@@ -13,7 +13,7 @@
 	}
 	else
 	{
-		document.cookie = loc + "Cookies=On; expires=" + new Date(Date.now() + 86400*10) + "; path=/";
+		document.cookie = loc + "Cookies=On; expires=" + new Date(Date.now() + 10*24*60*60*1000) + "; path=/";
 	}
 	
 	button1.onclick = function() 
