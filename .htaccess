@@ -1,0 +1,36 @@
+DirectoryIndex index.php
+
+FallbackResource index.php
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ /$1 [R,L]
+
+RewriteRule ^(functions\.php) - [F,L,NC]
+
+
+
+
+
+
+</IfModule>
+
+<IfModule mod_expires.c>
+# Enable expirations
+ExpiresActive On 
+# Default directive
+ExpiresDefault "access plus 1 day"
+# My favicon
+ExpiresByType image/x-icon "access plus 1 month"
+# Images
+ExpiresByType image/png "access plus 1 month"
+# CSS
+ExpiresByType text/css "access plus 1 day"
+# Javascript
+ExpiresByType application/javascript "access plus 1 day"
+# PHP and HTML
+ExpiresByType text/html "access plus 1 minute"
+</IfModule>
+
