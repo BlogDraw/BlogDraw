@@ -1,5 +1,5 @@
 <!-- 
-	BlogDraw2018 Theme for BlogDraw.  Copyright © TuxSoft Limited 2018 - tuxsoft@tuxsoft.uk.
+	DarkBlogDraw2018 Template for BlogDraw.  Copyright © TuxSoft Limited 2018 - tuxsoft@tuxsoft.uk.
  -->
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +29,7 @@
 				<ul class="nav navbar-nav navbar-center">
 					<li><a href="<?php output_home_link(); ?>" title="<?php echo TITLE; ?>">Home</a></li>
 					<li><a href="<?php output_archive_link(); ?>" title="Archive | <?php echo TITLE; ?>">Archive</a></li>
-					<li><a href="<?php output_contact_link(); ?>" title="Archive | <?php echo TITLE; ?>">Contact</a></li>
+					<li><a href="<?php output_contact_link(); ?>" title="Contact | <?php echo TITLE; ?>">Contact</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -49,7 +49,7 @@
 			<hr />
 			<div class="row">
 				<div class="col-xs-12">
-					<p>Content on <?php echo URL; ?>, Copyright &copy; <?php echo TITLE; ?> <?php date('Y'); ?></p>
+					<p>Content on <?php echo URL; ?>, Copyright &copy; <?php echo TITLE; ?> <?php echo date('Y'); ?></p>
 					<p><?php echo TITLE; ?>: Proudly powered by <a href="https://blogdraw.com">BlogDraw</a>.  Template: <?php echo TEMPLATE; ?> by <?php echo TEMPLATEBY; ?></p>
 				</div>
 			</div>
