@@ -156,9 +156,16 @@
 	function output_blog_archive($NumberToLoad,$LazyLoadIsOK)
 	{
 		$LastPostLoaded = engine_load_blog_archive($NumberToLoad);
-		if (!($LastPostLoaded <= $NumberToLoad))
+		if($LazyLoadIsOK)
 		{
-			engine_load_blog_archive_button($LastPostLoaded);
+			if (!($LastPostLoaded <= $NumberToLoad))
+			{
+				engine_load_blog_archive_button($LastPostLoaded);
+			}
+		}
+		else
+		{
+			engine_load_blog_archive_alt($LastPostLoaded);
 		}
 	}
 	
@@ -315,6 +322,24 @@
 			mysqli_close($DBConnection);
 		}
 		return $ReturnedID;
+	}
+	function engine_load_blog_archive_alt($NumberLeft)
+	{
+		if($NumberLeft > 0)
+		{
+			$DBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
+			if (!$DBConnection)
+			{
+				die('Could not connect to database.  Please try again later.');
+			}
+			$DBQuery = "SELECT ID,Title,NiceTitle FROM `" . DBPREFIX . "_PostsTable` WHERE PostIsDraft=0 AND ID<" . $NumberLeft . " ORDER BY ID DESC;";
+			$ReturnQuery = mysqli_query($DBConnection,$DBQuery);
+			while($Row = mysqli_fetch_array($ReturnQuery, MYSQLI_ASSOC))
+			{
+				echo '<a href="' . URL . htmlspecialchars($Row['NiceTitle']) . '" title="' . htmlspecialchars($Row['Title']) . '">' . htmlspecialchars($Row['Title']) . '</a><br />';
+			}
+			mysqli_close($DBConnection);
+		}
 	}
 
 	function engine_find_latest_public_post_id()
