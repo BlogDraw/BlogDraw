@@ -1,4 +1,4 @@
-<img width="50%" src="https://blogdraw.com/images/BlogDrawLogoBoT1024.png" />
+<img width="25%" src="https://blogdraw.com/images/BlogDrawLogoWoT1024.png" /><img width="50%" src="https://blogdraw.com/images/BlogDrawLogoBoT1024.png" />
 
 # BlogDraw
 BlogDraw - the ultra-lightweight, super-simple, easy-to-use, fully-featured blogging platform.
