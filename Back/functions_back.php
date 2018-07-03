@@ -460,6 +460,7 @@ function controlCodeFunc()
 				$ReturnedAuthorID = mb_convert_encoding($Row['AuthorID'], "UTF-8");
 				$ReturnedTitle = mb_convert_encoding($Row['Title'], "UTF-8");
 				$ReturnedPost = mb_convert_encoding($Row['Post'], "UTF-8");
+				$ReturnedPost = str_replace("<br />", "", $ReturnedPost); //Writing a post adds in HTML linebreaks.  We want to remove these so we don't add them twice.
 				$ReturnedTagOne = mb_convert_encoding($Row['TagOne'], "UTF-8");
 				$ReturnedTagTwo = mb_convert_encoding($Row['TagTwo'], "UTF-8");
 				$ReturnedTagThree = mb_convert_encoding($Row['TagThree'], "UTF-8");
