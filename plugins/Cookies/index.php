@@ -19,7 +19,8 @@
 	button1.onclick = function() 
 	{
 		div.style.display = 'none';
-		div.parentNode.innerHTML += '<p><?php echo COOKIENOTICE; ?></p>';
+		div.parentNode.innerHTML += '<div id="OverlayNotice" class="modal fade"><div class="modal-content"><div class="modal-body"><p><?php echo COOKIENOTICE; ?></p><button type="button" class="btn btn-danger" data-dismiss="modal">X</button></div></div></div>';
+		document.getElementById('OverlayNotice').modal('show');
 	};
 	
 	button.onclick = function() 
