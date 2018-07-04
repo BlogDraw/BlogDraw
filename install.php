@@ -1,5 +1,4 @@
 <?php
-
 	function engine_page()
 	{
 		if (isset($_POST['Submit']))
@@ -139,7 +138,6 @@
 			UI_page();
 		}
 	}
-
 	function UI_page()
 	{
 	?><!DOCTYPE html>

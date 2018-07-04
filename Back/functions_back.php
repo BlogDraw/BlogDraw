@@ -397,7 +397,7 @@ function controlCodeFunc()
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-xs-12">
+					<div class="col-xs-12 col-md-8">
 						<fieldset>
 							<div>
 								<a class="btn btn-default btn-sm" name="controlBold" onclick="controlBoldFunc()">B</a>
@@ -413,14 +413,14 @@ function controlCodeFunc()
 							<br />
 						</fieldset>
 					</div>
+					<div class="col-xs-12 col-md-4">
+						<div class="form-control" style="height:315px;overflow-y:scroll;"><?php engine_media_plugin(); ?></div>
+					</div>
 				</div>
 				<br />
 				<div class="row"> 
-					<div class="col-xs-12 col-sm-6">
+					<div class="col-xs-12 col-sm-8">
 						<input type="text" class="form-control" name="Tags" id="Tags" placeholder="3 comma separated Tags I.E: blog,post,hello" />
-					</div>
-					<div class="col-xs-12 col-sm-6">
-						<div class="form-control" style="height:8rem;overflow-y:scroll;"><?php engine_media_plugin(); ?></div>
 					</div>
 				</div>
 				<br />
@@ -460,6 +460,7 @@ function controlCodeFunc()
 				$ReturnedAuthorID = mb_convert_encoding($Row['AuthorID'], "UTF-8");
 				$ReturnedTitle = mb_convert_encoding($Row['Title'], "UTF-8");
 				$ReturnedPost = mb_convert_encoding($Row['Post'], "UTF-8");
+				$ReturnedPost = str_replace("<br />", "", $ReturnedPost); //Writing a post adds in HTML linebreaks.  We want to remove these so we don't add them twice.
 				$ReturnedTagOne = mb_convert_encoding($Row['TagOne'], "UTF-8");
 				$ReturnedTagTwo = mb_convert_encoding($Row['TagTwo'], "UTF-8");
 				$ReturnedTagThree = mb_convert_encoding($Row['TagThree'], "UTF-8");
@@ -609,7 +610,7 @@ function controlCodeFunc()
 	<div class="row">
 		<div class="col-xs-10 col-xs-push-1">
 			<div class="table-responsive">
-				<table class="table table-striped table-condensed">
+				<table class="table table-condensed">
 					<thead>
 						<tr>
 							<th>Number:</th>
@@ -728,12 +729,12 @@ function controlCodeFunc()
 	<div class="row"><?php } ?>
 		<?php if ($PageOrPlugin != 'Plugin'){ ?><div class="col-xs-10 col-xs-push-1"><?php } else { ?><div class="col-xs-12"><?php } ?>
 			<div class="table-responsive">
-				<table class="table table-striped table-condensed">
+				<table class="table table-condensed">
 					<thead>
 						<tr>
 							<th>Image:</th>
-							<th>Location:</th>
 							<th>HTML Code (copy into a blog post):</th>
+							<th>Location:</th>
 							<th>Uploaded on:</th>
 							<?php if ($PageOrPlugin != 'Plugin'){ ?><th>Delete:</th><?php } ?>
 						</tr>
@@ -760,7 +761,7 @@ function controlCodeFunc()
 		{
 			if (strcasecmp(substr($File,-4),'.png') == 0 || strcasecmp(substr($File,-4),'.jpg') == 0 || strcasecmp(substr($File,-5),'.jpeg') == 0 || strcasecmp(substr($File,-4),'.bmp') == 0 || strcasecmp(substr($File,-4),'.gif') == 0 || strcasecmp(substr($File,-5),'.tiff') == 0)
 			{
-				echo '<tr><td><img src="' . PROTOCOL . URL . substr($File,2) . '" alt="' . substr($File,11) . '" style="height:12vh;width:auto;" /></td>' . '<td>' . substr($File,2) . '</td><td>&ltimg src=&quot;' . PROTOCOL . URL . substr($File,2) . '&quot; alt=&quot;' . substr($File,11) . '&quot; /&gt;</td><td> ' . date ("Y-m-d H:i:s.", filemtime($File)) . '</td>';
+				echo '<tr><td><img src="' . PROTOCOL . URL . substr($File,2) . '" alt="' . substr($File,11) . '" style="height:8vh;width:auto;" /></td><td>&ltimg src=&quot;' . PROTOCOL . URL . substr($File,2) . '&quot; alt=&quot;' . substr($File,11) . '&quot; /&gt;</td>' . '<td>' . substr($File,2) . '</td><td> ' . date ("Y-m-d H:i:s.", filemtime($File)) . '</td>';
 				if ($PageOrPlugin != 'Plugin')
 				{
 					echo '<td><form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $ReturnedPostID . '" /><input type="submit" class="btn btn-default btn-xs" name="DeleteSubmit" value="Delete" /></form></td>';
@@ -769,7 +770,7 @@ function controlCodeFunc()
 			}
 			else if (strcasecmp(substr($File,-4),'.mp4') == 0 || strcasecmp(substr($File,-5),'.webm') == 0 || strcasecmp(substr($File,-4),'.ogv') == 0)
 			{
-				echo '<tr><td>No Image Available.</td>' . '<td>' . substr($File,2) . '</td><td>&lt;video controls&gt;&ltsource src=&quot;' . PROTOCOL . URL . substr($File,2) . '&quot; /&gt;Your Web Browser Doesn&#39;t Support Videos!&lt;/video&gt;</td><td> ' . date ("Y-m-d H:i:s.", filemtime($File)) . '</td>';
+				echo '<tr><td>No Image Available.</td><td>&lt;video controls&gt;&ltsource src=&quot;' . PROTOCOL . URL . substr($File,2) . '&quot; /&gt;Your Web Browser Doesn&#39;t Support Videos!&lt;/video&gt;</td>' . '<td>' . substr($File,2) . '</td><td> ' . date ("Y-m-d H:i:s.", filemtime($File)) . '</td>';
 				if ($PageOrPlugin != 'Plugin')
 				{
 					echo '<td><form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $ReturnedPostID . '" /><input type="submit" class="btn btn-default btn-xs" name="DeleteSubmit" value="Delete" /></form></td>';
@@ -778,7 +779,7 @@ function controlCodeFunc()
 			}
 			else if (strcasecmp(substr($File,-4),'.mp3') == 0 || strcasecmp(substr($File,-4),'.ogg') == 0)
 			{
-				echo '<tr><td>No Image Available.</td>' . '<td>' . substr($File,2) . '</td><td>&lt;audio controls&gt;&ltsource src=&quot;' . PROTOCOL . URL . substr($File,2) . '&quot; /&gt;Your Web Browser Doesn&#39;t Support Audio!&lt;/audio&gt;</td><td> ' . date ("Y-m-d H:i:s.", filemtime($File)) . '</td>';
+				echo '<tr><td>No Image Available.</td><td>&lt;audio controls&gt;&ltsource src=&quot;' . PROTOCOL . URL . substr($File,2) . '&quot; /&gt;Your Web Browser Doesn&#39;t Support Audio!&lt;/audio&gt;</td>' . '<td>' . substr($File,2) . '</td><td> ' . date ("Y-m-d H:i:s.", filemtime($File)) . '</td>';
 				if ($PageOrPlugin != 'Plugin')
 				{
 					echo '<td><form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $ReturnedPostID . '" /><input type="submit" class="btn btn-default btn-xs" name="DeleteSubmit" value="Delete" /></form></td>';

@@ -2,6 +2,8 @@
 	<p id="Cookies" style="text-align:right;">By using this site, you agree to <button class="btn btn-default" id="ShowPolicy">our cookie policy</button>&nbsp;<button class="btn btn-danger" id="Exit">&times;</button>&nbsp;&nbsp;</p>  
 </div>
 <script>
+jQuery(document).ready(function()
+{
 	var loc = window.location.host;
 	var button = document.getElementById('Exit');
 	var button1 = document.getElementById('ShowPolicy');
@@ -19,7 +21,8 @@
 	button1.onclick = function() 
 	{
 		div.style.display = 'none';
-		div.parentNode.innerHTML += '<p><?php echo COOKIENOTICE; ?></p>';
+		div.parentNode.innerHTML += '<div id="OverlayNotice" class="modal fade"><div class="modal-content"><div class="modal-body"><p><?php echo COOKIENOTICE; ?></p><button type="button" class="btn btn-danger" data-dismiss="modal">X</button></div></div></div>';
+		jQuery('#OverlayNotice').modal('show');
 	};
 	
 	button.onclick = function() 
@@ -34,4 +37,5 @@
 			div.style.display = 'block';
 		}
 	};
+});
 </script>
