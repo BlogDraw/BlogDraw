@@ -147,6 +147,12 @@
 	{
 		echo PROTOCOL . URL;
 	}
+
+	function output_template_location()
+	{
+		output_head_template_location();
+	}
+
 	function output_latest_blog_post()
 	{
 		$PostID = engine_find_latest_public_post_id();
