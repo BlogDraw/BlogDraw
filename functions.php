@@ -200,7 +200,94 @@
 		}
 	}
 	
+	function output_author_profile($Option)
+	{
+		list($AuthorID,$AuthorBlurb,$AuthorImage,$Preamble) = engine_author_profile();
+		if ($Option =="Preamble")
+		{
+			echo $Preamble;
+		}
+		else if ($Option =="Caption")
+		{
+			echo engine_call_author_details($AuthorID);
+		}
+		else if ($Option =="Image")
+		{
+			if ($AuthorImage !== 'X')
+			{
+				echo'<img src="' . $AuthorImage . '" style="display:block;margin:0 auto;border-radius:50%;max-width:100%;" />' ;
+			}
+		}
+		else if ($Option =="Blurb")
+		{
+			if ($AuthorBlurb !== 'X')
+			{
+				echo  $AuthorBlurb;
+			}
+		}
+		else //if ($Option =="All")
+		{
+			echo '<aside><header>' . engine_call_author_details($AuthorID) . '</header>';
+			if ($AuthorImage !== 'X')
+			{
+				echo'<img src="' . $AuthorImage . '" style="display:block;margin:0 auto;border-radius:50%;max-width:100%;" />' ;
+			}
+			if ($AuthorBlurb !== 'X')
+			{
+				echo  $AuthorBlurb;
+			}
+			echo '</aside>';
+		}
+	}
+	
 //BACKEND FUNCTIONS
+	function engine_author_profile()
+	{
+		$PostID = 1;
+		//Check if front page
+		$RequestedURI= mb_convert_encoding(htmlspecialchars(substr($_SERVER['REQUEST_URI'],1)), "UTF-8");
+		if (PROTOCOL . URL . $RequestedURI == PROTOCOL.URL || PROTOCOL . URL . "/" . $RequestedURI == PROTOCOL.URL."/archive"  || PROTOCOL . URL . "/" . $RequestedURI == PROTOCOL.URL."/contact" || substr(PROTOCOL . URL . "/" . $RequestedURI,0,(LENGTH+5)) == PROTOCOL.URL."/tag-")
+		{//If front page, get author id from latest blog article where not draft
+			$PostID = engine_find_latest_public_post_id();
+			$Preamble = "The latest blog author on this site:";
+		}
+		else
+		{//else find canonical page post link get author id from post where that = nice-title
+			$Preamble = "Author profile:";
+			$DBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
+			if (!$DBConnection)
+			{
+				die('Could not connect to database.  Please try again later.');
+			}
+			$RequestedURI = mysqli_real_escape_string($DBConnection,$RequestedURI);
+			$DBQuery = "SELECT ID FROM `" . DBPREFIX . "_PostsTable` WHERE PostIsDraft=0 AND NiceTitle='" . $RequestedURI . "' ORDER BY ID DESC LIMIT 1;";
+			$ReturnQuery = mysqli_query($DBConnection,$DBQuery);
+			while($Row = mysqli_fetch_array($ReturnQuery, MYSQLI_ASSOC))
+			{
+				$ReturnedID = mb_convert_encoding(htmlspecialchars($Row['ID']), "UTF-8");
+			}
+			$PostID = $ReturnedID;
+			mysqli_close($DBConnection);
+		}
+		$AuthorID = engine_call_post_field($PostID,"AuthorID");
+		//find author profile from id
+		$DBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
+		if (!$DBConnection)
+		{
+			die('Could not connect to database.  Please try again later.');
+		}
+		$DBQuery = "SELECT UserImage,UserBlurb FROM `" . DBPREFIX . "_LoginTable` WHERE ID='" . $AuthorID . "';";
+		$ReturnQuery = mysqli_query($DBConnection,$DBQuery);
+		while($Row = mysqli_fetch_array($ReturnQuery, MYSQLI_ASSOC))
+		{
+			$ReturnedAuthorImage = mb_convert_encoding(htmlspecialchars($Row['UserImage']), "UTF-8");
+			$ReturnedAuthorBlurb = mb_convert_encoding($Row['UserBlurb'], "UTF-8");
+		}
+		if (!empty($ReturnedAuthorImage)){$AuthorImage = $ReturnedAuthorImage;} else {$AuthorImage = "X";}
+		if (!empty($ReturnedAuthorBlurb)){$AuthorBlurb = $ReturnedAuthorBlurb;} else {$AuthorBlurb = "X";}
+		mysqli_close($DBConnection);
+		return array ($AuthorID,$AuthorBlurb,$AuthorImage,$Preamble);
+	}
 
 	function engine_call_canonical_page($Page)
 	{
@@ -231,7 +318,6 @@
 
 	function engine_find_called_post()
 	{
-		//echo $_SERVER['REQUEST_URI'];
 		$DBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
 		if (!$DBConnection)
 		{
