@@ -1103,3 +1103,4 @@ function controlCodeFunc()
 		echo 'Logging You Out Now...  <script>window.location.href = "' . PROTOCOL . URL . '/Back/";</script>';
 	}
 ?>
+	
