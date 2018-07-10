@@ -117,7 +117,7 @@
 				{
 					die('Could not connect to database.  Please try again later.');
 				}
-				$DBQuery = "CREATE TABLE " . $DBPrefix . "_LoginTable(ID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,Username VARCHAR(25) NOT NULL,Password VARCHAR(256) NOT NULL,Email VARCHAR(255) NOT NULL,Company VARCHAR(50),URL VARCHAR(255),EmailIsPublic BOOLEAN,Cookie VARCHAR(512));";
+				$DBQuery = "CREATE TABLE " . $DBPrefix . "_LoginTable(ID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,Username VARCHAR(25) NOT NULL,Password VARCHAR(256) NOT NULL,Email VARCHAR(255) NOT NULL,Company VARCHAR(50),URL VARCHAR(255),UserImage VARCHAR(255),UserBlurb LONGTEXT,EmailIsPublic BOOLEAN,Cookie VARCHAR(512));";
 				mysqli_query($DBConnection,$DBQuery);
 				$DBQuery = "INSERT INTO " . $DBPrefix . "_LoginTable (Username,Password,Email,EmailIsPublic,Cookie) VALUES ('Admin','" . password_hash($RandPass . $DBPrefix, PASSWORD_DEFAULT) . "','" . $WSContactEmail . "',0,'XXXX');";
 				mysqli_query($DBConnection,$DBQuery);
