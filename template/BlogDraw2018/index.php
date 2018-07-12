@@ -13,8 +13,8 @@
 		<!-- Enable IE/Edge Standards mode -->
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<!-- Use An Apple Touch Icon and Favicon-->
-		<link rel="apple-touch-icon" href="<?php output_head_template_location(); ?>/apple-touch-icon.png" />
-		<link rel="shortcut icon" href="<?php output_head_template_location(); ?>/favicon.ico" />
+		<link rel="apple-touch-icon" href="<?php output_home_link(); ?>/Uploads/apple-touch-icon.png" />
+		<link rel="shortcut icon" href="<?php output_home_link(); ?>/Uploads/favicon.ico" />
 		<!-- Here`s where the SEO comes in. -->
 		<meta name="description" content="<?php output_head_description(); ?>" />
 		<title><?php output_head_title(); ?></title>
@@ -40,8 +40,15 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-xs-12 col-sm-10 col-sm-push-1">
+				<div class="col-xs-12 col-sm-7 col-sm-push-1">
 					<?php output_canonical_page();?>
+				</div>
+				<div class="hidden-xs col-sm-3 col-sm-push-1">
+				<?php output_author_profile("Preamble"); ?>
+					<aside class="panel panel-info">
+						<header class="panel-heading"><h3>Meet <?php output_author_profile("Caption"); ?>:</h3></header>
+						<div class="panel-body"><?php output_author_profile("Image"); ?><?php output_author_profile("Blurb"); ?></div>
+					</aside>
 				</div>
 			</div>
 		</div>
@@ -54,6 +61,9 @@
 				</div>
 			</div>
 		</footer>
+		<script src="<?php output_template_location(); ?>/bootstrap-3.3.7-dist/js/jquery-3.2.1.min.js"></script>
+		<script src="<?php output_template_location(); ?>/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+		<?php require_once ('./plugins/Cookies/index.php'); ?>
 	</body>
 </html>
 <?php engine_analytics_collector(); ?>

@@ -7,12 +7,14 @@
 		{
 			die('Could not connect to database.  Please try again later.');
 		}
-		$DBQuery = "SELECT Username,Email,Company,URL,EmailIsPublic FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $SafeCookie . "';";
+		$DBQuery = "SELECT Username,Email,UserImage,UserBlurb,Company,URL,EmailIsPublic FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $SafeCookie . "';";
 		$ReturnQuery = mysqli_query($DBConnection,$DBQuery);
 		while($Row = mysqli_fetch_array($ReturnQuery, MYSQLI_ASSOC))
 		{
 			$ReturnedUsername = mb_convert_encoding($Row['Username'], "UTF-8");
 			$ReturnedEmail = mb_convert_encoding($Row['Email'], "UTF-8");
+			$ReturnedUserImage = mb_convert_encoding($Row['UserImage'], "UTF-8");
+			$ReturnedUserBlurb = mb_convert_encoding($Row['UserBlurb'], "UTF-8");
 			$ReturnedCompany = mb_convert_encoding($Row['Company'], "UTF-8");
 			$ReturnedURL = mb_convert_encoding($Row['URL'], "UTF-8");
 			$ReturnedEmailIsPublic = mb_convert_encoding($Row['EmailIsPublic'], "UTF-8");
@@ -83,6 +85,26 @@
 					$ReturnedURL = $SafeURL;
 				}
 			}
+			if(isset($_POST['UserImage']))
+			{
+				$SafeUserImage = mysqli_real_escape_string($DBConnection,mb_convert_encoding(htmlspecialchars($_POST['UserImage']),"UTF-8"));
+				if ($SafeUserImage != $ReturnedUserImage)
+				{
+					$DBQuery = "UPDATE `" . DBPREFIX . "_LoginTable` SET UserImage = '" . $SafeUserImage . "' WHERE Cookie = '" . $SafeCookie . "';";
+					mysqli_query($DBConnection,$DBQuery);
+					$ReturnedUserImage = $SafeUserImage;
+				}
+			}
+			if(isset($_POST['UserBlurb']))
+			{
+				$SafeUserBlurb = mysqli_real_escape_string($DBConnection,mb_convert_encoding($_POST['UserBlurb'],"UTF-8"));
+				if ($SafeUserBlurb != $ReturnedUserBlurb)
+				{
+					$DBQuery = "UPDATE `" . DBPREFIX . "_LoginTable` SET UserBlurb = '" . $SafeUserBlurb . "' WHERE Cookie = '" . $SafeCookie . "';";
+					mysqli_query($DBConnection,$DBQuery);
+					$ReturnedUserBlurb = $SafeUserBlurb;
+				}
+			}
 			if(isset($_POST['EmailPublic']))
 			{
 				if ($ReturnedEmailIsPublic == 0)
@@ -104,11 +126,11 @@
 			mysqli_close($DBConnection);
 		}
 		//Call in the UI, and pass variables to autofill the form
-		UI_account_page($ReturnedUsername,$ReturnedCompany,$ReturnedURL,$ReturnedEmail,$ReturnedEmailIsPublic);
+		UI_account_page($ReturnedUsername,$ReturnedCompany,$ReturnedURL,$ReturnedEmail,$ReturnedUserBlurb,$ReturnedUserImage,$ReturnedEmailIsPublic);
 	}
 
 	//Handle the UI for the Account page
-	function UI_account_page($ReturnedUsername,$ReturnedCompany,$ReturnedURL,$ReturnedEmail,$ReturnedEmailIsPublic)
+	function UI_account_page($ReturnedUsername,$ReturnedCompany,$ReturnedURL,$ReturnedEmail,$ReturnedUserBlurb,$ReturnedUserImage,$ReturnedEmailIsPublic)
 	{
 	?><div class="container-fluid">
 	<div class="row">
@@ -152,6 +174,20 @@
 					<label class="control-label col-xs-12 col-sm-3" for="Email">Email:</label> 
 					<div class="col-xs-12 col-sm-9">
 						<input type="text" class="form-control" name="Email" id="Email" value="<?php echo $ReturnedEmail; ?>" />
+					</div>
+				</div>
+				<br />
+				<div class="row">
+					<label class="control-label col-xs-12 col-sm-3" for="UserImage">User Photo URL:</label> 
+					<div class="col-xs-12 col-sm-9">
+						<input type="text" class="form-control" name="UserImage" id="UserImage" value="<?php echo $ReturnedUserImage; ?>" />
+					</div>
+				</div>
+				<br />
+				<div class="row">
+					<label class="control-label col-xs-12 col-sm-3" for="UserBlurb">Your User Blurb (accepts HTML):</label> 
+					<div class="col-xs-12 col-sm-9">
+						<input type="text" class="form-control" name="UserBlurb" id="UserBlurb" value="<?php echo $ReturnedUserBlurb; ?>" />
 					</div>
 				</div>
 				<br />
@@ -691,9 +727,9 @@ function controlCodeFunc()
 				$FineToUpload = 0;
 			}
 
-			if(!($FileType == "jpg" || $FileType == "jpeg" || $FileType == "png" || $FileType == "bmp" || $FileType == "gif" || $FileType == "tiff" || $FileType == "ogg" || $FileType == "ogv" || $FileType == "webm" || $FileType == "mp4" || $FileType == "txt" || $FileType == "rtf" || $FileType == "pdf" || $FileType == "docx" || $FileType == "pptx" || $FileType == "xlsx" || $FileType == "csv" || $FileType == "odt" || $FileType == "odp" || $FileType == "ods" || $FileType == "odg" || $FileType == "mp3")) //Allow certain file formats
+			if(!($FileType == "jpg" || $FileType == "jpeg" || $FileType == "png" || $FileType == "bmp" || $FileType == "gif" || $FileType == "tiff" || $FileType == "ogg" || $FileType == "ogv" || $FileType == "webm" || $FileType == "mp4" || $FileType == "txt" || $FileType == "rtf" || $FileType == "pdf" || $FileType == "docx" || $FileType == "pptx" || $FileType == "xlsx" || $FileType == "csv" || $FileType == "odt" || $FileType == "odp" || $FileType == "ods" || $FileType == "odg" || $FileType == "mp3" || $FileType == "ico")) //Allow certain file formats
 			{
-				echo "Allowed formats are: jpg, jpeg, png, bmp, gif, tiff, ogg, ogv, webm, mp4, mp3, txt, rtf, pdf, docx, pptx, xlsx, csv, odt, odp, ods, odg.";
+				echo "Allowed formats are: jpg, jpeg, png, bmp, gif, tiff, ogg, ogv, webm, mp4, mp3, txt, rtf, pdf, docx, pptx, xlsx, csv, odt, odp, ods, odg, ico.";
 				$FineToUpload = 0;
 			}
 
@@ -1103,4 +1139,3 @@ function controlCodeFunc()
 		echo 'Logging You Out Now...  <script>window.location.href = "' . PROTOCOL . URL . '/Back/";</script>';
 	}
 ?>
-	
