@@ -1,4 +1,8 @@
 <?php
+/**
+ * index.php - this contains most of the framework for the back end of BlogDraw (Known as "The Back").
+**/
+//Here we set our basic requirements, and do some security testing.
 	$NotLoggedIn = true;
 	require_once ('../functions.php');
 	require_once ('./functions_back.php');
@@ -16,6 +20,7 @@
 		if ($ReturnedCookie == $SafeCookie){$NotLoggedIn = false;}
     }
     mysqli_close($DBConnection); 
+//Below, we start our UI
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,6 +46,7 @@
 	</head>
 	<body>
 <?php
+//If the user isn't logged in, boot them to the login page.  Otherwise, show them The Back.
 	if ($NotLoggedIn == true)
 	{
 		include ('./page_login.php');
@@ -68,6 +74,7 @@
 			</div>
 		</nav>
 <?php
+		//Find out what page the user wants to see, and display it in the context of the framework laid out here.
 		if(isset($_GET['page']))
 		{
 			$SubPage = htmlspecialchars(filter_input( INPUT_GET, 'page', FILTER_SANITIZE_URL));
