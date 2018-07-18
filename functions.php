@@ -1,5 +1,14 @@
 <?php
 // DO NOT EDIT BELOW THIS LINE!-----------------------------------------
+/**
+ * Functions.php - this contains most of the core PHP functions that operate BlogDraw.
+ * They are split up as follows:
+ * - Core Content - this section runs whenever a page calls this script.  It primarily handles security and login sessions, as well as analytics.
+ * - Head Output Functions - this section contains functions that return outputs which may be needed in the <head> of a template.
+ * - Body Output Functions - this section contains functions that return outputs which may be needed in the <body> of a template.
+ * - Engine Functions - this section contains functions that parse, operate on, and pass data to and from output functions.
+**/
+//CORE CONTENT
 	global $NotLoggedIn;	
 					
 	if (!isset($_POST['LoginSubmit']))
@@ -31,7 +40,7 @@
 		setcookie(preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin',$CookieKey,0,'/',URL,FALSE,TRUE);	
 	}
 	
-	function engine_analytics_collector()
+	function engine_analytics_collector() //This function collects analytic data on every page to be used for /Back.
 	{
 		$DBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
 		if (!$DBConnection)
@@ -47,8 +56,8 @@
 		mysqli_close($DBConnection);
 	}
 	
-// HEAD FUNCTIONS	
-	function output_head_title()
+//HEAD OUTPUT FUNCTIONS	
+	function output_head_title() //This function outputs the relevant page title for the <title> tag
 	{
 		$URI = ltrim($_SERVER['REQUEST_URI'], '/');
 		if ($URI == NULL)
@@ -90,18 +99,18 @@
 		}
 	}
 	
-	function output_head_description()
+	function output_head_description() //This outputs the site's meta description
 	{
 		echo DESCRIPTION;
 	}
 	
-	function output_head_template_location()
+	function output_head_template_location() //This outputs the location of the site's current template
 	{
 		echo PROTOCOL . URL . '/template/' . TEMPLATE;
 	}
 	
-//BODY FUNCTIONS
-	function output_site_title($HasDescription)
+//BODY OUTPUT FUNCTIONS
+	function output_site_title($HasDescription) //This outputs the site's title, with an option to include the description as well.
 	{
 		if ($HasDescription)
 		{
@@ -113,7 +122,7 @@
 		}
 	}
 	
-	function output_contact_details($HasEmail,$HasPhone)
+	function output_contact_details($HasEmail,$HasPhone) //This outputs contact details for the site, with optional email address and phone number
 	{
 		if ($HasEmail && $HasPhone)
 		{
@@ -133,33 +142,33 @@
 		}
 	}
 	
-	function output_archive_link()
+	function output_archive_link() //This outputs a link to the website's blog archive page
 	{
 		echo PROTOCOL . URL . '/archive';
 	}
 	
-	function output_contact_link()
+	function output_contact_link() //This outputs a link to the website's contact page
 	{
 		echo PROTOCOL . URL . '/contact';
 	}
 	
-	function output_home_link()
+	function output_home_link() //This outputs a link to the home page
 	{
 		echo PROTOCOL . URL;
 	}
 
-	function output_template_location()
+	function output_template_location() //This outputs the website's template location
 	{
 		output_head_template_location();
 	}
 
-	function output_latest_blog_post()
+	function output_latest_blog_post() //This outputs the latest non-draft post on the website, by finding it's ID and collating it's data.
 	{
 		$PostID = engine_find_latest_public_post_id();
 		engine_collate_post_details($PostID);
 	}
 	
-	function output_blog_archive($NumberToLoad,$LazyLoadIsOK)
+	function output_blog_archive($NumberToLoad,$LazyLoadIsOK) //This function outputs the blog archive page of the website, with options to limit the number of posts that are displayed in full, and to lazy load with a button.
 	{
 		$LastPostLoaded = engine_load_blog_archive($NumberToLoad);
 		if($LazyLoadIsOK)
@@ -175,19 +184,19 @@
 		}
 	}
 	
-	function output_canonical_page()
+	function output_canonical_page() //This finds out what page the user has requesed, and passes that to the engine that loads the pages.
 	{
-		$URLPath = ltrim($_SERVER['REQUEST_URI'], '/');    // Trim leading slash(es)
-		$Elements = explode('/', $URLPath);                // Split path on slashes
+		$URLPath = ltrim($_SERVER['REQUEST_URI'], '/');
+		$Elements = explode('/', $URLPath);
 		if(empty($Elements[0]))
-		{                       // No path elements means home
+		{// No path elements means home
 			engine_call_canonical_page('home');
 		}
 		else if(substr($Elements[0],0,4) == "tag-")
 		{
 			engine_call_canonical_page('tag');
 		}
-		else switch(array_shift($Elements))             // Pop off first item and switch
+		else switch(array_shift($Elements))
 		{
 			case 'archive':
 				engine_call_canonical_page('archive');
@@ -200,7 +209,7 @@
 		}
 	}
 	
-	function output_author_profile($Option)
+	function output_author_profile($Option) //This outputs the author profile, with options to do it bit by bit.
 	{
 		list($AuthorID,$AuthorBlurb,$AuthorImage,$Preamble) = engine_author_profile();
 		if ($Option =="Preamble")
@@ -240,8 +249,8 @@
 		}
 	}
 	
-//BACKEND FUNCTIONS
-	function engine_author_profile()
+//ENGINE FUNCTIONS
+	function engine_author_profile() //This handles building the author profile
 	{
 		$PostID = 1;
 		//Check if front page
@@ -289,7 +298,7 @@
 		return array ($AuthorID,$AuthorBlurb,$AuthorImage,$Preamble);
 	}
 
-	function engine_call_canonical_page($Page)
+	function engine_call_canonical_page($Page) //This handles choosing the correct page template for the user and displaying it.
 	{
 		switch($Page)
 		{
@@ -316,7 +325,7 @@
 		}
 	}
 
-	function engine_find_called_post()
+	function engine_find_called_post() //This handles finding out which post has been called by the user in the URI, also handles returning engine_call_canonical_page to the 404 page if the post isn't found.
 	{
 		$DBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
 		if (!$DBConnection)
@@ -340,7 +349,7 @@
 		}
 	}
 	
-	function engine_find_called_tag()
+	function engine_find_called_tag() //This handles finding all posts tagged with a specific tag
 	{
 		$DBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
 		if (!$DBConnection)
@@ -364,7 +373,7 @@
 		}
 	}
 
-	function engine_load_blog_archive_button($LastPostLoaded)
+	function engine_load_blog_archive_button($LastPostLoaded) //This handles creating the optional lazy load button for the blog archive.  It uses Bootstrap 3 classes.
 	{
 		?>
 		<form method="post">
@@ -374,7 +383,7 @@
 		<?php
 	}
 
-	function engine_load_blog_archive($NumberToLoad)
+	function engine_load_blog_archive($NumberToLoad) //This handles loading the desired number of full posts for the blog archive.
 	{
 		if(isset($_POST['LoadMore']) && isset($_POST['LastPostLoaded']))
 		{
@@ -415,7 +424,7 @@
 		}
 		return $ReturnedID;
 	}
-	function engine_load_blog_archive_alt($NumberLeft)
+	function engine_load_blog_archive_alt($NumberLeft) //This loads links to all further blog articles that aren't displayed in full on the blog archive.  A reasonably efficient alternaive to the lazy-loading.
 	{
 		if($NumberLeft > 0)
 		{
@@ -434,7 +443,7 @@
 		}
 	}
 
-	function engine_find_latest_public_post_id()
+	function engine_find_latest_public_post_id() //This finds the ID of the latest non-draft post, so it can be loaded up.
 	{
 		$DBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
 		if (!$DBConnection)
@@ -451,7 +460,7 @@
 		return $ReturnedID;
 	}
 
-	function engine_collate_post_details($PostID)
+	function engine_collate_post_details($PostID) //this collates all data about a post into one html <article>.
 	{
 		echo '<article>';
 		echo '<header><h2>' . engine_call_post_field($PostID,"Title") . '</h2></header>';
@@ -468,7 +477,7 @@
 		echo '</article>';	
 	}
 
-	function engine_call_author_details($PostAuthor)
+	function engine_call_author_details($PostAuthor) //This finds basic author details and collates them into a short caption at the start of a post.
 	{
 		$DBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
 		if (!$DBConnection)
@@ -504,7 +513,7 @@
 		return $AuthorCaption;
 	}
 
-	function engine_call_post_field($PostToCallID,$Field)
+	function engine_call_post_field($PostToCallID,$Field) //This handles the majority of pulling blog post data from the database.  It returns each individual field with a corresponding ID as requested.
 	{
 		$DBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
 		if (!$DBConnection)
@@ -531,5 +540,5 @@
 		mysqli_close($DBConnection);
 		return $ReturnedField;
 	}
-	
+
 ?>
