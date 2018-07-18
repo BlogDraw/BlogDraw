@@ -1,6 +1,12 @@
-<?php		
-//Handle the algorithm for the account page
-	function engine_account_page($SafeCookie)
+<?php
+/**
+ * functions_back.php - this contains most of the core PHP functions that operate the back end of BlogDraw (Known as "The Back").
+ * They are split up as follows:
+ * - Functions named engine_... - these contain the code that runs each page or aspect of a page - the complex algorithms.
+ * - Functions named UI_... - these contain the code for the User Interfaces (UIs) of each page.  We need to keep these in PHP instead of HTML as many of them need dynamically generated content.
+ * - Functions named sub_... - these contain extra logic needed for the function they're relevant to, but need their own function for readability, portability, memory management, etc...
+**/
+	function engine_account_page($SafeCookie) //This handles the data for the Account page.
 	{
 		$DBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
 		if (!$DBConnection)
@@ -129,8 +135,7 @@
 		UI_account_page($ReturnedUsername,$ReturnedCompany,$ReturnedURL,$ReturnedEmail,$ReturnedUserBlurb,$ReturnedUserImage,$ReturnedEmailIsPublic);
 	}
 
-	//Handle the UI for the Account page
-	function UI_account_page($ReturnedUsername,$ReturnedCompany,$ReturnedURL,$ReturnedEmail,$ReturnedUserBlurb,$ReturnedUserImage,$ReturnedEmailIsPublic)
+	function UI_account_page($ReturnedUsername,$ReturnedCompany,$ReturnedURL,$ReturnedEmail,$ReturnedUserBlurb,$ReturnedUserImage,$ReturnedEmailIsPublic) //This handles the UI for the Account page.
 	{
 	?><div class="container-fluid">
 	<div class="row">
@@ -213,7 +218,7 @@
 </div><?php
 	}
 	
-	function engine_login_page($SafeCookie)
+	function engine_login_page($SafeCookie) //This handles the data for the Login page.
 	{
 		if (isset($_POST['LoginSubmit']))
 		{
@@ -248,7 +253,7 @@
 		UI_login_page();
 	}
 	
-	function UI_login_page()
+	function UI_login_page() //This handles the UI for the Login page.
 	{
 	?><div class="container-fluid">
 	<div class="row">
@@ -279,7 +284,7 @@
 <?php
 	}
 	
-	function engine_add_posts_page($SafeCookie)
+	function engine_add_posts_page($SafeCookie) //This handles the data for the "Add Posts" page.
 	{
 		if (isset($_POST['PostSubmit']))
 		{
@@ -306,7 +311,7 @@
 		UI_add_edit_posts_page('Add',$SafeCookie,0);
 	}
 	
-	function sub_engine_add_posts_SubmitOrDraft($SubmitOrDraft,$SafeCookie)
+	function sub_engine_add_posts_SubmitOrDraft($SubmitOrDraft,$SafeCookie) //This handles the Submit or Draft buttons present on the "Add Posts" page.
 	{
 		$DBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
 		if (!$DBConnection)
@@ -343,7 +348,7 @@
 		mysqli_close($DBConnection);
 	}
 	
-	function sub_UI_add_edit_posts_FindAuthorDetails ($SafeCookie)
+	function sub_UI_add_edit_posts_FindAuthorDetails ($SafeCookie) //This handles the filling in the author details for the UI for the "Add or Edit Posts" page.
 	{
 		$DBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
 		if (!$DBConnection)
@@ -360,7 +365,7 @@
 		return '<p>Written by: ' . $ReturnedAuthor . ' on: ' . date("Y-m-d") . '.</p>';
 	}
 	
-	function UI_add_edit_posts_page($AddEdit,$SafeCookie,$EditPostID)
+	function UI_add_edit_posts_page($AddEdit,$SafeCookie,$EditPostID) //This handles the UI for the "Add or Edit Posts" page.
 	{
 	?><script>
 function controlBoldFunc()
@@ -472,7 +477,7 @@ function controlCodeFunc()
 </div><?php
 	}
 	
-	function engine_edit_posts_page($SafeCookie)
+	function engine_edit_posts_page($SafeCookie) //This handles the data for the "Edit Posts" page.
 	{
 		if (isset($_POST['EditSubmit']) && isset($_POST['Edit']) && !empty($_POST['Edit']))
 		{
@@ -567,7 +572,7 @@ function controlCodeFunc()
 		}
 	}
 	
-	function sub_engine_edit_posts_SubmitOrDraft($SubmitOrDraft,$SafeCookie)
+	function sub_engine_edit_posts_SubmitOrDraft($SubmitOrDraft,$SafeCookie) //This handles the Submit or Draft buttons present on the "Edit Posts" page.
 	{
 		$DBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
 		if (!$DBConnection)
@@ -625,7 +630,7 @@ function controlCodeFunc()
 		mysqli_close($DBConnection);
 	}
 	
-	function sub_UI_add_edit_posts_JSFillForEdit($ReturnedPostID,$ReturnedTitle,$ReturnedPost,$ReturnedTags)
+	function sub_UI_add_edit_posts_JSFillForEdit($ReturnedPostID,$ReturnedTitle,$ReturnedPost,$ReturnedTags) //This fills in the UI form on the "Add or Edit Posts" page if needed.
 	{
 	?><script>
 		document.getElementById("Title").value = "<?php echo $ReturnedTitle; ?>";
@@ -634,7 +639,7 @@ function controlCodeFunc()
 	</script><?php
 	}
 	
-	function UI_edit_posts_page($SafeCookie)
+	function UI_edit_posts_page($SafeCookie) //This handles the UI for the "Edit Posts" page.
 	{?><div class="container-fluid">
 	<div class="row">
 		<form class="form-horizontal col-xs-10 col-xs-push-1">
@@ -666,7 +671,7 @@ function controlCodeFunc()
 </div><?php
 	}
 	
-	function sub_UI_edit_posts_TableContent($SafeCookie)
+	function sub_UI_edit_posts_TableContent($SafeCookie) //This fills in the table on the "Edit Posts" page.
 	{
 		$DBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
 		if (!$DBConnection)
@@ -697,7 +702,7 @@ function controlCodeFunc()
 		mysqli_close($DBConnection);
 	}
 		
-	function engine_media_page()
+	function engine_media_page() //This handles the data for the Media page.
 	{
 		if (isset($_POST['DeleteSubmit']) && isset($_POST['Delete']) && !empty($_POST['Delete']))
 		{
@@ -752,7 +757,7 @@ function controlCodeFunc()
 		UI_media_page('Page');
 	}
 	
-	function UI_media_page($PageOrPlugin)
+	function UI_media_page($PageOrPlugin) //This handles the UI for the Media page, and it's plugin on the "Add or Edit Posts" page.
 	{
 	?><?php if ($PageOrPlugin != 'Plugin'){ ?><div class="container-fluid">
 	<div class="row">
@@ -791,7 +796,7 @@ function controlCodeFunc()
 <?php if ($PageOrPlugin != 'Plugin'){ ?></div><?php }
 	}
 	
-	function sub_UI_media_page_FindAndPrintFileData($PageOrPlugin)
+	function sub_UI_media_page_FindAndPrintFileData($PageOrPlugin) //This handles the file data for the UI for the Media page.
 	{
 		foreach(array_filter(glob('../Uploads'.'/*'),'is_file') as $File)
 		{
@@ -834,12 +839,12 @@ function controlCodeFunc()
 		}
 	}
 	
-	function engine_media_plugin()
+	function engine_media_plugin() //This handles the Media page plugin.
 	{
 		UI_media_page('Plugin');
 	}
 		
-	function engine_analytics_page()
+	function engine_analytics_page() //This handles the data for the analytics on the home page of The Back.
 	{
 		$DBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
 		if (!$DBConnection)
@@ -942,7 +947,7 @@ function controlCodeFunc()
 		mysqli_close($DBConnection);  
 	}
 	
-	function UI_analytics_page($UsersInJan,$UsersInFeb,$UsersInMar,$UsersInApr,$UsersInMay,$UsersInJun,$UsersInJul,$UsersInAug,$UsersInSep,$UsersInOct,$UsersInNov,$UsersInDec,$TotalVisitors,$TotalDaysVisitors,$LastDayVisitors,$LastDayPages,$TotalWeeksVisitors,$LastWeekVisitors,$LastWeekPages,$TotalMonthsVisitors,$LastMonthVisitors,$LastMonthPages)
+	function UI_analytics_page($UsersInJan,$UsersInFeb,$UsersInMar,$UsersInApr,$UsersInMay,$UsersInJun,$UsersInJul,$UsersInAug,$UsersInSep,$UsersInOct,$UsersInNov,$UsersInDec,$TotalVisitors,$TotalDaysVisitors,$LastDayVisitors,$LastDayPages,$TotalWeeksVisitors,$LastWeekVisitors,$LastWeekPages,$TotalMonthsVisitors,$LastMonthVisitors,$LastMonthPages) //This handles the UI for the analytics on the home page of The Back.
 	{
 	?><div style="padding-top:1rem;">
 	<style>
@@ -999,7 +1004,7 @@ function controlCodeFunc()
 </div><?php
 	}
 	
-	function engine_register_page()
+	function engine_register_page() //This handles the data for the Register page.
 	{
 		if (isset($_POST['RegisterSubmit']))
 		{
@@ -1061,7 +1066,7 @@ function controlCodeFunc()
 		UI_register_page();
 	}
 
-	function UI_register_page()
+	function UI_register_page() //This handles the UI for the Register page.
 	{
 	?><div class="container-fluid">
 	<div class="row">
@@ -1126,7 +1131,7 @@ function controlCodeFunc()
 </div><?php
 	}
 	
-	function engine_logout_page($SafeCookie)
+	function engine_logout_page($SafeCookie) //This handles the data for the Logout page.  It needs no UI.
 	{
 		$DBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
 		if (!$DBConnection)
