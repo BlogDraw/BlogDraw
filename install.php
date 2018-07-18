@@ -1,5 +1,8 @@
 <?php
-	function engine_page()
+/**
+ * install.php - this installs and initialises BlogDraw for the first time.
+**/
+	function engine_page() //This handles all of the data for the install process.
 	{
 		if (isset($_POST['Submit']))
 		{
@@ -42,8 +45,8 @@
 				{
 					$WSContactPhone = mb_convert_encoding($_POST['WSContactPhone'], "UTF-8");
 				}
-				//DoTheInstall
-				//1. Load the data into the functions file
+				//The data has now been sanitised, Start the installation process.
+				//1. Load the Website data into the functions file
 				$File = "functions.php";
 				$FileContent = '<?php' . "\n";
 				$FileContent .= '	if (substr($_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"], 0, ' . ($Length + 1 - $ProtoLength) . ') != "' . $WSURL . '/" || substr($_SERVER["SERVER_NAME"] . $_SERVER["PHP_SELF"], 0, ' . ($Length + 1 - $ProtoLength) . ') != "' . $WSURL . '/")' . "\n";
@@ -110,7 +113,7 @@
 					$AllContent = implode("", $HtaccessContent);
 					file_put_contents($HtaccessFile, $AllContent);
 				}
-				//2. Build the DB
+				//2. Build the database structure, and populate the login table.
 				$RandPass = mt_rand(1000,9999);
 				$DBConnection = mysqli_connect($DBServer,$DBUsername,$DBPassword,$DBName);
 				if (!$DBConnection)
@@ -129,7 +132,7 @@
 				//OUTPUT
 				echo '<p>Username: Admin - Password: ' . $RandPass . $DBPrefix . '.</p><p>Please Log in to ' . $WSURL . '/Back/ and change these details now.</p>';
 				
-				//3. Delete self
+				//3. Delete this script, to stop other people using this script to destroy the site.
 				unlink(__FILE__);
 			}
 		}
@@ -138,7 +141,7 @@
 			UI_page();
 		}
 	}
-	function UI_page()
+	function UI_page() //This handles the UI for the installer.
 	{
 	?><!DOCTYPE html>
 <html lang="en">
