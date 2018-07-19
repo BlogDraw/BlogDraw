@@ -720,7 +720,7 @@ function controlCodeFunc()
 			$FineToUpload = 1;
 			$FileType = strtolower(pathinfo($TargetFile,PATHINFO_EXTENSION));
 
-			if (file_exists($TargetFile)) //Check if file already exists
+			if (file_exists($TargetFile) && $TargetFile != $TargetDir . "favicon.ico" && $TargetFile != $TargetDir . "apple-touch-icon.png") //Check if file already exists
 			{
 				echo "File already exists.";
 				$FineToUpload = 0;
@@ -744,6 +744,21 @@ function controlCodeFunc()
 			}
 			else //if everything is ok, try to upload file
 			{
+				if ($TargetFile == $TargetDir . "favicon.ico")
+				{
+					if (file_exists("../Uploads/favicon.ico"))
+					{				
+						unlink("../Uploads/favicon.ico") or die("Couldn't delete old file.");
+					}
+				}
+				else if ($TargetFile == $TargetDir . "apple-touch-icon.png")
+				{
+					if (file_exists("../Uploads/apple-touch-icon.png"))
+					{				
+						unlink("../Uploads/apple-touch-icon.png") or die("Couldn't delete old file.");
+					}
+				}
+				
 				if (move_uploaded_file($_FILES["UploadFile"]["tmp_name"], $TargetFile))
 				{
 					echo "The file ". basename( $_FILES["UploadFile"]["name"]). " has been uploaded.";
@@ -800,7 +815,15 @@ function controlCodeFunc()
 	{
 		foreach(array_filter(glob('../Uploads'.'/*'),'is_file') as $File)
 		{
-			if (strcasecmp(substr($File,-4),'.png') == 0 || strcasecmp(substr($File,-4),'.jpg') == 0 || strcasecmp(substr($File,-5),'.jpeg') == 0 || strcasecmp(substr($File,-4),'.bmp') == 0 || strcasecmp(substr($File,-4),'.gif') == 0 || strcasecmp(substr($File,-5),'.tiff') == 0)
+			if (strcasecmp(substr($File,-20),'apple-touch-icon.png') == 0 || strcasecmp(substr($File,-11),'favicon.ico') == 0)
+			{
+				if ($PageOrPlugin != 'Plugin')
+				{
+					echo '<tr><td></td><td></td><td>' . substr($File,2) . '</td><td> ' . date ("Y-m-d H:i:s.", filemtime($File)) . '</td></tr>';
+				}
+				//don't do anything to show in the plugin.  It'll just confuse people.
+			}
+			else if (strcasecmp(substr($File,-4),'.png') == 0 || strcasecmp(substr($File,-4),'.jpg') == 0 || strcasecmp(substr($File,-5),'.jpeg') == 0 || strcasecmp(substr($File,-4),'.bmp') == 0 || strcasecmp(substr($File,-4),'.gif') == 0 || strcasecmp(substr($File,-5),'.tiff') == 0)
 			{
 				echo '<tr><td><img src="' . PROTOCOL . URL . substr($File,2) . '" alt="' . substr($File,11) . '" style="height:8vh;width:auto;" /></td><td>&ltimg src=&quot;' . PROTOCOL . URL . substr($File,2) . '&quot; alt=&quot;' . substr($File,11) . '&quot; /&gt;</td>' . '<td>' . substr($File,2) . '</td><td> ' . date ("Y-m-d H:i:s.", filemtime($File)) . '</td>';
 				if ($PageOrPlugin != 'Plugin')
@@ -829,7 +852,7 @@ function controlCodeFunc()
 			}
 			else
 			{
-				echo '<tr><td>No Image Available.</td>' . '<td>' . substr($File,2) . '</td><td>&lta href=&quot;' . PROTOCOL . URL . substr($File,2) . '&quot; title=&quot;' . substr($File,11) . '&quot; &gt;' . PROTOCOL . URL . substr($File,2) . '&lt;/a&gt;</td><td> ' . date ("Y-m-d H:i:s.", filemtime($File)) . '</td><td><form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $File . '" /><input type="submit" class="btn btn-default btn-xs" name="DeleteSubmit" value="Delete" /></form></td>';
+				echo '<tr><td>No Image Available.</td>' . '<td>' . substr($File,2) . '</td><td>&lta href=&quot;' . PROTOCOL . URL . substr($File,2) . '&quot; title=&quot;' . substr($File,11) . '&quot; &gt;' . PROTOCOL . URL . substr($File,2) . '&lt;/a&gt;</td><td> ' . date ("Y-m-d H:i:s.", filemtime($File)) . '</td>';
 				if ($PageOrPlugin != 'Plugin')
 				{
 					echo '<td><form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $ReturnedPostID . '" /><input type="submit" class="btn btn-default btn-xs" name="DeleteSubmit" value="Delete" /></form></td>';
