@@ -91,7 +91,7 @@ function fake_func ($FakeVar) //fake_func is a very important function.
  - remember that comments get sent to the client-side.
 ```HTML
 <!-- I shouldn't talk about my passwords, or describe the PHP that calls this. -->
-<!-- I shouldn't keep my passwords to myself, and use PHP comments for the PHP-->
+<!-- I should keep my passwords to myself, and use PHP comments for the PHP-->
 ```
  - 99% of the time, inline styling isn't necessary.  It's not an outright ban, but question whether it's really the best way.  You can still add `<style>...</style>` tags in your HTML `<head>`.
 ### JavaScript
