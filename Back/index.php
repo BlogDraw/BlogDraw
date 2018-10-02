@@ -33,9 +33,9 @@
 		<meta name="HandheldFriendly" content="True" />
 		<!-- Enable IE/Edge Standards mode -->
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<!-- Use An Apple Touch Icon and Favicon-->
-		<link rel="apple-touch-icon" href="<?php echo output_head_template_location(); ?>/apple-touch-icon.png" />
-		<link rel="shortcut icon" href="<?php echo output_head_template_location(); ?>/favicon.ico" />
+		<!-- Use An Apple Touch Icon and Favicon -->
+		<link rel="apple-touch-icon" href="<?php output_home_link(); ?>/Uploads/apple-touch-icon.png" />
+		<link rel="shortcut icon" href="<?php output_home_link(); ?>/Uploads/favicon.ico" />
 		<!-- Here`s where the SEO comes in. -->
 		<meta name="robots" content="noindex, nofollow">
 		<meta name="description" content="<?php output_head_description(); ?>" />
@@ -109,7 +109,8 @@
 		}
 		else
 		{
-			require_once ('./page_analytics.php');
+			//require_once ('./page_analytics.php');
+			echo '<p><strong>Technical Jargon Ahead: Here be dragons. </strong>Analytics is unavailable at the moment due to GDPR Compliance.  If you have a legitimate reason for collecting this analytic data under GDPR, you can enable it by uncommenting the analytics functions in Back/functions_back.php, uncommenting the engine_analytics_collector function in functions.php, and by uncommenting the reference to page_analytics.php in Back/index.php. </p>';
 			engine_analytics_collector();
 		}
 	}

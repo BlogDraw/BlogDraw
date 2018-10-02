@@ -867,7 +867,8 @@ function controlCodeFunc()
 		UI_media_page('Plugin');
 	}
 		
-	function engine_analytics_page() //This handles the data for the analytics on the home page of The Back.
+	//GDPR Compliance - Can't do this any more.
+	/*function engine_analytics_page() //This handles the data for the analytics on the home page of The Back.
 	{
 		$DBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
 		if (!$DBConnection)
@@ -1025,7 +1026,7 @@ function controlCodeFunc()
 		</div>
 	</div>
 </div><?php
-	}
+	} */
 	
 	function engine_register_page() //This handles the data for the Register page.
 	{
