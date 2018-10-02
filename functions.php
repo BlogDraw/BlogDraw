@@ -42,7 +42,8 @@
 	
 	function engine_analytics_collector() //This function collects analytic data on every page to be used for /Back.
 	{
-		$DBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
+		//Removed due to GDPR
+		/*$DBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
 		if (!$DBConnection)
 		{
 			die('Could not connect to database.  Please try again later.');
@@ -53,7 +54,7 @@
 		$Year = mysqli_real_escape_string($DBConnection,mb_convert_encoding(date("Y"), "UTF-8"));
 		$DBQuery = "INSERT INTO `" . DBPREFIX . "_AnalyticsTable` (`IP`,`Page`,`Month`,`Year`) VALUES ('$IP', '$Page', '$Month','$Year');";
 		mysqli_query($DBConnection,$DBQuery);
-		mysqli_close($DBConnection);
+		mysqli_close($DBConnection);*/
 	}
 	
 //HEAD OUTPUT FUNCTIONS	
