@@ -188,6 +188,10 @@
 	function output_canonical_page() //This finds out what page the user has requesed, and passes that to the engine that loads the pages.
 	{
 		$URLPath = ltrim($_SERVER['REQUEST_URI'], '/');
+		if (strpos($URLPath,"?fbclid") != FALSE)
+		{
+			$URLPath = strstr($URLPath, "?fbclid", TRUE);
+		}
 		$Elements = explode('/', $URLPath);
 		if(empty($Elements[0]))
 		{// No path elements means home
@@ -334,7 +338,14 @@
 			die('Could not connect to database.  Please try again later.');
 		}
 		$PostCount = 1;
-		$RequestedURI= mysqli_real_escape_string($DBConnection,mb_convert_encoding(htmlspecialchars(substr($_SERVER['REQUEST_URI'],1)), "UTF-8"));
+		if (strpos($_SERVER['REQUEST_URI'], "?fbclid") != FALSE)
+		{
+			$RequestedURI = mysqli_real_escape_string($DBConnection, mb_convert_encoding(htmlspecialchars(strstr(substr($_SERVER['REQUEST_URI'], 1), "?fbclid", TRUE)), "UTF-8"));
+		}
+		else
+		{
+			$RequestedURI = mysqli_real_escape_string($DBConnection, mb_convert_encoding(htmlspecialchars(substr($_SERVER['REQUEST_URI'], 1)), "UTF-8"));
+		}
 		$DBQuery = "SELECT ID FROM `" . DBPREFIX . "_PostsTable` WHERE PostIsDraft=0 AND NiceTitle='" . $RequestedURI . "' ORDER BY ID DESC LIMIT 1;";
 		$ReturnQuery = mysqli_query($DBConnection,$DBQuery);
 		while($Row = mysqli_fetch_array($ReturnQuery, MYSQLI_ASSOC))
