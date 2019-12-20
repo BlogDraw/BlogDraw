@@ -7,30 +7,28 @@
 		if (isset($_POST['Submit']))
 		{
 			if (!(isset($_POST['DBUsername']) && !empty($_POST['DBUsername']) && isset($_POST['DBPassword']) && !empty($_POST['DBPassword']) && isset($_POST['DBServer']) && !empty($_POST['DBServer']) && isset($_POST['DBName']) && !empty($_POST['DBName']) && isset($_POST['DBPrefix']) && !empty($_POST['DBPrefix']) && isset($_POST['WSTitle']) && !empty($_POST['WSTitle']) && isset($_POST['WSDescription']) && !empty($_POST['WSDescription']) && isset($_POST['WSURL']) && !empty($_POST['WSURL']) && ((isset($_POST['WSSSL']) && !empty($_POST['WSSSL'])) || (isset($_POST['WSnoSSL']) && !empty($_POST['WSnoSSL'])) )))
-			{
 				echo '<p>Please fill in all fields marked with a &#39;*&#39;.</p>';
-			}
 			else
 			{
-				$DBUsername = mb_convert_encoding($_POST['DBUsername'], "UTF-8");
-				$DBPassword = mb_convert_encoding($_POST['DBPassword'], "UTF-8");
-				$DBServer = mb_convert_encoding($_POST['DBServer'], "UTF-8");
-				$DBName = mb_convert_encoding($_POST['DBName'], "UTF-8");
-				$DBPrefix = mb_convert_encoding($_POST['DBPrefix'], "UTF-8");
-				$WSTitle = mb_convert_encoding($_POST['WSTitle'], "UTF-8");
-				$WSDescription = mb_convert_encoding($_POST['WSDescription'], "UTF-8");
-				$WSURL = mb_convert_encoding($_POST['WSURL'], "UTF-8");
+				$dBUsername = mb_convert_encoding($_POST['DBUsername'], "UTF-8");
+				$dBPassword = mb_convert_encoding($_POST['DBPassword'], "UTF-8");
+				$dBServer = mb_convert_encoding($_POST['DBServer'], "UTF-8");
+				$dBName = mb_convert_encoding($_POST['DBName'], "UTF-8");
+				$dBPrefix = mb_convert_encoding($_POST['DBPrefix'], "UTF-8");
+				$wSTitle = mb_convert_encoding($_POST['WSTitle'], "UTF-8");
+				$wSDescription = mb_convert_encoding($_POST['WSDescription'], "UTF-8");
+				$wSURL = mb_convert_encoding($_POST['WSURL'], "UTF-8");
 				if (isset($_POST['WSSSL']) && $_POST['WSSSL'] == "WSnoSSL")
 				{
-					$WSSSL = 'http://';
-					$Length = strlen($WSURL) + 7;
-					$ProtoLength = 7;
+					$wSSSL = 'http://';
+					$length = strlen($wSURL) + 7;
+					$protoLength = 7;
 				}
 				else if (isset($_POST['WSSSL']) && $_POST['WSSSL'] == "WSSSL")
 				{
-					$WSSSL = 'https://';
-					$Length = strlen($WSURL) + 8;
-					$ProtoLength = 8;
+					$wSSSL = 'https://';
+					$length = strlen($wSURL) + 8;
+					$protoLength = 8;
 				}
 				else
 				{
@@ -38,108 +36,88 @@
 					return;
 				}
 				if (isset($_POST['WSContactEmail']) && !empty($_POST['WSContactEmail']))
-				{
-					$WSContactEmail = mb_convert_encoding($_POST['WSContactEmail'], "UTF-8");
-				}
+					$wSContactEmail = mb_convert_encoding($_POST['WSContactEmail'], "UTF-8");
 				if (isset($_POST['WSContactPhone']) && !empty($_POST['WSContactPhone']))
-				{
-					$WSContactPhone = mb_convert_encoding($_POST['WSContactPhone'], "UTF-8");
-				}
+					$wSContactPhone = mb_convert_encoding($_POST['WSContactPhone'], "UTF-8");
 				//The data has now been sanitised, Start the installation process.
 				//1. Load the Website data into the functions file
-				$File = "functions.php";
-				$FileContent = '<?php' . "\n";
-				$FileContent .= '	if (substr($_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"], 0, ' . ($Length + 1 - $ProtoLength) . ') != "' . $WSURL . '/" || substr($_SERVER["SERVER_NAME"] . $_SERVER["PHP_SELF"], 0, ' . ($Length + 1 - $ProtoLength) . ') != "' . $WSURL . '/")' . "\n";
-				$FileContent .= '	{' . "\n" . '		die();' . "\n" . '	}' . "\n";
-				$FileContent .= '	define(\'URL\',\'' . $WSURL . '\');				//Website Location.' . "\n";
-				$FileContent .= '	define(\'PROTOCOL\',\'' . $WSSSL . '\');			//http:// or https://.' . "\n";
-				$FileContent .= '	define(\'LENGTH\',' . $Length . ');					//Length of URL plus PROTOCOL.' . "\n";
-				$FileContent .= '	define(\'DBUSER\', \'' . $DBUsername . '\');		//MySQL User.' . "\n";
-				$FileContent .= '	define(\'DBPASS\', \'' . $DBPassword . '\');			//MySQL Password.' . "\n";
-				$FileContent .= '	define(\'DBSERVER\', \'' . $DBServer . '\');		//Database Server.' . "\n";
-				$FileContent .= '	define(\'DBNAME\', \'' . $DBName . '\');		//Database Name.' . "\n";
-				$FileContent .= '	define(\'DBPREFIX\', \'' . $DBPrefix . '\');				//Database Table Prefix.' . "\n" . "\n";
-				$FileContent .= '	define(\'TITLE\', \'' . $WSTitle . '\');						//Your Blog Title.' . "\n";
-				$FileContent .= '	define(\'DESCRIPTION\', \'' . $WSDescription . '\');//A short description of your Blog.'. "\n";
-				$FileContent .= '	define(\'CONTACTEMAIL\', \'' . $WSContactEmail . '\');		//Your Contact Email.' . "\n";
-				$FileContent .= '	define(\'CONTACTPHONE\', \'' . $WSContactPhone . '\');			//Your Contact Phone.' . "\n";
-				$FileContent .= '	define(\'TEMPLATE\', \'BlogDraw2018\');					//Your Template Name.' . "\n";
-				$FileContent .= '	define(\'TEMPLATEBY\', \'TuxSoft Limited\');			//Template Manufacturer.' . "\n";
-				$FileContent .= '	define(\'COOKIENOTICE\', \'By using this site, you agree to our use of cookies on your computer, which enable some features of the site.\');	//Your Cookie Notice.' . "\n";
-				$FileContent .= '?>';
-				$FileContent .= file_get_contents($File);
-				file_put_contents($File, $FileContent);
-				if ($WSSSL == "https://")
+				$file = "functions.php";
+				$fileContent = '<?php' . "\n";
+				$fileContent .= '	if (substr($_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"], 0, ' . ($length + 1 - $protoLength) . ') != "' . $wSURL . '/" || substr($_SERVER["SERVER_NAME"] . $_SERVER["PHP_SELF"], 0, ' . ($length + 1 - $protoLength) . ') != "' . $wSURL . '/")' . "\n";
+				$fileContent .= '	{' . "\n" . '		die();' . "\n" . '	}' . "\n";
+				$fileContent .= '	define(\'URL\',\'' . $wSURL . '\');				//Website Location.' . "\n";
+				$fileContent .= '	define(\'PROTOCOL\',\'' . $wSSSL . '\');			//http:// or https://.' . "\n";
+				$fileContent .= '	define(\'LENGTH\',' . $length . ');					//Length of URL plus PROTOCOL.' . "\n";
+				$fileContent .= '	define(\'DBUSER\', \'' . $dBUsername . '\');		//MySQL User.' . "\n";
+				$fileContent .= '	define(\'DBPASS\', \'' . $dBPassword . '\');			//MySQL Password.' . "\n";
+				$fileContent .= '	define(\'DBSERVER\', \'' . $dBServer . '\');		//Database Server.' . "\n";
+				$fileContent .= '	define(\'DBNAME\', \'' . $dBName . '\');		//Database Name.' . "\n";
+				$fileContent .= '	define(\'DBPREFIX\', \'' . $dBPrefix . '\');				//Database Table Prefix.' . "\n" . "\n";
+				$fileContent .= '	define(\'TITLE\', \'' . $wSTitle . '\');						//Your Blog Title.' . "\n";
+				$fileContent .= '	define(\'DESCRIPTION\', \'' . $wSDescription . '\');//A short description of your Blog.'. "\n";
+				$fileContent .= '	define(\'CONTACTEMAIL\', \'' . $wSContactEmail . '\');		//Your Contact Email.' . "\n";
+				$fileContent .= '	define(\'CONTACTPHONE\', \'' . $wSContactPhone . '\');			//Your Contact Phone.' . "\n";
+				$fileContent .= '	define(\'TEMPLATE\', \'BlogDraw2018\');					//Your Template Name.' . "\n";
+				$fileContent .= '	define(\'TEMPLATEBY\', \'TuxSoft Limited\');			//Template Manufacturer.' . "\n";
+				$fileContent .= '	define(\'COOKIENOTICE\', \'By using this site, you agree to our use of cookies on your computer, which enable some features of the site.\');	//Your Cookie Notice.' . "\n";
+				$fileContent .= '?>';
+				$fileContent .= file_get_contents($file);
+				file_put_contents($file, $fileContent);
+				if ($wSSSL == "https://")
 				{
-					$HtaccessFile = ".htaccess";
-					$HtaccessContent = file($HtaccessFile);
-					foreach($HtaccessContent as $LineNumber => &$LineContent)
+					$htaccessFile = ".htaccess";
+					$htaccessContent = file($htaccessFile);
+					foreach($htaccessContent as $lineNumber => &$lineContent)
 					{
-						if($LineNumber == 12)
-						{
-							$LineContent .= '# Force SSL/TLS';
-						}
-						if($LineNumber == 13)
-						{
-							$LineContent .= 'RewriteCond %{HTTPS} off';
-						}
-						if($LineNumber == 14)
-						{
-							$LineContent .= 'RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]';
-						}
+						if($lineNumber == 12)
+							$lineContent .= '# Force SSL/TLS';
+						if($lineNumber == 13)
+							$lineContent .= 'RewriteCond %{HTTPS} off';
+						if($lineNumber == 14)
+							$lineContent .= 'RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]';
 					}
-					$AllContent = implode("", $HtaccessContent);
-					file_put_contents($HtaccessFile, $AllContent);
+					$allContent = implode("", $htaccessContent);
+					file_put_contents($htaccessFile, $allContent);
 				}
-				else //$WSSSL == "http://"
+				else //$wSSSL == "http://"
 				{
-					$HtaccessFile = ".htaccess";
-					$HtaccessContent = file($HtaccessFile);
-					foreach($HtaccessContent as $LineNumber => &$LineContent)
+					$htaccessFile = ".htaccess";
+					$htaccessContent = file($htaccessFile);
+					foreach($htaccessContent as $lineNumber => &$lineContent)
 					{
-						if($LineNumber == 12)
-						{
-							$LineContent .= '# Force no SSL/TLS';
-						}
-						if($LineNumber == 13)
-						{
-							$LineContent .= 'RewriteCond %{HTTPS} on';
-						}
-						if($LineNumber == 14)
-						{
-							$LineContent .= 'RewriteRule ^(.*)$ http://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]';
-						}
+						if($lineNumber == 12)
+							$lineContent .= '# Force no SSL/TLS';
+						if($lineNumber == 13)
+							$lineContent .= 'RewriteCond %{HTTPS} on';
+						if($lineNumber == 14)
+							$lineContent .= 'RewriteRule ^(.*)$ http://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]';
 					}
-					$AllContent = implode("", $HtaccessContent);
-					file_put_contents($HtaccessFile, $AllContent);
+					$allContent = implode("", $htaccessContent);
+					file_put_contents($htaccessFile, $allContent);
 				}
 				//2. Build the database structure, and populate the login table.
-				$RandPass = mt_rand(1000,9999);
-				$DBConnection = mysqli_connect($DBServer,$DBUsername,$DBPassword,$DBName);
-				if (!$DBConnection)
-				{
+				$randPass = mt_rand(1000,9999);
+				$dBConnection = mysqli_connect($dBServer,$dBUsername,$dBPassword,$dBName);
+				if (!$dBConnection)
 					die('Could not connect to database.  Please try again later.');
-				}
-				$DBQuery = "CREATE TABLE " . $DBPrefix . "_LoginTable(ID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,Username VARCHAR(25) NOT NULL,Password VARCHAR(256) NOT NULL,Email VARCHAR(255) NOT NULL,Company VARCHAR(50),URL VARCHAR(255),EmailIsPublic BOOLEAN,Cookie VARCHAR(512),UserImage VARCHAR(255),UserBlurb LONGTEXT);";
-				mysqli_query($DBConnection,$DBQuery);
-				$DBQuery = "INSERT INTO " . $DBPrefix . "_LoginTable (Username,Password,Email,EmailIsPublic,Cookie) VALUES ('Admin','" . password_hash($RandPass . $DBPrefix, PASSWORD_DEFAULT) . "','" . $WSContactEmail . "',0,'XXXX');";
-				mysqli_query($DBConnection,$DBQuery);
-				$DBQuery = "CREATE TABLE " . $DBPrefix . "_PostsTable(ID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,AuthorID BIGINT NOT NULL,Title VARCHAR(128) NOT NULL,NiceTitle VARCHAR(128) NOT NULL,TagOne VARCHAR(512) NOT NULL,TagTwo VARCHAR(512) NOT NULL,TagThree VARCHAR(512),Timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,Post LONGTEXT NOT NULL,PostIsDraft BOOLEAN);";
-				mysqli_query($DBConnection,$DBQuery);
-				$DBQuery = "CREATE TABLE " . $DBPrefix . "_AnalyticsTable(ID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,Page VARCHAR(256) NOT NULL,IP VARCHAR(32) NOT NULL,DateTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,Month INT(11) NOT NULL,Year BIGINT NOT NULL);";
-				mysqli_query($DBConnection,$DBQuery);
-				mysqli_close($DBConnection);
+				$dBQuery = "CREATE TABLE " . $dBPrefix . "_LoginTable(ID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,Username VARCHAR(25) NOT NULL,Password VARCHAR(256) NOT NULL,Email VARCHAR(255) NOT NULL,Company VARCHAR(50),URL VARCHAR(255),EmailIsPublic BOOLEAN,Cookie VARCHAR(512),UserImage VARCHAR(255),UserBlurb LONGTEXT);";
+				mysqli_query($dBConnection,$dBQuery);
+				$dBQuery = "INSERT INTO " . $dBPrefix . "_LoginTable (Username,Password,Email,EmailIsPublic,Cookie) VALUES ('Admin','" . password_hash($randPass . $dBPrefix, PASSWORD_DEFAULT) . "','" . $wSContactEmail . "',0,'XXXX');";
+				mysqli_query($dBConnection,$dBQuery);
+				$dBQuery = "CREATE TABLE " . $dBPrefix . "_PostsTable(ID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,AuthorID BIGINT NOT NULL,Title VARCHAR(128) NOT NULL,NiceTitle VARCHAR(128) NOT NULL,TagOne VARCHAR(512) NOT NULL,TagTwo VARCHAR(512) NOT NULL,TagThree VARCHAR(512),Timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,Post LONGTEXT NOT NULL,PostIsDraft BOOLEAN);";
+				mysqli_query($dBConnection,$dBQuery);
+				$dBQuery = "CREATE TABLE " . $dBPrefix . "_AnalyticsTable(ID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,Page VARCHAR(256) NOT NULL,IP VARCHAR(32) NOT NULL,DateTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,Month INT(11) NOT NULL,Year BIGINT NOT NULL);";
+				mysqli_query($dBConnection,$dBQuery);
+				mysqli_close($dBConnection);
 				//OUTPUT
-				echo '<p>Username: Admin - Password: ' . $RandPass . $DBPrefix . '.</p><p>Please Log in to ' . $WSURL . '/Back/ and change these details now.</p>';
+				echo '<p>Username: Admin - Password: ' . $randPass . $dBPrefix . '.</p><p>Please Log in to ' . $wSURL . '/Back/ and change these details now.</p>';
 				
 				//3. Delete this script, to stop other people using this script to destroy the site.
 				unlink(__FILE__);
 			}
 		}
 		else
-		{
 			UI_page();
-		}
 	}
 	function UI_page() //This handles the UI for the installer.
 	{
