@@ -137,7 +137,7 @@
         <div class="row">
           <label class="control-label col-xs-12 col-sm-3" for="Username">Username:</label> 
           <div class="col-xs-12 col-sm-9">
-            <input type="text" class="form-control" name="Username" id="Username" value="<? echo $returnedUsername; ?>" />
+            <input type="text" class="form-control" name="Username" id="Username" value="  <?php echo $returnedUsername; ?>" />
           </div>
         </div>
         <br />
@@ -156,35 +156,35 @@
         <div class="row">
           <label class="control-label col-xs-12 col-sm-3" for="Company">Company:</label> 
           <div class="col-xs-12 col-sm-9">
-            <input type="text" class="form-control" name="Company" id="Company" value="<? echo $returnedCompany; ?>" />
+            <input type="text" class="form-control" name="Company" id="Company" value="  <?php echo $returnedCompany; ?>" />
           </div>
         </div>
         <br />
         <div class="row">
           <label class="control-label col-xs-12 col-sm-3" for="UserURL">Website:</label> 
           <div class="col-xs-12 col-sm-9">
-            <input type="text" class="form-control" name="UserURL" id="UserURL" value="<? echo $returnedURL; ?>" />
+            <input type="text" class="form-control" name="UserURL" id="UserURL" value="  <?php echo $returnedURL; ?>" />
           </div>
         </div>
         <br />
         <div class="row">
           <label class="control-label col-xs-12 col-sm-3" for="Email">Email:</label> 
           <div class="col-xs-12 col-sm-9">
-            <input type="text" class="form-control" name="Email" id="Email" value="<? echo $returnedEmail; ?>" />
+            <input type="text" class="form-control" name="Email" id="Email" value="  <?php echo $returnedEmail; ?>" />
           </div>
         </div>
         <br />
         <div class="row">
           <label class="control-label col-xs-12 col-sm-3" for="UserImage">User Photo URL:</label> 
           <div class="col-xs-12 col-sm-9">
-            <input type="text" class="form-control" name="UserImage" id="UserImage" value="<? echo $returnedUserImage; ?>" />
+            <input type="text" class="form-control" name="UserImage" id="UserImage" value="  <?php echo $returnedUserImage; ?>" />
           </div>
         </div>
         <br />
         <div class="row">
           <label class="control-label col-xs-12 col-sm-3" for="UserBlurb">Your User Blurb (accepts HTML):</label> 
           <div class="col-xs-12 col-sm-9">
-            <input type="text" class="form-control" name="UserBlurb" id="UserBlurb" value="<? echo $returnedUserBlurb; ?>" />
+            <input type="text" class="form-control" name="UserBlurb" id="UserBlurb" value="  <?php echo $returnedUserBlurb; ?>" />
           </div>
         </div>
         <br />
@@ -192,11 +192,11 @@
           <label class="control-label col-xs-12 col-sm-3" for="EmailPublic">Make email address public:</label> 
           <div class="col-xs-12 col-sm-9">
             <div class="checkbox">
-              <? if ($returnedEmailIsPublic == 1){ ?>
+                <?php if ($returnedEmailIsPublic == 1){ ?>
               <input type="checkbox" name="EmailPublic" id="EmailPublic" checked />
-              <? }else{ ?>
+                <?php }else{ ?>
               <input type="checkbox" name="EmailPublic" id="EmailPublic" />
-              <? } ?>
+                <?php } ?>
             </div>
           </div>
         </div>
@@ -396,11 +396,11 @@ function controlCodeFunc()
   <div class="row">
     <form method="post" id="AccountChangeForm" class="form-horizontal col-xs-10 col-xs-push-1">
       <fieldset class="form-group">
-        <? if ($addEdit == 'Add'){ ?>
+          <?php if ($addEdit == 'Add'){ ?>
         <legend>Add a Post:</legend>
-        <? } else if ($addEdit == 'Edit'){ ?>
+          <?php } else if ($addEdit == 'Edit'){ ?>
         <legend>Edit a Post:</legend>
-        <? } ?>
+          <?php } ?>
         <div class="row"> 
           <div class="col-xs-12">
             <input type="text" class="form-control" name="Title" id="Title" placeholder="Title" />
@@ -408,7 +408,7 @@ function controlCodeFunc()
         </div>
         <div class="row"> 
           <div class="col-xs-12">
-            <? echo sub_UI_add_edit_posts_FindAuthorDetails ($safeCookie); ?>
+              <?php echo sub_UI_add_edit_posts_FindAuthorDetails ($safeCookie); ?>
           </div>
         </div>
         <div class="row">
@@ -429,7 +429,7 @@ function controlCodeFunc()
             </fieldset>
           </div>
           <div class="col-xs-12 col-md-4">
-            <div class="form-control" style="height:315px;overflow-y:scroll;"><? engine_media_plugin(); ?></div>
+            <div class="form-control" style="height:315px;overflow-y:scroll;">  <?php engine_media_plugin(); ?></div>
           </div>
         </div>
         <br />
@@ -439,7 +439,7 @@ function controlCodeFunc()
           </div>
         </div>
         <br />
-        <? if ($addEdit == 'Edit'){ ?><input type="hidden" name="Editor" id="Editor" value="<? echo $editPostID; ?>" /> <? } ?>
+          <?php if ($addEdit == 'Edit'){ ?><input type="hidden" name="Editor" id="Editor" value="  <?php echo $editPostID; ?>" />   <?php } ?>
         <div class="btn-group col-xs-12">
           <input type="submit" class="btn btn-default col-xs-4" name="PostSubmit" value="Write Post" />
           <input type="submit" class="btn btn-default col-xs-4" name="PostDraft" value="Save Draft Post" />
@@ -579,9 +579,9 @@ function controlCodeFunc()
   function sub_UI_add_edit_posts_JSFillForEdit($returnedPostID,$returnedTitle,$returnedPost,$returnedTags) //This fills in the UI form on the "Add or Edit Posts" page if needed.
   {
   ?><script>
-    document.getElementById("Title").value = "<? echo $returnedTitle; ?>";
-    document.getElementById("Content").value = `<? echo substr($returnedPost,5,-6); ?>`;
-    document.getElementById("Tags").value = "<? echo $returnedTags; ?>";
+    document.getElementById("Title").value = "  <?php echo $returnedTitle; ?>";
+    document.getElementById("Content").value = `  <?php echo substr($returnedPost,5,-6); ?>`;
+    document.getElementById("Tags").value = "  <?php echo $returnedTags; ?>";
   </script><?php
   }
   
@@ -608,7 +608,7 @@ function controlCodeFunc()
             </tr>
           </thead>
           <tbody>
-            <? sub_UI_edit_posts_TableContent($safeCookie); ?>
+              <?php sub_UI_edit_posts_TableContent($safeCookie); ?>
           </tbody>
         </table>
       </div>
@@ -710,8 +710,8 @@ function controlCodeFunc()
       </fieldset>
     </form>
   </div>
-  <div class="row"><? } ?>
-    <? if ($pageOrPlugin != 'Plugin'){ ?><div class="col-xs-10 col-xs-push-1"><? } else { ?><div class="col-xs-12"><? } ?>
+  <div class="row">  <?php } ?>
+      <?php if ($pageOrPlugin != 'Plugin'){ ?><div class="col-xs-10 col-xs-push-1">  <?php } else { ?><div class="col-xs-12">  <?php } ?>
       <div class="table-responsive">
         <table class="table table-condensed">
           <thead>
@@ -720,23 +720,23 @@ function controlCodeFunc()
               <th>HTML Code (copy into a blog post):</th>
               <th>Location:</th>
               <th>Uploaded on:</th>
-              <? if ($pageOrPlugin != 'Plugin'){ ?><th>Delete:</th><? } ?>
+                <?php if ($pageOrPlugin != 'Plugin'){ ?><th>Delete:</th>  <?php } ?>
             </tr>
           </thead>
           <tbody>
-            <? sub_UI_media_page_FindAndPrintFileData($pageOrPlugin); ?>
+              <?php sub_UI_media_page_FindAndPrintFileData($pageOrPlugin); ?>
           </tbody>
         </table>
       </div>
-      <? if ($pageOrPlugin != 'Plugin'){ ?><div class="row">
+        <?php if ($pageOrPlugin != 'Plugin'){ ?><div class="row">
         <form method="post" enctype="multipart/form-data">
           <input type="submit" class="btn btn-default col-xs-6" name="AddSubmit" id="AddSubmit" value="Add Media" />
           <input type="file" name="UploadFile" class="col-xs-6" id="UploadFile">
         </form>
-      </div><? } ?>
+      </div>  <?php } ?>
     </div>
-  <? if ($pageOrPlugin != 'Plugin'){ ?></div><? } ?>
-<? if ($pageOrPlugin != 'Plugin'){ ?></div><?php }
+    <?php if ($pageOrPlugin != 'Plugin'){ ?></div>  <?php } ?>
+  <?php if ($pageOrPlugin != 'Plugin'){ ?></div><?php }
   }
   
   function sub_UI_media_page_FindAndPrintFileData($pageOrPlugin) //This handles the file data for the UI for the Media page.

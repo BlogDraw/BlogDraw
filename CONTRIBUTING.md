@@ -52,10 +52,10 @@ We use these guidelines to ensure our code is as uniform and easy-to-read as pos
 ?>
 ```
 
-- an exception the the above rule can be made when you're only calling one statement.  Then "<?" can be used instead of "<?php", and your PHP code can go on one block.
+- an exception the the above rule can be made when you're only calling one statement.  Then your PHP code can go on one line.
 
 ```php
-<p><?text();?></p>
+<p><?php text(); ?></p>
 ```
 
 #### Commenting Your Code

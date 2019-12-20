@@ -33,12 +33,12 @@
     <!-- Enable IE/Edge Standards mode -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- Use An Apple Touch Icon and Favicon -->
-    <link rel="apple-touch-icon" href="<? output_home_link(); ?>/Uploads/apple-touch-icon.png" />
-    <link rel="shortcut icon" href="<? output_home_link(); ?>/Uploads/favicon.ico" />
+    <link rel="apple-touch-icon" href="  <?php output_home_link(); ?>/Uploads/apple-touch-icon.png" />
+    <link rel="shortcut icon" href="  <?php output_home_link(); ?>/Uploads/favicon.ico" />
     <!-- Here`s where the SEO comes in. -->
     <meta name="robots" content="noindex, nofollow">
-    <meta name="description" content="<? output_head_description(); ?>" />
-    <title>The Back - <? output_head_title(); ?></title>
+    <meta name="description" content="  <?php output_head_description(); ?>" />
+    <title>The Back -   <?php output_head_title(); ?></title>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="./bootstrap-3.3.7-dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="./bootstrap-3.3.7-dist/css/bootstrap-theme.min.css" />
@@ -56,15 +56,15 @@
       <nav id="navbar" class="navbar navbar-default navbar-static-top">
       <div class="container-fluid">
         <ul class="nav navbar-nav">
-          <li<? if(!isset($_GET['page'])){echo ' class="active"';} ?>><a href="<? PROTOCOL . URL ?>/Back/" title="The Back"><span class="glyphicon glyphicon-home" aria-hidden="true" aria-label="The Back"></span>&nbsp;The Back</a></li>
-          <li<? if(isset($_GET['page']) && $subPage == "AddPost"){echo ' class="active"';} ?>><a href="<? echo PROTOCOL . URL; ?>/Back/?page=AddPost" title="Write a Post">Write a Post</a></li>
-          <li<? if(isset($_GET['page']) && $subPage == "EditPost"){echo ' class="active"';} ?>><a href="<? echo PROTOCOL . URL; ?>/Back/?page=EditPost" title="View and Edit Posts">View and Edit Posts</a></li>
-          <li<? if(isset($_GET['page']) && $subPage == "Media"){echo ' class="active"';} ?>><a href="<? echo PROTOCOL . URL;?>/Back/?page=Media" title="Add and Edit Media">Add and Edit Media</a></li>
-          <li<? if(isset($_GET['page']) && $subPage == "Account"){echo ' class="active"';} ?>><a href="<? echo PROTOCOL . URL; ?>/Back/?page=Account" title="My Account">My Account</a></li>
-          <li<? if(isset($_GET['page']) && $subPage == "Register"){echo ' class="active"';} ?>><a href="<? echo PROTOCOL . URL; ?>/Back/?page=Register" title="Register a new User">Register a new User</a></li>
+          <li  <?php if(!isset($_GET['page'])){echo ' class="active"';} ?>><a href="  <?php PROTOCOL . URL ?>/Back/" title="The Back"><span class="glyphicon glyphicon-home" aria-hidden="true" aria-label="The Back"></span>&nbsp;The Back</a></li>
+          <li  <?php if(isset($_GET['page']) && $subPage == "AddPost"){echo ' class="active"';} ?>><a href="  <?php echo PROTOCOL . URL; ?>/Back/?page=AddPost" title="Write a Post">Write a Post</a></li>
+          <li  <?php if(isset($_GET['page']) && $subPage == "EditPost"){echo ' class="active"';} ?>><a href="  <?php echo PROTOCOL . URL; ?>/Back/?page=EditPost" title="View and Edit Posts">View and Edit Posts</a></li>
+          <li  <?php if(isset($_GET['page']) && $subPage == "Media"){echo ' class="active"';} ?>><a href="  <?php echo PROTOCOL . URL;?>/Back/?page=Media" title="Add and Edit Media">Add and Edit Media</a></li>
+          <li  <?php if(isset($_GET['page']) && $subPage == "Account"){echo ' class="active"';} ?>><a href="  <?php echo PROTOCOL . URL; ?>/Back/?page=Account" title="My Account">My Account</a></li>
+          <li  <?php if(isset($_GET['page']) && $subPage == "Register"){echo ' class="active"';} ?>><a href="  <?php echo PROTOCOL . URL; ?>/Back/?page=Register" title="Register a new User">Register a new User</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="<? echo PROTOCOL . URL; ?>/Back/?page=Logout" title="Logout">Logout</a></li>
+          <li><a href="  <?php echo PROTOCOL . URL; ?>/Back/?page=Logout" title="Logout">Logout</a></li>
         </ul>
       </div>
     </nav>
@@ -90,7 +90,7 @@
     }
     else
     {
-      echo '<p><strong>Technical Jargon Ahead: Here be dragons. </strong>Analytics is unavailable at the moment due to GDPR Compliance.  If you have a legitimate reason for collecting this analytic data under GDPR, you can enable it by uncommenting the analytics functions in Back/functions_back.php, uncommenting the engine_analytics_collector function in functions.php, and by uncommenting the reference to page_analytics.php in Back/index.php. </p>';
+      echo '<p><strong>Technical Jargon Ahead: Here be dragons. </strong>Our analytics system is unavailable at the moment due to GDPR Compliance. </p>';
       engine_analytics_collector();
     }
   }
