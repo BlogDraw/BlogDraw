@@ -40,8 +40,8 @@
     <meta name="description" content="  <?php output_head_description(); ?>" />
     <title>The Back -   <?php output_head_title(); ?></title>
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="./bootstrap-3.3.7-dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="./bootstrap-3.3.7-dist/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap-theme.min.css" />
   </head>
   <body>
 <?php
@@ -96,7 +96,7 @@
   }
 ?>
     <!-- jQuery and Bootstrap -->
-    <script src="./bootstrap-3.3.7-dist/js/jquery-3.2.1.min.js"></script>
-    <script src="./bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="./bootstrap/js/jquery-3.4.1.min.js"></script>
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>

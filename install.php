@@ -126,8 +126,8 @@
   <head>
     <title>Install BlogDraw</title>
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="./Back/bootstrap-3.3.7-dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="./Back/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="./Back/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./Back/bootstrap/css/bootstrap-theme.min.css" />
   </head>
   <body>
     <div class="container-fluid">
@@ -228,8 +228,8 @@
     <br />
   </body>
   <!-- jQuery and Bootstrap -->
-  <script src="./Back/bootstrap-3.3.7-dist/js/jquery-3.2.1.min.js"></script>
-  <script src="./Back/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+  <script src="./Back/bootstrap/js/jquery-3.4.1.min.js"></script>
+  <script src="./Back/bootstrap/js/bootstrap.min.js"></script>
 </html><?php
   }
   engine_page();
