@@ -33,22 +33,86 @@ We use these guidelines to ensure our code is as uniform and easy-to-read as pos
 ### Code Style
 
 - Use two spaces to indent code.
+- Braces have their own lines.
+
+```php
+function do_this()
+{
+  ...
+}// Correct.
+
+function do_this(){...}// Incorrect.
+
+function do_this(){
+  ...
+}// Also incorrect.
+```
+
 - Always indent code contained within braces.
 - Braces aren't necessary for one-line loops and statements, but indentation is.
+
+```php
+if (1 == 1)
+  return true;// Correct.
+
+if (2 == 2)
+{
+  return true;// Incorrect.
+}
+```
+
 - Don’t leave trailing white space at the end of your lines.
 - Write one statement per line.
 - Give your variables meaningful names.
 - Use ‘camelCase’ for variable names.
+
+```php
+thisInteger = 7;
+```
+
 - Use 'underscored_lower_case' method/function names in PHP.
+
+```php
+function this_funtion()
+{
+  ...
+}
+```
+
 - Use 'camelCase' method/function names in JavaScript.
+
+```js
+function thisFuntion()
+{
+  ...
+}
+```
+
 - Try to keep logic out of HTML templates; keep frontend and backend separate.
 - BlogDraw is written in Procedural-PHP, not OO-PHP.  It doesn't make use of Object-oriented functionality.  Procedural development reduces memory and processing overheads and allows BlogDraw to run where other systems couldn't.
+- When writing PHP code, use long tags, not short tags.  Short tags only work when they're enabled by server admins, and are scheduled to be deprecated in a future update to PHP.
+
+```php
+<?php
+// Correct.
+?>
+
+<?
+// Incorrect.
+?>
+```
+
 - When writing PHP code, code blocks open with "<?php" on it's own line, and close with "?>" on it's own line.
 
 ```php
 <?php
-  statementOne(0);
-  statementTwo();
+function funtion_one()
+{
+  do_this(0);
+  do_that(9);
+}// Correct.
+
+function funtion_one(){do_this(0);do_that(9);}// Incorrect.
 ?>
 ```
 
@@ -62,6 +126,21 @@ We use these guidelines to ensure our code is as uniform and easy-to-read as pos
 
 - Add meaningful comments to clarify what your code is trying to achieve.
 - Use JavaDoc-style code comments where possible for all methods/functions to document your code.
+
+```php
+/**
+ * This squares a given input, then adds 5.
+ * @param input - The inputted number to preform this functon on.
+ * @return output - The resultant number after this function.
+ **/
+function square_then_add_five($input)
+{
+  $output = $input * $input;
+  $output += 5;
+  return $output;
+}
+```
+
 - Use inline comments wherever you feel your code may be unclear on it's own.
 
 ## Questions
