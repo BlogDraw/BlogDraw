@@ -1,11 +1,15 @@
 <img width="25%" src="https://blogdraw.com/images/BlogDrawLogoWoT1024.png" /><img width="50%" src="https://blogdraw.com/images/BlogDrawLogoBoT1024.png" />
 
 # BlogDraw
+
 BlogDraw - the ultra-lightweight, super-simple, easy-to-use, fully-featured blogging platform.
 
-## What is BlogDraw?
-BlogDraw is an ultra-lightweight, super-simple, easy-to-use, fully-featured blogging platform. It was designed by TuxSoft Limited in the winter of 2017/18 to give you a new blogging platform - one which is better suited to your needs than anything else on the market at the moment.
+## What BlogDraw is
+
+BlogDraw is an ultra-lightweight, super-simple, easy-to-use, fully-featured blogging platform. It was initially designed by the team at TuxSoft Limited during late 2017 to give you a new blogging platform - one which is better suited to your needs than anything else on the market at the moment.
+
 ## BlogDraw Advantages
+
 <table>
   <tr>
     <td>
@@ -24,6 +28,7 @@ BlogDraw is an ultra-lightweight, super-simple, easy-to-use, fully-featured blog
 </table>
 
 ## How to Install
+
 <table>
   <tr>
     <td>
@@ -42,6 +47,7 @@ BlogDraw is an ultra-lightweight, super-simple, easy-to-use, fully-featured blog
 </table>
 
 ## How to Change Templates
+
 1. Download a new BlogDraw template from the internet and upload it to the `/template/` folder, or choose one of the default ones already in your installation.
 2. Open functions.php from your web-root folder, and find the line which starts: "`define('TEMPLATE', '...');`".
 3. Type the folder name of the new template in the second set of quotation marks.
@@ -49,7 +55,17 @@ BlogDraw is an ultra-lightweight, super-simple, easy-to-use, fully-featured blog
 5. Enjoy your new look.
 
 ## How to Update
+
 1. Like [BlogDraw on Facebook](https://www.facebook.com/BlogDraw/ "BlogDraw's Facebook Page").
 2. We'll announce when there's an update, and provide you with an updater.
 3. Follow the instructions.
- - If you're a developer, you can star and watch [BlogDraw-Updater on GitHub](https://github.com/TuxSoftLimited/BlogDraw-Updater "BlogDraw-Updater"), to get updates whenever we release a new update.
+
+- If you're a developer, you can star and watch [BlogDraw-Updater on GitHub](https://github.com/TuxSoftLimited/BlogDraw-Updater "BlogDraw-Updater"), to get updates whenever we release a new update.
+
+## System Requirements
+
+- Apache (or similar .htaccess compatible web server).
+  - with mod_rewrite installed.
+- PHP 7 or above.
+  - with mbstring extension.
+- MYSQL.
