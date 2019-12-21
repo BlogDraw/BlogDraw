@@ -9,7 +9,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)/$ /$1 [R,L]
 
 RewriteRule ^(functions\.php) - [F,L,NC]
-
+RewriteRule ^(Back/functions) - [F,L,NC]
 
 
 
