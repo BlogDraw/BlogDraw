@@ -143,9 +143,9 @@ function controlCodeFunc()
 function sub_UI_add_edit_posts_JSFillForEdit($returnedPostID,$returnedTitle,$returnedPost,$returnedTags)
 {
 ?><script>
-  document.getElementById("Title").value = "  <?php echo $returnedTitle; ?>";
-  document.getElementById("Content").value = `  <?php echo substr($returnedPost,5,-6); ?>`;
-  document.getElementById("Tags").value = "  <?php echo $returnedTags; ?>";
+  document.getElementById("Title").value = "<?php echo $returnedTitle; ?>";
+  document.getElementById("Content").value = `<?php echo substr($returnedPost,5,-6); ?>`;
+  document.getElementById("Tags").value = "<?php echo $returnedTags; ?>";
 </script><?php
 }
 ?>

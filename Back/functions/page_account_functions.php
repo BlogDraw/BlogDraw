@@ -93,7 +93,7 @@ function engine_account_page($safeCookie)
       {
         $dBQuery = "UPDATE `" . DBPREFIX . "_LoginTable` SET UserBlurb = '" . $safeUserBlurb . "' WHERE Cookie = '" . $safeCookie . "';";
         mysqli_query($dBConnection,$dBQuery);
-        $returnedUserBlurb = $safeUserBlurb;
+        $returnedUserBlurb = str_replace("\\'", "'", $safeUserBlurb);
       }
     }
     if(isset($_POST['EmailPublic']))
@@ -140,7 +140,7 @@ function UI_account_page($returnedUsername,$returnedCompany,$returnedURL,$return
         <div class="row">
           <label class="control-label col-xs-12 col-sm-3" for="Username">Username:</label>
           <div class="col-xs-12 col-sm-9">
-            <input type="text" class="form-control" name="Username" id="Username" value="  <?php echo $returnedUsername; ?>" />
+            <input type="text" class="form-control" name="Username" id="Username" value="<?php echo $returnedUsername; ?>" />
           </div>
         </div>
         <br />
@@ -159,35 +159,35 @@ function UI_account_page($returnedUsername,$returnedCompany,$returnedURL,$return
         <div class="row">
           <label class="control-label col-xs-12 col-sm-3" for="Company">Company:</label>
           <div class="col-xs-12 col-sm-9">
-            <input type="text" class="form-control" name="Company" id="Company" value="  <?php echo $returnedCompany; ?>" />
+            <input type="text" class="form-control" name="Company" id="Company" value="<?php echo $returnedCompany; ?>" />
           </div>
         </div>
         <br />
         <div class="row">
           <label class="control-label col-xs-12 col-sm-3" for="UserURL">Website:</label>
           <div class="col-xs-12 col-sm-9">
-            <input type="text" class="form-control" name="UserURL" id="UserURL" value="  <?php echo $returnedURL; ?>" />
+            <input type="text" class="form-control" name="UserURL" id="UserURL" value="<?php echo $returnedURL; ?>" />
           </div>
         </div>
         <br />
         <div class="row">
           <label class="control-label col-xs-12 col-sm-3" for="Email">Email:</label>
           <div class="col-xs-12 col-sm-9">
-            <input type="text" class="form-control" name="Email" id="Email" value="  <?php echo $returnedEmail; ?>" />
+            <input type="text" class="form-control" name="Email" id="Email" value="<?php echo $returnedEmail; ?>" />
           </div>
         </div>
         <br />
         <div class="row">
           <label class="control-label col-xs-12 col-sm-3" for="UserImage">User Photo URL:</label>
           <div class="col-xs-12 col-sm-9">
-            <input type="text" class="form-control" name="UserImage" id="UserImage" value="  <?php echo $returnedUserImage; ?>" />
+            <input type="text" class="form-control" name="UserImage" id="UserImage" value="<?php echo $returnedUserImage; ?>" />
           </div>
         </div>
         <br />
         <div class="row">
           <label class="control-label col-xs-12 col-sm-3" for="UserBlurb">Your User Blurb (accepts HTML):</label>
           <div class="col-xs-12 col-sm-9">
-            <input type="text" class="form-control" name="UserBlurb" id="UserBlurb" value="  <?php echo $returnedUserBlurb; ?>" />
+            <input type="text" class="form-control" name="UserBlurb" id="UserBlurb" value="<?php echo $returnedUserBlurb; ?>" />
           </div>
         </div>
         <br />
