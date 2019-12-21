@@ -45,9 +45,9 @@
         $fileContent = '<?php' . "\n";
         $fileContent .= '  if (substr($_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"], 0, ' . ($length + 1 - $protoLength) . ') != "' . $wSURL . '/" || substr($_SERVER["SERVER_NAME"] . $_SERVER["PHP_SELF"], 0, ' . ($length + 1 - $protoLength) . ') != "' . $wSURL . '/")' . "\n";
         $fileContent .= '  {' . "\n" . '    die();' . "\n" . '  }' . "\n";
-        $fileContent .= '  define(\'URL\',\'' . $wSURL . '\');        //Website Location.' . "\n";
-        $fileContent .= '  define(\'PROTOCOL\',\'' . $wSSSL . '\');      //http:// or https://.' . "\n";
-        $fileContent .= '  define(\'LENGTH\',' . $length . ');          //Length of URL plus PROTOCOL.' . "\n";
+        $fileContent .= '  define(\'URL\', \'' . $wSURL . '\');        //Website Location.' . "\n";
+        $fileContent .= '  define(\'PROTOCOL\', \'' . $wSSSL . '\');      //http:// or https://.' . "\n";
+        $fileContent .= '  define(\'LENGTH\', ' . $length . ');          //Length of URL plus PROTOCOL.' . "\n";
         $fileContent .= '  define(\'DBUSER\', \'' . $dBUsername . '\');    //MySQL User.' . "\n";
         $fileContent .= '  define(\'DBPASS\', \'' . $dBPassword . '\');      //MySQL Password.' . "\n";
         $fileContent .= '  define(\'DBSERVER\', \'' . $dBServer . '\');    //Database Server.' . "\n";
@@ -74,7 +74,7 @@
             if($lineNumber == 13)
               $lineContent .= 'RewriteCond %{HTTPS} off';
             if($lineNumber == 14)
-              $lineContent .= 'RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]';
+              $lineContent .= 'RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L, R=301]';
           }
           $allContent = implode("", $htaccessContent);
           file_put_contents($htaccessFile, $allContent);
@@ -90,24 +90,24 @@
             if($lineNumber == 13)
               $lineContent .= 'RewriteCond %{HTTPS} on';
             if($lineNumber == 14)
-              $lineContent .= 'RewriteRule ^(.*)$ http://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]';
+              $lineContent .= 'RewriteRule ^(.*)$ http://%{HTTP_HOST}%{REQUEST_URI} [L, R=301]';
           }
           $allContent = implode("", $htaccessContent);
           file_put_contents($htaccessFile, $allContent);
         }
         //2. Build the database structure, and populate the login table.
-        $randPass = mt_rand(1000,9999);
-        $dBConnection = mysqli_connect($dBServer,$dBUsername,$dBPassword,$dBName);
+        $randPass = mt_rand(1000, 9999);
+        $dBConnection = mysqli_connect($dBServer, $dBUsername, $dBPassword, $dBName);
         if (!$dBConnection)
           die('Could not connect to database.  Please try again later.');
-        $dBQuery = "CREATE TABLE " . $dBPrefix . "_LoginTable(ID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,Username VARCHAR(25) NOT NULL,Password VARCHAR(256) NOT NULL,Email VARCHAR(255) NOT NULL,Company VARCHAR(50),URL VARCHAR(255),EmailIsPublic BOOLEAN,Cookie VARCHAR(512),UserImage VARCHAR(255),UserBlurb LONGTEXT);";
-        mysqli_query($dBConnection,$dBQuery);
-        $dBQuery = "INSERT INTO " . $dBPrefix . "_LoginTable (Username,Password,Email,EmailIsPublic,Cookie) VALUES ('Admin','" . password_hash($randPass . $dBPrefix, PASSWORD_DEFAULT) . "','" . $wSContactEmail . "',0,'XXXX');";
-        mysqli_query($dBConnection,$dBQuery);
-        $dBQuery = "CREATE TABLE " . $dBPrefix . "_PostsTable(ID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,AuthorID BIGINT NOT NULL,Title VARCHAR(128) NOT NULL,NiceTitle VARCHAR(128) NOT NULL,TagOne VARCHAR(512) NOT NULL,TagTwo VARCHAR(512) NOT NULL,TagThree VARCHAR(512),Timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,Post LONGTEXT NOT NULL,PostIsDraft BOOLEAN);";
-        mysqli_query($dBConnection,$dBQuery);
-        $dBQuery = "INSERT INTO " . $dBPrefix . "_PostsTable(AuthorID,NiceTitle,TagOne,TagTwo,TagThree,Post,PostIsDraft) VALUES(0, 'First Post', 'BlogDraw', 'First', 'Post', 'Welcome to my new blog!', false);";
-        mysqli_query($dBConnection,$dBQuery);
+        $dBQuery = "CREATE TABLE " . $dBPrefix . "_LoginTable(ID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, Username VARCHAR(25) NOT NULL, Password VARCHAR(256) NOT NULL, Email VARCHAR(255) NOT NULL, Company VARCHAR(50), URL VARCHAR(255), EmailIsPublic BOOLEAN, Cookie VARCHAR(512), UserImage VARCHAR(255), UserBlurb LONGTEXT);";
+        mysqli_query($dBConnection, $dBQuery);
+        $dBQuery = "INSERT INTO " . $dBPrefix . "_LoginTable (Username, Password, Email, EmailIsPublic, Cookie) VALUES ('Admin', '" . password_hash($randPass . $dBPrefix, PASSWORD_DEFAULT) . "', '" . $wSContactEmail . "', 0, 'XXXX');";
+        mysqli_query($dBConnection, $dBQuery);
+        $dBQuery = "CREATE TABLE " . $dBPrefix . "_PostsTable(ID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, AuthorID BIGINT NOT NULL, Title VARCHAR(128) NOT NULL, NiceTitle VARCHAR(128) NOT NULL, TagOne VARCHAR(512) NOT NULL, TagTwo VARCHAR(512) NOT NULL, TagThree VARCHAR(512), Timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, Post LONGTEXT NOT NULL, PostIsDraft BOOLEAN);";
+        mysqli_query($dBConnection, $dBQuery);
+        $dBQuery = "INSERT INTO " . $dBPrefix . "_PostsTable (AuthorID, Title, NiceTitle, TagOne, TagTwo, TagThree, Post, PostIsDraft) VALUES (1, 'First Post', 'first-post', 'BlogDraw', 'First', 'Post', 'Welcome to my new blog!', false);";
+        mysqli_query($dBConnection, $dBQuery);
         mysqli_close($dBConnection);
         //OUTPUT
         echo '<p>Username: Admin - Password: ' . $randPass . $dBPrefix . '.</p><p>Please Log in to ' . $wSURL . '/Back/ and change these details now.</p>';
