@@ -3,7 +3,7 @@
 /**
  * Functions.php - this contains most of the core PHP functions that operate BlogDraw.
  * They are split up as follows:
- * - Core Content - this section runs whenever a page calls this script.  It primarily handles security and login sessions, as well as analytics.
+ * - Core Content - this section runs whenever a page calls this script.  It primarily handles security and login sessions.
  * - Head Output Functions - this section contains functions that return outputs which may be needed in the <head> of a template.
  * - Body Output Functions - this section contains functions that return outputs which may be needed in the <body> of a template.
  * - Engine Functions - this section contains functions that parse, operate on, and pass data to and from output functions.
@@ -17,7 +17,6 @@
   if (isset($_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']))
   {
     $dBConnection = connect();
-      die('Could not connect to database.  Please try again later.');
     $safeCookie = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']), "UTF-8"));
     $dBQuery = "SELECT Cookie FROM `" . DBPREFIX . "_LoginTable` WHERE CHAR_LENGTH(Cookie) > 1;";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
@@ -32,11 +31,6 @@
   if (!isset($_POST['LoginSubmit']) && (!isset($_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']) || $notLoggedIn == true))
   {
     setcookie(preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin',$cookieKey,0,'/',URL,FALSE,TRUE);  
-  }
-  
-  function engine_analytics_collector() //This function collects analytic data on every page to be used for /Back.
-  {
-    //Removed due to GDPR
   }
   
 //HEAD OUTPUT FUNCTIONS  

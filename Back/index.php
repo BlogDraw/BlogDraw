@@ -88,8 +88,7 @@
     }
     else
     {
-      echo '<p><strong>Technical Jargon Ahead: Here be dragons. </strong>Our analytics system is unavailable at the moment due to GDPR Compliance. </p>';
-      engine_analytics_collector();
+      echo '<p><strong>Welcome to BlogDraw!</strong> How can we help you today?  Use the menu above to navigate through the options available to you.</p>';
     }
   }
 ?>

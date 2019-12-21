@@ -66,4 +66,3 @@
     <?php require_once ('./plugins/Cookies/index.php'); ?>
   </body>
 </html>
-<?php engine_analytics_collector(); ?>

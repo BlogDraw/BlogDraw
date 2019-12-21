@@ -5,7 +5,7 @@
  **/
 function connect()
 {
-  $dBConnection = mysqli_connect(HOST, USERNAME, PASSWORD, DATABASE);
+  $dBConnection = mysqli_connect(DBSERVER, DBUSER, DBPASS, DBNAME);
   if (!$dBConnection)
     die("<p>BlogDraw couldn't connect to the database.</p>");
   return $dBConnection;

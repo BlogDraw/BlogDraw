@@ -106,7 +106,7 @@
         mysqli_query($dBConnection,$dBQuery);
         $dBQuery = "CREATE TABLE " . $dBPrefix . "_PostsTable(ID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,AuthorID BIGINT NOT NULL,Title VARCHAR(128) NOT NULL,NiceTitle VARCHAR(128) NOT NULL,TagOne VARCHAR(512) NOT NULL,TagTwo VARCHAR(512) NOT NULL,TagThree VARCHAR(512),Timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,Post LONGTEXT NOT NULL,PostIsDraft BOOLEAN);";
         mysqli_query($dBConnection,$dBQuery);
-        $dBQuery = "CREATE TABLE " . $dBPrefix . "_AnalyticsTable(ID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,Page VARCHAR(256) NOT NULL,IP VARCHAR(32) NOT NULL,DateTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,Month INT(11) NOT NULL,Year BIGINT NOT NULL);";
+        $dBQuery = "INSERT INTO " . $dBPrefix . "_PostsTable(AuthorID,NiceTitle,TagOne,TagTwo,TagThree,Post,PostIsDraft) VALUES(0, 'First Post', 'BlogDraw', 'First', 'Post', 'Welcome to my new blog!', false);";
         mysqli_query($dBConnection,$dBQuery);
         mysqli_close($dBConnection);
         //OUTPUT

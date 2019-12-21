@@ -1,5 +1,5 @@
 <?php
-require_once ('./db_connection_handler.php');
+require_once ('db_connection_handler.php');
 /**
  * functions_back.php - this contains most of the core PHP functions that operate the back end of BlogDraw (Known as "The Back").
  * They are split up as follows:
