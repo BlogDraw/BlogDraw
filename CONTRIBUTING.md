@@ -70,7 +70,7 @@ if (2 == 2)
 thisInteger = 7;
 ```
 
-- Use 'underscored_lower_case' method/function names in PHP.
+- Use 'underscored_lower_case' for method/function names in PHP.
 
 ```php
 function this_funtion()
@@ -79,7 +79,7 @@ function this_funtion()
 }
 ```
 
-- Use 'camelCase' method/function names in JavaScript.
+- Use 'camelCase' for method/function names in JavaScript.
 
 ```js
 function thisFuntion()
@@ -102,18 +102,16 @@ function thisFuntion()
 ?>
 ```
 
-- When writing PHP code, code blocks open with "<?php" on it's own line, and close with "?>" on it's own line.
+- When writing PHP code, code blocks open with ```<?php``` on it's own line, and close with ```?>``` on it's own line.
 
 ```php
 <?php
-function funtion_one()
-{
-  do_this(0);
-  do_that(9);
-}// Correct.
+do_this(0);
+do_that(9);
+?>// Correct
 
-function funtion_one(){do_this(0);do_that(9);}// Incorrect.
-?>
+<?php do_this(0);
+do_that(9); ?>// Incorrect.
 ```
 
 - an exception the the above rule can be made when you're only calling one statement.  Then your PHP code can go on one line.
@@ -147,4 +145,4 @@ function square_then_add_five($input)
 
 If you have any questions about these guidelines, or about contributing to BlogDraw in general, feel free to [get in touch](https://tuxsoft.uk/Contact/ "Get in touch with us.").
 
-- This was last updated for Beta2.1, BlogDraw 0.0.1.
+- This was last updated for Beta 2.1, BlogDraw 0.0.1.
