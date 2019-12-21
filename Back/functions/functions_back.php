@@ -1,4 +1,5 @@
 <?php
+require_once ('./db_connection_handler.php');
 /**
  * functions_back.php - this contains most of the core PHP functions that operate the back end of BlogDraw (Known as "The Back").
  * They are split up as follows:
@@ -8,9 +9,7 @@
 **/
   function engine_account_page($safeCookie) //This handles the data for the Account page.
   {
-    $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-    if (!$dBConnection)
-      die('Could not connect to database.  Please try again later.');
+    $dBConnection = connect();
     $dBQuery = "SELECT Username,Email,UserImage,UserBlurb,Company,URL,EmailIsPublic FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $safeCookie . "';";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
     while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
@@ -23,13 +22,11 @@
       $returnedURL = mb_convert_encoding($row['URL'], "UTF-8");
       $returnedEmailIsPublic = mb_convert_encoding($row['EmailIsPublic'], "UTF-8");
     }
-    mysqli_close($dBConnection);
+    disconnect($dBConnection);
 
     if (isset($_POST['AccountSubmit']))
     {
-      $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-      if (!$dBConnection)
-        die('Could not connect to database.  Please try again later.');
+      $dBConnection = connect();
       if(isset($_POST['Username']) && isset($_POST['Email']) && !empty($_POST['Username']) && !empty($_POST['Email']))
       {
         $safeUsername = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['Username']),"UTF-8"));
@@ -121,7 +118,7 @@
           $returnedEmailIsPublic = 0;
         }
       }
-      mysqli_close($dBConnection);
+      disconnect($dBConnection);
     }
     //Call in the UI, and pass variables to autofill the form
     UI_account_page($returnedUsername,$returnedCompany,$returnedURL,$returnedEmail,$returnedUserBlurb,$returnedUserImage,$returnedEmailIsPublic);
@@ -214,9 +211,7 @@
   {
     if (isset($_POST['LoginSubmit']))
     {
-      $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-      if (!$dBConnection)
-        die('Could not connect to database.  Please try again later.');
+      $dBConnection = connect();
       $dBQuery = "SELECT ID,Username,Password FROM `" . DBPREFIX . "_LoginTable`;";
       $returnQuery = mysqli_query($dBConnection,$dBQuery);
       $safeUsername = mysqli_real_escape_string($dBConnection,mb_convert_encoding($_POST['Username'],"UTF-8"));
@@ -238,7 +233,7 @@
         }
       }
       echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>Username and/or Password is Invalid.</strong></p></div>';
-      mysqli_close($dBConnection);
+      disconnect($dBConnection);
     }
     UI_login_page();
   }
@@ -295,9 +290,7 @@
   
   function sub_engine_add_posts_SubmitOrDraft($submitOrDraft,$safeCookie) //This handles the Submit or Draft buttons present on the "Add Posts" page.
   {
-    $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-    if (!$dBConnection)
-      die('Could not connect to database.  Please try again later.');
+    $dBConnection = connect();
     $safeTitle = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['Title']),"UTF-8"));
     $safeNiceTitle = preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', $safeTitle)));
     $safePost = mysqli_real_escape_string($dBConnection,mb_convert_encoding('<div>' . nl2br($_POST['Content'],true) . '</div>',"UTF-8"));
@@ -323,19 +316,17 @@
       mysqli_query($dBConnection,$dBQuery);
       echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>Saved!</strong></p></div>';
     }
-    mysqli_close($dBConnection);
+    disconnect($dBConnection);
   }
   
   function sub_UI_add_edit_posts_FindAuthorDetails ($safeCookie) //This handles the filling in the author details for the UI for the "Add or Edit Posts" page.
   {
-    $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-    if (!$dBConnection)
-      die('Could not connect to database.  Please try again later.');
+    $dBConnection = connect();
     $dBQuery = "SELECT Username FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $safeCookie . "';";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
     while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
       $returnedAuthor = mb_convert_encoding($row['Username'], "UTF-8");
-    mysqli_close($dBConnection);
+    disconnect($dBConnection);
     return '<p>Written by: ' . $returnedAuthor . ' on: ' . date("Y-m-d") . '.</p>';
   }
   
@@ -455,9 +446,7 @@ function controlCodeFunc()
   {
     if (isset($_POST['EditSubmit']) && isset($_POST['Edit']) && !empty($_POST['Edit']))
     {
-      $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-      if (!$dBConnection)
-        die('Could not connect to database.  Please try again later.');
+      $dBConnection = connect();
       $safeEditPostNo = mysqli_real_escape_string($dBConnection,mb_convert_encoding($_POST['Edit'],"UTF-8"));
       $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $safeCookie . "';";
       $returnQuery = mysqli_query($dBConnection,$dBQuery);
@@ -482,13 +471,11 @@ function controlCodeFunc()
         UI_add_edit_posts_page('Edit',$safeCookies,$returnedPostID);
         sub_UI_add_edit_posts_JSFillForEdit($returnedPostID,$returnedTitle,$returnedPost,$returnedTags);
       }
-      mysqli_close($dBConnection);
+      disconnect($dBConnection);
     }
     else if (isset($_POST['DeleteSubmit']) && isset($_POST['Delete']) && !empty($_POST['Delete']))
     {
-      $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-      if (!$dBConnection)
-        die('Could not connect to database.  Please try again later.');
+      $dBConnection = connect();
       $safeDeletePostNo = mysqli_real_escape_string($dBConnection,mb_convert_encoding($_POST['Delete'],"UTF-8"));
       $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $safeCookie . "';";
       $returnQuery = mysqli_query($dBConnection,$dBQuery);
@@ -504,7 +491,7 @@ function controlCodeFunc()
         mysqli_query($dBConnection,$dBQuery);
         echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>Your post has been deleted.</strong></p></div>';
       }
-      mysqli_close($dBConnection);
+      disconnect($dBConnection);
     }
     else
       UI_edit_posts_page($safeCookie);
@@ -528,9 +515,7 @@ function controlCodeFunc()
   
   function sub_engine_edit_posts_SubmitOrDraft($submitOrDraft,$safeCookie) //This handles the Submit or Draft buttons present on the "Edit Posts" page.
   {
-    $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-    if (!$dBConnection)
-      die('Could not connect to database.  Please try again later.');
+    $dBConnection = connect();
     $safeTitle = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['Title']),"UTF-8"));
     $safeNiceTitle = preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', $safeTitle)));
     $safePost = mysqli_real_escape_string($dBConnection,mb_convert_encoding('<div>' . nl2br($_POST['Content'],true) . '</div>',"UTF-8"));
@@ -573,7 +558,7 @@ function controlCodeFunc()
         echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>Saved!</strong></p></div>';
       }
     }
-    mysqli_close($dBConnection);
+    disconnect($dBConnection);
   }
   
   function sub_UI_add_edit_posts_JSFillForEdit($returnedPostID,$returnedTitle,$returnedPost,$returnedTags) //This fills in the UI form on the "Add or Edit Posts" page if needed.
@@ -619,9 +604,7 @@ function controlCodeFunc()
   
   function sub_UI_edit_posts_TableContent($safeCookie) //This fills in the table on the "Edit Posts" page.
   {
-    $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-    if (!$dBConnection)
-      die('Could not connect to database.  Please try again later.');
+    $dBConnection = connect();
     $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $safeCookie . "';";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
     while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
@@ -639,7 +622,7 @@ function controlCodeFunc()
         $returnedPost = substr("[DRAFT]: " . $returnedPost,0,80);
       echo'<tr><td>' . $returnedPostID . '</td><td>' . $returnedTitle . '</td><td>' . $returnedPost . '</td><td>' . $returnedTimestamp . '</td><td><form method="post" style="display:inline;"><input id="Edit" name="Edit" type="hidden" value="' . $returnedPostID . '" /><input type="submit" class="btn btn-default btn-xs" name="EditSubmit" value="Edit" /></form>&nbsp;<form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $returnedPostID . '" /><input type="submit" class="btn btn-default btn-xs" name="DeleteSubmit" value="Delete" /></form></td></tr>';
     }
-    mysqli_close($dBConnection);
+    disconnect($dBConnection);
   }
     
   function engine_media_page() //This handles the data for the Media page.
@@ -797,9 +780,7 @@ function controlCodeFunc()
   {
     if (isset($_POST['RegisterSubmit']))
     {
-      $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-      if (!$dBConnection)
-        die('Could not connect to database.  Please try again later.');
+      $dBConnection = connect();
       if(isset($_POST['Username']) && isset($_POST['Email']) && !empty($_POST['Username']) && !empty($_POST['Email']) && isset($_POST['Password1']) && !empty($_POST['Password1']) && isset($_POST['Password2']) && !empty($_POST['Password2']))
       {
         $safeUsername = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['Username']),"UTF-8"));
@@ -835,7 +816,7 @@ function controlCodeFunc()
       }
       else
         echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>You need at least username, password, and email address for an account.</strong></p></div>';
-      mysqli_close($dBConnection);
+      disconnect($dBConnection);
     }
     //Call in the UI, and pass variables to autofill the form
     UI_register_page();
@@ -908,12 +889,10 @@ function controlCodeFunc()
   
   function engine_logout_page($safeCookie) //This handles the data for the Logout page.  It needs no UI.
   {
-    $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-    if (!$dBConnection)
-      die('Could not connect to database.  Please try again later.');
+    $dBConnection = connect();
     $dBQuery = "UPDATE `" . DBPREFIX . "_LoginTable` SET Cookie = 'XXX' WHERE Cookie = '" . $safeCookie . "';";
     mysqli_query($dBConnection,$dBQuery);
-    mysqli_close($dBConnection);
+    disconnect($dBConnection);
     echo 'Logging You Out Now...  <script>window.location.href = "' . PROTOCOL . URL . '/Back/";</script>';
   }
 ?>

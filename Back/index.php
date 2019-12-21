@@ -5,10 +5,8 @@
 //Here we set our basic requirements, and do some security testing.
   $notLoggedIn = true;
   require_once ('../functions.php');
-  require_once ('./functions_back.php');
-  $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-  if (!$dBConnection)
-    die('Could not connect to database.  Please try again later.');
+  require_once ('./functions/functions_back.php');
+  $dBConnection = connect();
   $dBQuery = "SELECT Cookie,ID FROM `" . DBPREFIX . "_LoginTable` WHERE CHAR_LENGTH(Cookie) > 1;";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
   while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
@@ -18,7 +16,7 @@
     if ($returnedCookie == $safeCookie)
       $notLoggedIn = false;
   }
-  mysqli_close($dBConnection); 
+  disconnect($dBConnection); 
 //Below, we start our UI
 ?>
 <!DOCTYPE html>

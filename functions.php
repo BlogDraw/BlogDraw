@@ -10,15 +10,15 @@
 **/
 //CORE CONTENT
   global $notLoggedIn;  
-          
+  
+  require_once ('./back/functions/db_connection_handler.php');
   if (!isset($_POST['LoginSubmit']))
     $cookieKey = mb_convert_encoding(htmlspecialchars(bin2hex(random_bytes(256))),"UTF-8");
   if (isset($_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']))
   {
-    $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-    $safeCookie = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']), "UTF-8"));
-    if (!$dBConnection)
+    $dBConnection = connect();
       die('Could not connect to database.  Please try again later.');
+    $safeCookie = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']), "UTF-8"));
     $dBQuery = "SELECT Cookie FROM `" . DBPREFIX . "_LoginTable` WHERE CHAR_LENGTH(Cookie) > 1;";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
     while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
@@ -27,7 +27,7 @@
       if ($returnedCookie == $safeCookie)
         $notLoggedIn = false;
     }
-    mysqli_close($dBConnection);
+    disconnect($dBConnection);
   }
   if (!isset($_POST['LoginSubmit']) && (!isset($_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']) || $notLoggedIn == true))
   {
@@ -56,9 +56,7 @@
         echo TITLE . ' | Contact';
         break;
       default:
-        $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-        if (!$dBConnection)
-          die('Could not connect to database.  Please try again later.');
+        $dBConnection = connect();
         $isPost = false;
         $dBQuery = "SELECT Title FROM `" . DBPREFIX . "_PostsTable` WHERE PostIsDraft=0 AND NiceTitle='" . $uRI . "' ORDER BY ID DESC LIMIT 1;";
         $returnQuery = mysqli_query($dBConnection,$dBQuery);
@@ -68,7 +66,7 @@
           echo TITLE . ' | ' . $returnedTitle;
           $isPost = true;
         }
-        mysqli_close($dBConnection);
+        disconnect($dBConnection);
         if($isPost == false)
           echo TITLE . ' | ' . $uRI;
     }
@@ -208,22 +206,18 @@
     else
     {//else find canonical page post link get author id from post where that = nice-title
       $preamble = "Author profile:";
-      $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-      if (!$dBConnection)
-        die('Could not connect to database.  Please try again later.');
+      $dBConnection = connect();
       $requestedURI = mysqli_real_escape_string($dBConnection,$requestedURI);
       $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_PostsTable` WHERE PostIsDraft=0 AND NiceTitle='" . $requestedURI . "' ORDER BY ID DESC LIMIT 1;";
       $returnQuery = mysqli_query($dBConnection,$dBQuery);
       while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
         $returnedID = mb_convert_encoding(htmlspecialchars($row['ID']), "UTF-8");
       $postID = $returnedID;
-      mysqli_close($dBConnection);
+      disconnect($dBConnection);
     }
     $authorID = engine_call_post_field($postID,"AuthorID");
     //find author profile from id
-    $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-    if (!$dBConnection)
-      die('Could not connect to database.  Please try again later.');
+    $dBConnection = connect();
     $dBQuery = "SELECT UserImage,UserBlurb FROM `" . DBPREFIX . "_LoginTable` WHERE ID='" . $authorID . "';";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
     while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
@@ -233,7 +227,7 @@
     }
     if (!empty($returnedAuthorImage)){$authorImage = $returnedAuthorImage;} else {$authorImage = "X";}
     if (!empty($returnedAuthorBlurb)){$authorBlurb = $returnedAuthorBlurb;} else {$authorBlurb = "X";}
-    mysqli_close($dBConnection);
+    disconnect($dBConnection);
     return array ($authorID,$authorBlurb,$authorImage,$preamble);
   }
 
@@ -266,9 +260,7 @@
 
   function engine_find_called_post() //This handles finding out which post has been called by the user in the URI, also handles returning engine_call_canonical_page to the 404 page if the post isn't found.
   {
-    $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-    if (!$dBConnection)
-      die('Could not connect to database.  Please try again later.');
+    $dBConnection = connect();
     $postCount = 1;
     if (strpos($_SERVER['REQUEST_URI'], "?fbclid") != FALSE)
       $requestedURI = mysqli_real_escape_string($dBConnection, mb_convert_encoding(htmlspecialchars(strstr(substr($_SERVER['REQUEST_URI'], 1), "?fbclid", TRUE)), "UTF-8"));
@@ -282,16 +274,14 @@
       engine_collate_post_details($returnedID);
       $postCount = 0;
     }
-    mysqli_close($dBConnection);
+    disconnect($dBConnection);
     if ($postCount == 1)
       engine_call_canonical_page('404');
   }
   
   function engine_find_called_tag() //This handles finding all posts tagged with a specific tag
   {
-    $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-    if (!$dBConnection)
-      die('Could not connect to database.  Please try again later.');
+    $dBConnection = connect();
     $postCount = 1;
     $requestedTag= mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars(urldecode(substr($_SERVER['REQUEST_URI'],5))), "UTF-8"));
     $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_PostsTable` WHERE PostIsDraft=0 AND (TagOne='" . $requestedTag . "' OR TagTwo='" . $requestedTag . "' OR TagThree='" . $requestedTag . "') ORDER BY ID DESC;";
@@ -302,7 +292,7 @@
       engine_collate_post_details($returnedID);
       $postCount = 0;
     }
-    mysqli_close($dBConnection);
+    disconnect($dBConnection);
     if ($postCount == 1)
       engine_call_canonical_page('404');
   }
@@ -321,9 +311,7 @@
   {
     if(isset($_POST['LoadMore']) && isset($_POST['LastPostLoaded']))
     {
-      $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-      if (!$dBConnection)
-        die('Could not connect to database.  Please try again later.');
+      $dBConnection = connect();
       $lastOneLoaded = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['LastPostLoaded']), "UTF-8"));
       if (!is_numeric($lastOneLoaded))
         $lastOneLoaded = $numberToLoad + 1;
@@ -334,13 +322,11 @@
         $returnedID = mb_convert_encoding(htmlspecialchars($row['ID']), "UTF-8");
         engine_collate_post_details($returnedID);
       }
-      mysqli_close($dBConnection);
+      disconnect($dBConnection);
     }
     else
     {
-      $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-      if (!$dBConnection)
-        die('Could not connect to database.  Please try again later.');
+      $dBConnection = connect();
       $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_PostsTable` WHERE PostIsDraft=0 ORDER BY ID DESC LIMIT " . $numberToLoad . ";";
       $returnQuery = mysqli_query($dBConnection,$dBQuery);
       while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
@@ -348,7 +334,7 @@
         $returnedID = mb_convert_encoding(htmlspecialchars($row['ID']), "UTF-8");
         engine_collate_post_details($returnedID);
       }
-      mysqli_close($dBConnection);
+      disconnect($dBConnection);
     }
     return $returnedID;
   }
@@ -356,29 +342,25 @@
   {
     if($numberLeft > 0)
     {
-      $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-      if (!$dBConnection)
-        die('Could not connect to database.  Please try again later.');
+      $dBConnection = connect();
       $dBQuery = "SELECT ID,Title,NiceTitle FROM `" . DBPREFIX . "_PostsTable` WHERE PostIsDraft=0 AND ID<" . $numberLeft . " ORDER BY ID DESC;";
       $returnQuery = mysqli_query($dBConnection,$dBQuery);
       while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
       {
         echo '<a href="' . URL . htmlspecialchars($row['NiceTitle']) . '" title="' . htmlspecialchars($row['Title']) . '">' . htmlspecialchars($row['Title']) . '</a><br />';
       }
-      mysqli_close($dBConnection);
+      disconnect($dBConnection);
     }
   }
 
   function engine_find_latest_public_post_id() //This finds the ID of the latest non-draft post, so it can be loaded up.
   {
-    $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-    if (!$dBConnection)
-      die('Could not connect to database.  Please try again later.');
+    $dBConnection = connect();
     $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_PostsTable` WHERE PostIsDraft=0 ORDER BY ID DESC LIMIT 1;";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
     while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
       $returnedID = mb_convert_encoding(htmlspecialchars($row['ID']), "UTF-8");
-    mysqli_close($dBConnection);
+    disconnect($dBConnection);
     return $returnedID;
   }
 
@@ -401,9 +383,7 @@
 
   function engine_call_author_details($postAuthor) //This finds basic author details and collates them into a short caption at the start of a post.
   {
-    $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-    if (!$dBConnection)
-      die('Could not connect to database.  Please try again later.');
+    $dBConnection = connect();
     $dBQuery = "SELECT Username,Email,EmailIsPublic,URL FROM `" . DBPREFIX . "_LoginTable` WHERE ID='" . $postAuthor . "';";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
     while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
@@ -413,7 +393,7 @@
       $returnedEmailIsPublic = mb_convert_encoding(htmlspecialchars($row['EmailIsPublic']), "UTF-8");
       $returnedURL = mb_convert_encoding(htmlspecialchars($row['URL']), "UTF-8");
     }
-    mysqli_close($dBConnection);
+    disconnect($dBConnection);
     if($returnedEmailIsPublic == 1 && !empty($returnedURL))
       $authorCaption = '<a href="' . $returnedURL . '" title="Go To ' . $returnedURL . '">' . $returnedUsername . '</a>(<a href="mailto:' . $returnedEmail . '" title="Email ' . $returnedEmail . '">Email The Author</a>)';
     else if($returnedEmailIsPublic == 1 && empty($returnedURL))
@@ -427,9 +407,7 @@
 
   function engine_call_post_field($postToCallID,$field) //This handles the majority of pulling blog post data from the database.  It returns each individual field with a corresponding ID as requested.
   {
-    $dBConnection = mysqli_connect(DBSERVER,DBUSER,DBPASS,DBNAME);
-    if (!$dBConnection)
-      die('Could not connect to database.  Please try again later.');
+    $dBConnection = connect();
     $dBQuery = "SELECT " . $field . ",PostIsDraft FROM `" . DBPREFIX . "_PostsTable` WHERE ID='" . $postToCallID . "';";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
     while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
@@ -443,7 +421,7 @@
           $returnedField = mb_convert_encoding($row[$field], "UTF-8");
       }
     }
-    mysqli_close($dBConnection);
+    disconnect($dBConnection);
     return $returnedField;
   }
 ?>
