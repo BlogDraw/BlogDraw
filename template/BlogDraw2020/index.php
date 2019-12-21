@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="<?php output_head_template_location(); ?>/style.css" />
   </head>
   <body>
-    <nav class="navbar fixed-top navbar-dark bg-dark">
+    <nav class="navbar navbar-expand static-top navbar-dark bg-dark">
       <div class="container-fluid">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item"><a class="nav-link" href="<?php output_home_link(); ?>" title="<?php echo TITLE; ?>">Home</a></li>
@@ -33,9 +33,9 @@
         </ul>
       </div>
     </nav>
-    <div class="jumbotron-fluid">
+    <div class="jumbotron jumbotron-fluid">
       <a class="text-decoration-none text-center" href="<?php output_home_link(); ?>" title="<?php echo TITLE; ?>">
-        <?php output_site_title(true); ?>
+        <?php output_site_title(false); ?>
       </a>
     </div>
     <div class="container-md">
@@ -43,8 +43,7 @@
         <div class="col-12 col-md-8">
           <?php output_canonical_page();?>
         </div>
-        <div class="d-none d-md-4">
-        <?php output_author_profile("Preamble"); ?>
+        <div class="d-none d-md-block col-4">
           <aside class="card">
             <header class="card-header"><h3>Meet <?php output_author_profile("Caption"); ?>:</h3></header>
             <div class="card-body"><?php output_author_profile("Image"); ?><?php output_author_profile("Blurb"); ?></div>
