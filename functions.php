@@ -141,7 +141,7 @@
     if (strpos($uRLPath,"?fbclid") != FALSE)
       $uRLPath = strstr($uRLPath, "?fbclid", TRUE);
     $elements = explode('/', $uRLPath);
-    if(empty($elements[0]))// No path elements means home
+    if(empty($elements[0]) || strcmp("?fbclid", substr($Elements[0], 0, 7)) == 0)// No path elements means home
       engine_call_canonical_page('home');
     else if(substr($elements[0],0,4) == "tag-")
       engine_call_canonical_page('tag');
