@@ -74,7 +74,7 @@
             if($lineNumber == 13)
               $lineContent .= 'RewriteCond %{HTTPS} off';
             if($lineNumber == 14)
-              $lineContent .= 'RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L, R=301]';
+              $lineContent .= 'RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]';
           }
           $allContent = implode("", $htaccessContent);
           file_put_contents($htaccessFile, $allContent);
@@ -90,7 +90,7 @@
             if($lineNumber == 13)
               $lineContent .= 'RewriteCond %{HTTPS} on';
             if($lineNumber == 14)
-              $lineContent .= 'RewriteRule ^(.*)$ http://%{HTTP_HOST}%{REQUEST_URI} [L, R=301]';
+              $lineContent .= 'RewriteRule ^(.*)$ http://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]';
           }
           $allContent = implode("", $htaccessContent);
           file_put_contents($htaccessFile, $allContent);
