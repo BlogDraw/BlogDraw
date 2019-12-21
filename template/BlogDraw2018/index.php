@@ -1,9 +1,9 @@
-<!-- 
+<!--
   BlogDraw2018 Template for BlogDraw.  Copyright © TuxSoft Limited 2018 - tuxsoft@tuxsoft.uk.
  -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>    
+  <head>   
     <!-- Enable utf8 reading -->
     <meta charset="UTF-8" />
     <!-- Enable Mobile-first Optimization -->

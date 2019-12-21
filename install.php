@@ -111,7 +111,7 @@
         mysqli_close($dBConnection);
         //OUTPUT
         echo '<p>Username: Admin - Password: ' . $randPass . $dBPrefix . '.</p><p>Please Log in to ' . $wSURL . '/Back/ and change these details now.</p>';
-        
+       
         //3. Delete this script, to stop other people using this script to destroy the site.
         unlink(__FILE__);
       }
@@ -136,35 +136,35 @@
           <fieldset class="form-group">
             <legend>Database Details:</legend>
             <div class="row">
-              <label class="control-label col-xs-12 col-sm-3" for="DBUsername">Username*:</label> 
+              <label class="control-label col-xs-12 col-sm-3" for="DBUsername">Username*:</label>
               <div class="col-xs-12 col-sm-9">
                 <input type="text" class="form-control" name="DBUsername" id="DBUsername" />
               </div>
             </div>
             <br />
             <div class="row">
-              <label class="control-label col-xs-12 col-sm-3" for="DBPassword">Password*:</label> 
+              <label class="control-label col-xs-12 col-sm-3" for="DBPassword">Password*:</label>
               <div class="col-xs-12 col-sm-9">
                 <input type="password" class="form-control" name="DBPassword" id="DBPassword" />
               </div>
             </div>
             <br />
             <div class="row">
-              <label class="control-label col-xs-12 col-sm-3" for="DBServer">Server IP*:</label> 
+              <label class="control-label col-xs-12 col-sm-3" for="DBServer">Server IP*:</label>
               <div class="col-xs-12 col-sm-9">
                 <input type="text" class="form-control" name="DBServer" id="DBServer" />
               </div>
             </div>
             <br />
             <div class="row">
-              <label class="control-label col-xs-12 col-sm-3" for="DBName">Database Name*:</label> 
+              <label class="control-label col-xs-12 col-sm-3" for="DBName">Database Name*:</label>
               <div class="col-xs-12 col-sm-9">
                 <input type="text" class="form-control" name="DBName" id="DBName" />
               </div>
             </div>
             <br />
             <div class="row">
-              <label class="control-label col-xs-12 col-sm-3" for="DBPrefix">Table Prefix (Two random letters, IE: "BD")*:</label> 
+              <label class="control-label col-xs-12 col-sm-3" for="DBPrefix">Table Prefix (Two random letters, IE: "BD")*:</label>
               <div class="col-xs-12 col-sm-9">
                 <input type="text" class="form-control" name="DBPrefix" id="DBPrefix" />
               </div>
@@ -174,14 +174,14 @@
           <fieldset class="form-group">
             <legend>Website Details:</legend>
             <div class="row">
-              <label class="control-label col-xs-12 col-sm-3" for="WSURL">Website URL*:</label> 
+              <label class="control-label col-xs-12 col-sm-3" for="WSURL">Website URL*:</label>
               <div class="col-xs-12 col-sm-9">
                 <input type="text" class="form-control" name="WSURL" id="WSURL" />
               </div>
             </div>
             <br />
             <div class="row">
-              <label class="control-label col-xs-12 col-sm-3" for="WSSSL">HTTP, or HTTPS?*:</label> 
+              <label class="control-label col-xs-12 col-sm-3" for="WSSSL">HTTP, or HTTPS?*:</label>
               <div class="col-xs-12 col-sm-9">
                 <div>
                   <input type="radio" name="WSSSL" value="WSSSL" checked />HTTPS
@@ -191,28 +191,28 @@
             </div>
             <br />
             <div class="row">
-              <label class="control-label col-xs-12 col-sm-3" for="WSTitle">Website Title*:</label> 
+              <label class="control-label col-xs-12 col-sm-3" for="WSTitle">Website Title*:</label>
               <div class="col-xs-12 col-sm-9">
                 <input type="text" class="form-control" name="WSTitle" id="WSTitle" />
               </div>
             </div>
             <br />
             <div class="row">
-              <label class="control-label col-xs-12 col-sm-3" for="WSDescription">Website Description*:</label> 
+              <label class="control-label col-xs-12 col-sm-3" for="WSDescription">Website Description*:</label>
               <div class="col-xs-12 col-sm-9">
                 <input type="text" class="form-control" name="WSDescription" id="WSDescription" />
               </div>
             </div>
             <br />
             <div class="row">
-              <label class="control-label col-xs-12 col-sm-3" for="WSContactEmail">Website Contact Email:</label> 
+              <label class="control-label col-xs-12 col-sm-3" for="WSContactEmail">Website Contact Email:</label>
               <div class="col-xs-12 col-sm-9">
                 <input type="text" class="form-control" name="WSContactEmail" id="WSContactEmail" />
               </div>
             </div>
             <br />
             <div class="row">
-              <label class="control-label col-xs-12 col-sm-3" for="WSContactPhone">Website Contact Phone:</label> 
+              <label class="control-label col-xs-12 col-sm-3" for="WSContactPhone">Website Contact Phone:</label>
               <div class="col-xs-12 col-sm-9">
                 <input type="text" class="form-control" name="WSContactPhone" id="WSContactPhone" />
               </div>

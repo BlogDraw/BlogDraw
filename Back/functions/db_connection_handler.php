@@ -1,7 +1,7 @@
 <?php
 /**
- * Connects to a database. 
- * @return Database connection object.
+ * Connects to a database.
+ * @return dBConnection - Database connection object.
  **/
 function connect()
 {
@@ -13,7 +13,7 @@ function connect()
 
 /**
  * Closes an open database connection.
- * @param $dBConnection - The Database connection object.
+ * @param dBConnection - The Database connection object.
  **/
 function disconnect($dBConnection)
 {
@@ -22,25 +22,26 @@ function disconnect($dBConnection)
 }
 
 /**
- * Prevents xss/SQL injection 
- * @param $dBConnection - The database connection object currently in use.
- * @param $string - The String to clean.
- * @return the string. 
+ * Prevents xss/SQL injection
+ * @param dBConnection - The database connection object currently in use.
+ * @param string - The String to clean.
+ * @return string - The string.
  **/
 function cleanString($dBConnection, $string)
 {
-  $str = mysqli_real_escape_string($dBConnection, mb_convert_encoding(htmlspecialchars($string), "UTF-8"));
-  return $str;// Return the string.
+  $string = mysqli_real_escape_string($dBConnection, mb_convert_encoding(htmlspecialchars($string), "UTF-8"));
+  return $string;// Return the string.
 }
+
 /**
  * Prevents xss/SQL injection - doesn't strip HTML tags.
- * @param $dBConnection - The database connection object currently in use.
- * @param $string - The String to clean.
- * @return the string. 
+ * @param dBConnection - The database connection object currently in use.
+ * @param string - The String to clean.
+ * @return string - The string.
  **/
 function cleanHtmlString($dBConnection, $string)
 {
-  $str = mysqli_real_escape_string($dBConnection, mb_convert_encoding($string, "UTF-8"));
-  return $str;// Return the string.
+  $string = mysqli_real_escape_string($dBConnection, mb_convert_encoding($string, "UTF-8"));
+  return $string;// Return the string.
 }
 ?>

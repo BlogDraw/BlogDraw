@@ -16,12 +16,12 @@
     if ($returnedCookie == $safeCookie)
       $notLoggedIn = false;
   }
-  disconnect($dBConnection); 
+  disconnect($dBConnection);
 //Below, we start our UI
 ?>
 <!DOCTYPE html>
 <html lang="en">
-  <head>    
+  <head>   
     <!-- Enable utf8 reading -->
     <meta charset="UTF-8" />
     <!-- Enable Mobile-first Optimization -->
