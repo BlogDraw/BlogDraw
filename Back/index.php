@@ -21,7 +21,7 @@
 ?>
 <!DOCTYPE html>
 <html lang="en">
-  <head>   
+  <head>
     <!-- Enable utf8 reading -->
     <meta charset="UTF-8" />
     <!-- Enable Mobile-first Optimization -->
@@ -51,7 +51,7 @@
     if(isset($_GET['page']))
       $subPage = htmlspecialchars(filter_input( INPUT_GET, 'page', FILTER_SANITIZE_URL));
 ?>
-      <nav id="navbar" class="navbar navbar-default navbar-static-top">
+      <nav id="navbar" class="navbar navbar-inverse navbar-static-top">
       <div class="container-fluid">
         <ul class="nav navbar-nav">
           <li  <?php if(!isset($_GET['page'])){echo ' class="active"';} ?>><a href="  <?php PROTOCOL . URL ?>/Back/" title="The Back"><span class="glyphicon glyphicon-home" aria-hidden="true" aria-label="The Back"></span>&nbsp;The Back</a></li>
