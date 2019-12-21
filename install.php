@@ -57,7 +57,7 @@
         $fileContent .= '  define(\'DESCRIPTION\', \'' . $wSDescription . '\');//A short description of your Blog.'. "\n";
         $fileContent .= '  define(\'CONTACTEMAIL\', \'' . $wSContactEmail . '\');    //Your Contact Email.' . "\n";
         $fileContent .= '  define(\'CONTACTPHONE\', \'' . $wSContactPhone . '\');      //Your Contact Phone.' . "\n";
-        $fileContent .= '  define(\'TEMPLATE\', \'BlogDraw2018\');          //Your Template Name.' . "\n";
+        $fileContent .= '  define(\'TEMPLATE\', \'BlogDraw2020\');          //Your Template Name.' . "\n";
         $fileContent .= '  define(\'TEMPLATEBY\', \'TuxSoft Limited\');      //Template Manufacturer.' . "\n";
         $fileContent .= '  define(\'COOKIENOTICE\', \'By using this site, you agree to our use of cookies on your computer, which enable some features of the site.\');  //Your Cookie Notice.' . "\n";
         $fileContent .= '?>';

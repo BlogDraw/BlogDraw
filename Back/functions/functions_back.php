@@ -14,5 +14,6 @@ require_once ('page_edit_posts_functions.php');
 require_once ('add_edit_posts_functions.php');
 require_once ('page_media_functions.php');
 require_once ('page_register_functions.php');
+require_once ('page_logout_functions.php');
 
 ?>
