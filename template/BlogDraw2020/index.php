@@ -20,7 +20,6 @@
     <title><?php output_head_title(); ?></title>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="<?php output_head_template_location(); ?>/bootstrap-4.4.1-dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="<?php output_head_template_location(); ?>/bootstrap-4.4.1-dist/css/bootstrap-theme.min.css" />
     <link rel="stylesheet" href="<?php output_head_template_location(); ?>/style.css" />
   </head>
   <body>
