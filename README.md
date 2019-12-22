@@ -21,8 +21,8 @@ BlogDraw is an ultra-lightweight, super-simple, easy-to-use, fully-featured blog
         <li>All the themes! You can install any BlogDraw Theme on any BlogDraw Site, and it just works. </li>
       </ul>
     </td>
-    <td>
-      <img src="https://blogdraw.com/images/writer.png" />
+    <td width="60%">
+      <img src="https://blogdraw.com/images/writerb21.png" />
     </td>
   </tr>
 </table>
@@ -31,8 +31,8 @@ BlogDraw is an ultra-lightweight, super-simple, easy-to-use, fully-featured blog
 
 <table>
   <tr>
-    <td>
-      <img src="https://blogdraw.com/images/account.png" />
+    <td width="60%">
+      <img src="https://blogdraw.com/images/accountb21.png" />
     </td>
     <td>
       <ol>
