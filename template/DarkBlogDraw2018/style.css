@@ -1,8 +1,0 @@
-.navbar{margin-bottom:0 !important;position:fixed; width:100%;}
-article header h2{margin-top:0 !important}
-.no-effect{color:inherit;}
-.no-effect:hover{text-decoration:none;color:inherit;}
-article img,article video{display:block;max-width:50%;margin:0.2rem auto;}
-.navbar-nav {width:100%;text-align:center;}
-.navbar-nav>li{float:none;display:inline-block;}
-.jumbotron{border-radius:0 !important;margin-top:50px;}

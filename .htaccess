@@ -9,7 +9,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)/$ /$1 [R,L]
 
 RewriteRule ^(functions\.php) - [F,L,NC]
-
+RewriteRule ^(Back/functions) - [F,L,NC]
 
 
 
@@ -19,7 +19,7 @@ RewriteRule ^(functions\.php) - [F,L,NC]
 
 <IfModule mod_expires.c>
 # Enable expirations
-ExpiresActive On 
+ExpiresActive On
 # Default directive
 ExpiresDefault "access plus 1 day"
 # My favicon

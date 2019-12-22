@@ -1,0 +1,3 @@
+.jumbotron h1{color: initial;}
+article div img, article div video {display: block; width: 75%; margin: 0 auto;}
+blockquote{border-left: solid 2px #888; padding-left: 0.4rem; margin-left: 0.4rem; font-style: oblique; color: #555;}
