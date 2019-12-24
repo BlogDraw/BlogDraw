@@ -81,11 +81,18 @@ function UI_media_page($pageOrPlugin)
       <table class="table table-condensed">
         <thead>
           <tr>
+<?php if ($pageOrPlugin != 'Plugin'){ ?>
             <th>Image:</th>
             <th>HTML Code (copy into a blog post):</th>
             <th>Location:</th>
             <th>Uploaded on:</th>
-              <?php if ($pageOrPlugin != 'Plugin'){ ?><th>Delete:</th>  <?php } ?>
+            <th>Delete:</th>
+<?php } else { ?>
+            <th>Image:</th>
+            <th>Copy to clipboard:</th>
+            <th>HTML Code (copy into a blog post):</th>
+            <th>Location:</th>
+<?php } ?>
           </tr>
         </thead>
         <tbody>
@@ -110,21 +117,34 @@ function UI_media_page($pageOrPlugin)
  **/
 function sub_UI_media_page_FindAndPrintFileData($pageOrPlugin)
 {
+  $count = 0;
   foreach(array_filter(glob('../uploads'.'/*'),'is_file') as $file)
   {
     if (strcasecmp(substr($file,-20),'apple-touch-icon.png') == 0 || strcasecmp(substr($file,-11),'favicon.ico') == 0)
     {
       if ($pageOrPlugin != 'Plugin')
         echo '<tr><td></td><td></td><td>' . substr($file,2) . '</td><td> ' . date ("Y-m-d H:i:s.", filemtime($file)) . '</td></tr>';
-      //don't do anything to show in the plugin.  It'll just confuse people.
+      //Show the apple touch icon and favicon.  Don't do anything to show in the plugin.  It'll just confuse people.
     }
     else if (strcasecmp(substr($file,-4),'.png') == 0 || strcasecmp(substr($file,-4),'.jpg') == 0 || strcasecmp(substr($file,-5),'.jpeg') == 0 || strcasecmp(substr($file,-4),'.bmp') == 0 || strcasecmp(substr($file,-4),'.gif') == 0 || strcasecmp(substr($file,-5),'.tiff') == 0)
     {
-      echo '<tr><td><img src="' . PROTOCOL . URL . substr($file,2) . '" alt="' . substr($file,11) . '" style="height:8vh;width:auto;" /></td><td>&ltimg src=&quot;' . PROTOCOL . URL . substr($file,2) . '&quot; alt=&quot;' . substr($file,11) . '&quot; /&gt;</td>' . '<td>' . substr($file,2) . '</td><td> ' . date ("Y-m-d H:i:s.", filemtime($file)) . '</td>';
       if ($pageOrPlugin != 'Plugin')
-      {
-        echo '<td><form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $returnedPostID . '" /><input type="submit" class="btn btn-default btn-xs" name="DeleteSubmit" value="Delete" /></form></td>';
-      }
+        echo '<tr>
+          <td><img src="' . PROTOCOL . URL . substr($file,2) . '" alt="' . substr($file,11) . '" style="height:8vh;width:auto;" /></td>
+          <td>&ltimg src=&quot;' . PROTOCOL . URL . substr($file,2) . '&quot; alt=&quot;' . substr($file,11) . '&quot; /&gt;</td>
+          <td>' . substr($file,2) . '</td>
+          <td> ' . date ("Y-m-d H:i:s.", filemtime($file)) . '</td>
+          <td><form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $returnedPostID . '" /><input type="submit" class="btn btn-default btn-xs" name="DeleteSubmit" value="Delete" /></form></td>';
+      else
+        echo '<tr>
+          <td><img src="' . PROTOCOL . URL . substr($file,2) . '" alt="' . substr($file,11) . '" style="height:8vh;width:auto;" /></td>
+          <td>
+            <p style="display:none;" id="' . $count . '"></p>
+            <button class="btn btn-default btn-xs" onclick="copy(' . $count . ')">Copy Link</button>
+            <script>function copy(id){var $temp = $("<input>");$("body").append($temp);$temp.val($(id).text()).select();document.execCommand("copy");$temp.remove();}</script>
+          </td>
+          <td>&ltimg src=&quot;' . PROTOCOL . URL . substr($file,2) . '&quot; alt=&quot;' . substr($file,11) . '&quot; /&gt;</td>
+          <td>' . substr($file,2) . '</td>';
       echo '</tr>';
     }
     else if (strcasecmp(substr($file,-4),'.mp4') == 0 || strcasecmp(substr($file,-5),'.webm') == 0 || strcasecmp(substr($file,-4),'.ogv') == 0)
@@ -154,6 +174,7 @@ function sub_UI_media_page_FindAndPrintFileData($pageOrPlugin)
       }
       echo '</tr>';
     }
+    $count++;
   }
 }
 
