@@ -13,8 +13,8 @@
     <!-- Enable IE/Edge Standards mode -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- Use An Apple Touch Icon and Favicon-->
-    <link rel="apple-touch-icon" href="<?php output_home_link(); ?>/Uploads/apple-touch-icon.png" />
-    <link rel="shortcut icon" href="<?php output_home_link(); ?>/Uploads/favicon.ico" />
+    <link rel="apple-touch-icon" href="<?php output_home_link(); ?>/uploads/apple-touch-icon.png" />
+    <link rel="shortcut icon" href="<?php output_home_link(); ?>/uploads/favicon.ico" />
     <!-- Here`s where the SEO comes in. -->
     <meta name="description" content="<?php output_head_description(); ?>" />
     <title><?php output_head_title(); ?></title>
@@ -61,6 +61,6 @@
     </footer>
     <script src="<?php output_template_location(); ?>/bootstrap-4.4.1-dist/js/jquery-3.4.1.min.js"></script>
     <script src="<?php output_template_location(); ?>/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
-    <?php require_once ('./plugins/Cookies/index.php'); ?>
+    <?php require_once ('./plugins/cookies/index.php'); ?>
   </body>
 </html>

@@ -110,7 +110,7 @@
         mysqli_query($dBConnection, $dBQuery);
         mysqli_close($dBConnection);
         //OUTPUT
-        echo '<p>Username: Admin - Password: ' . $randPass . $dBPrefix . '.</p><p>Please Log in to ' . $wSURL . '/Back/ and change these details now.</p>';
+        echo '<p>Username: Admin - Password: ' . $randPass . $dBPrefix . '.</p><p>Please Log in to ' . $wSURL . '/control/ and change these details now.</p>';
        
         //3. Delete this script, to stop other people using this script to destroy the site.
         unlink(__FILE__);
@@ -126,8 +126,8 @@
   <head>
     <title>Install BlogDraw</title>
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="./Back/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="./Back/bootstrap/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="./control/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./control/bootstrap/css/bootstrap-theme.min.css" />
   </head>
   <body>
     <div class="container-fluid">
@@ -228,8 +228,8 @@
     <br />
   </body>
   <!-- jQuery and Bootstrap -->
-  <script src="./Back/bootstrap/js/jquery-3.4.1.min.js"></script>
-  <script src="./Back/bootstrap/js/bootstrap.min.js"></script>
+  <script src="./control/bootstrap/js/jquery-3.4.1.min.js"></script>
+  <script src="./control/bootstrap/js/bootstrap.min.js"></script>
 </html><?php
   }
   engine_page();

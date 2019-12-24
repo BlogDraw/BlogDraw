@@ -11,7 +11,7 @@
 //CORE CONTENT
 global $notLoggedIn; 
 
-require_once ('Back/functions/db_connection_handler.php');
+require_once ('control/functions/db_connection_handler.php');
 if (!isset($_POST['LoginSubmit']))
   $cookieKey = mb_convert_encoding(htmlspecialchars(bin2hex(random_bytes(256))),"UTF-8");
 if (isset($_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']))

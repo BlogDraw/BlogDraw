@@ -1,7 +1,7 @@
 <?php
 require_once ('db_connection_handler.php');
 /**
- * functions_back.php - this combines the core PHP functions that operate the back end of BlogDraw (Known as "The Back").
+ * functions_back.php - this combines the core PHP functions that operate the back end of BlogDraw (Known as "The Control Panel").
  * They are split up as follows:
  * - Functions named engine_... - these contain the code that runs each page or aspect of a page - the complex algorithms.
  * - Functions named UI_... - these contain the code for the User Interfaces (UIs) of each page.  We need to keep these in PHP instead of HTML as many of them need dynamically generated content.

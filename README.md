@@ -39,7 +39,7 @@ BlogDraw is an ultra-lightweight, super-simple, easy-to-use, fully-featured blog
         <li>Downlad the source code, either from <a href="https://github.com/TuxSoftLimited/BlogDraw" title="BlogDraw on GitHub">Our GitHub Repository</a>, or from <a href="https://blogdraw.com" title="Visit BlogDraw">blogdraw.com</a>.</li>
         <li>Upload the zip file to your web server, and extract it.</li>
         <li>Go to your-website-url/install.php, and fill in your website and database details.</li>
-        <li>Log into your-website-url/Back using the details provided and click "My Account", then update your information.</li>
+        <li>Log into your-website-url/control using the details provided and click "My Account", then update your information.</li>
         <li>Start blogging!</li>
       </ol>
     </td>

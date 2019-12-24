@@ -9,6 +9,6 @@ function engine_logout_page($safeCookie)
   $dBQuery = "UPDATE `" . DBPREFIX . "_LoginTable` SET Cookie = 'XXX' WHERE Cookie = '" . $safeCookie . "';";
   mysqli_query($dBConnection,$dBQuery);
   disconnect($dBConnection);
-  echo 'Logging You Out Now...  <script>window.location.href = "' . PROTOCOL . URL . '/Back/";</script>';
+  echo 'Logging You Out Now...  <script>window.location.href = "' . PROTOCOL . URL . '/control/";</script>';
 }
 ?>

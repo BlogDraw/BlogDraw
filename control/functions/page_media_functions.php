@@ -8,13 +8,13 @@ function engine_media_page()
   if (isset($_POST['DeleteSubmit']) && isset($_POST['Delete']) && !empty($_POST['Delete']))
   {
     $file = htmlspecialchars($_POST['Delete']);
-    if (file_exists($file) && substr($file,0,11) == "../Uploads/")     
+    if (file_exists($file) && substr($file,0,11) == "../uploads/")     
       unlink($file) or die("Couldn't delete file");
   }
  
   if (isset($_POST['AddSubmit']))
   {
-    $targetDir = "../Uploads/";
+    $targetDir = "../uploads/";
     $targetFile = $targetDir . basename($_FILES["UploadFile"]["name"]);
     $fineToUpload = 1;
     $fileType = strtolower(pathinfo($targetFile,PATHINFO_EXTENSION));
@@ -43,13 +43,13 @@ function engine_media_page()
     {
       if ($targetFile == $targetDir . "favicon.ico")
       {
-        if (file_exists("../Uploads/favicon.ico"))      
-          unlink("../Uploads/favicon.ico") or die("Couldn't delete old file.");
+        if (file_exists("../uploads/favicon.ico"))      
+          unlink("../uploads/favicon.ico") or die("Couldn't delete old file.");
       }
       else if ($targetFile == $targetDir . "apple-touch-icon.png")
       {
-        if (file_exists("../Uploads/apple-touch-icon.png"))     
-          unlink("../Uploads/apple-touch-icon.png") or die("Couldn't delete old file.");
+        if (file_exists("../uploads/apple-touch-icon.png"))     
+          unlink("../uploads/apple-touch-icon.png") or die("Couldn't delete old file.");
       }
      
       if (move_uploaded_file($_FILES["UploadFile"]["tmp_name"], $targetFile))
@@ -95,8 +95,8 @@ function UI_media_page($pageOrPlugin)
     </div>
       <?php if ($pageOrPlugin != 'Plugin'){ ?><div class="row">
       <form method="post" enctype="multipart/form-data">
-        <input type="submit" class="btn btn-default col-xs-6" name="AddSubmit" id="AddSubmit" value="Add Media" />
         <input type="file" name="UploadFile" class="col-xs-6" id="UploadFile">
+        <input type="submit" class="btn btn-default col-xs-6" name="AddSubmit" id="AddSubmit" value="Add Media" />
       </form>
     </div>  <?php } ?>
   </div>
@@ -110,7 +110,7 @@ function UI_media_page($pageOrPlugin)
  **/
 function sub_UI_media_page_FindAndPrintFileData($pageOrPlugin)
 {
-  foreach(array_filter(glob('../Uploads'.'/*'),'is_file') as $file)
+  foreach(array_filter(glob('../uploads'.'/*'),'is_file') as $file)
   {
     if (strcasecmp(substr($file,-20),'apple-touch-icon.png') == 0 || strcasecmp(substr($file,-11),'favicon.ico') == 0)
     {

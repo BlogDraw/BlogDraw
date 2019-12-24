@@ -97,11 +97,11 @@ function controlCodeFunc()
           <div class="col-xs-12 col-md-8">
             <fieldset>
               <div>
-                <a class="btn btn-default btn-sm" name="controlBold" onclick="controlBoldFunc()">B</a>
-                <a class="btn btn-default btn-sm" name="controlItalic" onclick="controlItalicFunc()">I</a>
-                <a class="btn btn-default btn-sm" name="controlUnderline" onclick="controlUnderlineFunc()">U</a>
-                <a class="btn btn-default btn-sm" name="controlQuote" onclick="controlQuoteFunc()">"</a>
-                <a class="btn btn-default btn-sm" name="controlCode" onclick="controlCodeFunc()">&lt;&gt;</a>
+                <a class="btn btn-default btn-sm" title="Bold" name="controlBold" onclick="controlBoldFunc()"><strong>B</strong></a>
+                <a class="btn btn-default btn-sm" title="Italic" name="controlItalic" onclick="controlItalicFunc()"><em>I</em></a>
+                <a class="btn btn-default btn-sm" title="Underlined" name="controlUnderline" onclick="controlUnderlineFunc()"><span style="text-decoration:underline;">U</span></a>
+                <a class="btn btn-default btn-sm" title="Block Quote" name="controlQuote" onclick="controlQuoteFunc()"><blockquote>"</blockquote></a>
+                <a class="btn btn-default btn-sm" title="Code" name="controlCode" onclick="controlCodeFunc()"><code>&lt;&gt;<code></a>
               </div>
               <div style="height:0.4rem;"></div>
               <div>

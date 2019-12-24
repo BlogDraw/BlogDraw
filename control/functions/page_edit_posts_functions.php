@@ -107,7 +107,8 @@ function sub_engine_edit_posts_SubmitOrDraft($submitOrDraft,$safeCookie) //This 
     {
       $dBQuery = "UPDATE `" . DBPREFIX . "_PostsTable` SET Title = '" . $safeTitle . "',NiceTitle = '" . $safeNiceTitle . "',TagOne = '" . $safeTagOne . "',TagTwo = '" . $safeTagTwo . "',TagThree = '" . $safeTagThree . "',Post = '" . $safePost . "',PostIsDraft = 0 WHERE ID = '" . $safeEditID . "';";
       mysqli_query($dBConnection,$dBQuery);
-      echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>Posted!</strong></p></div>';
+      echo '<div class="row"><div class="col-xs-10 col-xs-push-1"><p class="alert alert-success" role="alert">Posted!</p></div></div>
+      <script>$(document).ready(function(){window.open(' . PROTOCOL . URL . '/' . $safeNiceTitle . ', "_blank");});</script>';
     }
   }
   else if ($submitOrDraft == 'Draft')
@@ -121,7 +122,7 @@ function sub_engine_edit_posts_SubmitOrDraft($submitOrDraft,$safeCookie) //This 
     {
       $dBQuery = "UPDATE `" . DBPREFIX . "_PostsTable` SET Title = '" . $safeTitle . "',NiceTitle = '" . $safeNiceTitle . "',TagOne = '" . $safeTagOne . "',TagTwo = '" . $safeTagTwo . "',TagThree = '" . $safeTagThree . "',Post = '" . $safePost . "',PostIsDraft = 1 WHERE ID = '" . $safeEditID . "';";
       mysqli_query($dBConnection,$dBQuery);
-      echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>Saved!</strong></p></div>';
+      echo '<div class="row"><div class="col-xs-10 col-xs-push-1"><p class="alert alert-success" role="alert">Saved!</p></div></div>';
     }
   }
   disconnect($dBConnection);

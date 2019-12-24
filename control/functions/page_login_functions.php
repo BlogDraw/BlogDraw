@@ -23,7 +23,7 @@ function engine_login_page($safeCookie)
         {
           $dBQuery = "UPDATE `" . DBPREFIX . "_LoginTable` SET Cookie = '" . $safeCookie . "' WHERE ID = '" . $returnedID . "';";
           mysqli_query($dBConnection,$dBQuery);
-          echo '<script>window.location.href = "' . PROTOCOL . URL . '/Back/";</script>';
+          echo '<script>window.location.href = "' . PROTOCOL . URL . '/control/";</script>';
           return;
         }
       }
