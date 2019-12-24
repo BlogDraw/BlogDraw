@@ -8,10 +8,10 @@ function engine_media_page()
   if (isset($_POST['DeleteSubmit']) && isset($_POST['Delete']) && !empty($_POST['Delete']))
   {
     $file = htmlspecialchars($_POST['Delete']);
-    if (file_exists($file) && substr($file,0,11) == "../uploads/")     
+    if (file_exists($file) && substr($file,0,11) == "../uploads/")
       unlink($file) or die("Couldn't delete file");
   }
- 
+
   if (isset($_POST['AddSubmit']))
   {
     $targetDir = "../uploads/";
@@ -43,15 +43,15 @@ function engine_media_page()
     {
       if ($targetFile == $targetDir . "favicon.ico")
       {
-        if (file_exists("../uploads/favicon.ico"))      
+        if (file_exists("../uploads/favicon.ico"))
           unlink("../uploads/favicon.ico") or die("Couldn't delete old file.");
       }
       else if ($targetFile == $targetDir . "apple-touch-icon.png")
       {
-        if (file_exists("../uploads/apple-touch-icon.png"))     
+        if (file_exists("../uploads/apple-touch-icon.png"))
           unlink("../uploads/apple-touch-icon.png") or die("Couldn't delete old file.");
       }
-     
+
       if (move_uploaded_file($_FILES["UploadFile"]["tmp_name"], $targetFile))
         echo "The file ". basename( $_FILES["UploadFile"]["name"]). " has been uploaded.";
       else
@@ -117,6 +117,8 @@ function UI_media_page($pageOrPlugin)
  **/
 function sub_UI_media_page_FindAndPrintFileData($pageOrPlugin)
 {
+  if ($pageOrPlugin == 'Plugin')
+    echo '<script>function copier(id){var copyText = document.getElementById(id);copyText.select();document.execCommand("copy");alert("Copied!");}</script>';
   $count = 0;
   foreach(array_filter(glob('../uploads'.'/*'),'is_file') as $file)
   {
@@ -128,23 +130,15 @@ function sub_UI_media_page_FindAndPrintFileData($pageOrPlugin)
     }
     else if (strcasecmp(substr($file,-4),'.png') == 0 || strcasecmp(substr($file,-4),'.jpg') == 0 || strcasecmp(substr($file,-5),'.jpeg') == 0 || strcasecmp(substr($file,-4),'.bmp') == 0 || strcasecmp(substr($file,-4),'.gif') == 0 || strcasecmp(substr($file,-5),'.tiff') == 0)
     {
+      echo '<tr>';
       if ($pageOrPlugin != 'Plugin')
-        echo '<tr>
-          <td><img src="' . PROTOCOL . URL . substr($file,2) . '" alt="' . substr($file,11) . '" style="height:8vh;width:auto;" /></td>
-          <td>&ltimg src=&quot;' . PROTOCOL . URL . substr($file,2) . '&quot; alt=&quot;' . substr($file,11) . '&quot; /&gt;</td>
-          <td>' . substr($file,2) . '</td>
-          <td> ' . date ("Y-m-d H:i:s.", filemtime($file)) . '</td>
-          <td><form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $returnedPostID . '" /><input type="submit" class="btn btn-default btn-xs" name="DeleteSubmit" value="Delete" /></form></td>';
+        echo '<td><img src="' . PROTOCOL . URL . substr($file,2) . '" alt="' . substr($file,11) . '" style="height:8vh;width:auto;" /></td><td>&ltimg src=&quot;' . PROTOCOL . URL . substr($file,2) . '&quot; alt=&quot;' . substr($file,11) . '&quot; /&gt;</td><td>' . substr($file,2) . '</td><td> ' . date ("Y-m-d H:i:s.", filemtime($file)) . '</td><td><form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $returnedPostID . '" /><input type="submit" class="btn btn-default btn-xs" name="DeleteSubmit" value="Delete" /></form></td>';
       else
-        echo '<tr>
-          <td><img src="' . PROTOCOL . URL . substr($file,2) . '" alt="' . substr($file,11) . '" style="height:8vh;width:auto;" /></td>
-          <td>
-            <p style="display:none;" id="' . $count . '"></p>
-            <button class="btn btn-default btn-xs" onclick="copy(' . $count . ')">Copy Link</button>
-            <script>function copy(id){var $temp = $("<input>");$("body").append($temp);$temp.val($(id).text()).select();document.execCommand("copy");$temp.remove();}</script>
-          </td>
-          <td>&ltimg src=&quot;' . PROTOCOL . URL . substr($file,2) . '&quot; alt=&quot;' . substr($file,11) . '&quot; /&gt;</td>
-          <td>' . substr($file,2) . '</td>';
+      {
+        echo '<td><img src="' . PROTOCOL . URL . substr($file,2) . '" alt="' . substr($file,11) . '" style="height:8vh;width:auto;" /></td><td>';
+        echo "<input type='text' style='position:absolute;top:-900px;left:-900px;' id='" . $count . "' value='<img src=\"" . PROTOCOL . URL . substr($file,2) . "\" alt=\"" . substr($file,11) . "\" />' />";
+        echo '<p class="btn btn-default btn-xs" onclick="copier(\'' . $count . '\')">Copy Link</p></td><td>&ltimg src=&quot;' . PROTOCOL . URL . substr($file,2) . '&quot; alt=&quot;' . substr($file,11) . '&quot; /&gt;</td><td>' . substr($file,2) . '</td>';
+      }
       echo '</tr>';
     }
     else if (strcasecmp(substr($file,-4),'.mp4') == 0 || strcasecmp(substr($file,-5),'.webm') == 0 || strcasecmp(substr($file,-4),'.ogv') == 0)
