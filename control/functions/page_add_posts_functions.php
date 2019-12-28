@@ -48,7 +48,7 @@ function sub_engine_add_posts_SubmitOrDraft($submitOrDraft,$safeCookie)
     $dBQuery = "INSERT INTO `" . DBPREFIX . "_PostsTable` (AuthorID,Title,NiceTitle,TagOne,TagTwo,TagThree,Post,PostIsDraft) VALUES ('" . $returnedAuthorID . "','" . $safeTitle . "','" . $safeNiceTitle . "','" . $safeTagOne . "','" . $safeTagTwo . "','" . $safeTagThree . "','" . $safePost . "',0);";
     mysqli_query($dBConnection,$dBQuery);
     echo '<div class="row"><div class="col-xs-10 col-xs-push-1"><p class="alert alert-success" role="alert">Posted!</p></div></div>
-    <script>$(document).ready(function(){window.open(' . PROTOCOL . URL . '/' . $safeNiceTitle . ', "_blank");});</script>';
+    <script>$(document).ready(function(){window.open("' . PROTOCOL . URL . '/' . $safeNiceTitle . '", "_blank");});</script>';
   }
   else if ($submitOrDraft == 'Draft')
   {
