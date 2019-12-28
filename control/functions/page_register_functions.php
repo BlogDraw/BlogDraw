@@ -116,7 +116,7 @@ function UI_register_page()
         </div>
         <br />
         <div class="row">
-          <input type="submit" class="btn btn-primary col-3" name="RegisterSubmit" id="RegisterSubmit" value="Add New Account" />
+          <input type="submit" class="btn btn-light col-3" name="RegisterSubmit" id="RegisterSubmit" value="Add New Account" />
         </div>
       </fieldset>
     </form>

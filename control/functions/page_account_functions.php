@@ -224,7 +224,7 @@ function UI_account_page($returnedUsername,$returnedDisplayName,$returnedCompany
         </div>
         <br />
         <div class="row">
-          <input type="submit" class="btn btn-primary col-3" name="AccountSubmit" value="Change" />
+          <input type="submit" class="btn btn-light col-3" name="AccountSubmit" value="Change" />
         </div>
       </fieldset>
     </form>

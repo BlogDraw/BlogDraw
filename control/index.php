@@ -50,7 +50,7 @@
     if(isset($_GET['page']))
       $subPage = htmlspecialchars(filter_input( INPUT_GET, 'page', FILTER_SANITIZE_URL));
 ?>
-      <nav id="navbar" class="navbar navbar-expand static-top navbar-dark bg-dark">
+      <nav id="navbar" class="navbar navbar-expand static-top navbar-dark bg-dark" style="margin-bottom:2rem;">
       <div class="container-fluid">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item<?php if(!isset($_GET['page'])){echo ' active';} ?>"><a class="nav-link" href="<?php PROTOCOL . URL ?>/control/" title="The Control Panel"><span class="glyphicon glyphicon-home" aria-hidden="true" aria-label="The Control Panel"></span>&nbsp;The Control Panel</a></li>

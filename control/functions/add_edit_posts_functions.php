@@ -97,11 +97,11 @@ function controlCodeFunc()
           <div class="col-12 col-md-8">
             <fieldset>
               <div>
-                <a class="btn btn-primary btn-sm" title="Bold" name="controlBold" onclick="controlBoldFunc()"><strong> B </strong></a>
-                <a class="btn btn-primary btn-sm" title="Italic" name="controlItalic" onclick="controlItalicFunc()"><em> I </em></a>
-                <a class="btn btn-primary btn-sm" title="Underlined" name="controlUnderline" onclick="controlUnderlineFunc()"><span style="text-decoration:underline;"> U </span></a>
-                <a class="btn btn-primary btn-sm" title="Block Quote" name="controlQuote" onclick="controlQuoteFunc()">&ldquo; &rdquo;</a>
-                <a class="btn btn-primary btn-sm" title="Code" name="controlCode" onclick="controlCodeFunc()"><code>&lt; &gt;</code></a>
+                <a class="btn btn-light btn-sm" title="Bold" name="controlBold" onclick="controlBoldFunc()"><strong> B </strong></a>
+                <a class="btn btn-light btn-sm" title="Italic" name="controlItalic" onclick="controlItalicFunc()"><em> I </em></a>
+                <a class="btn btn-light btn-sm" title="Underlined" name="controlUnderline" onclick="controlUnderlineFunc()"><span style="text-decoration:underline;"> U </span></a>
+                <a class="btn btn-light btn-sm" title="Block Quote" name="controlQuote" onclick="controlQuoteFunc()">&ldquo; &rdquo;</a>
+                <a class="btn btn-light btn-sm" title="Code" name="controlCode" onclick="controlCodeFunc()"><code>&lt; &gt;</code></a>
               </div>
               <div style="height:0.4rem;"></div>
               <div>
@@ -123,9 +123,9 @@ function controlCodeFunc()
         <br />
           <?php if ($addEdit == 'Edit'){ ?><input type="hidden" name="Editor" id="Editor" value="  <?php echo $editPostID; ?>" />   <?php } ?>
         <div class="btn-group col-12">
-          <input type="submit" class="btn btn-primary col-4" name="PostSubmit" value="Write Post" />
-          <input type="submit" class="btn btn-primary col-4" name="PostDraft" value="Save Draft Post" />
-          <input type="submit" class="btn btn-primary col-4" name="PostCancel" value="Cancel Post" />
+          <input type="submit" class="btn btn-light col-4" name="PostSubmit" value="Write Post" />
+          <input type="submit" class="btn btn-light col-4" name="PostDraft" value="Save Draft Post" />
+          <input type="submit" class="btn btn-light col-4" name="PostCancel" value="Cancel Post" />
         </div>
       </fieldset>
     </form>

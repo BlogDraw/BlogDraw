@@ -151,7 +151,7 @@ function UI_edit_posts_page($safeCookie)
               <th>Title:</th>
               <th>Content:</th>
               <th>Written On:</th>
-              <th>Actions:</th>
+              <th style="width:8rem;">Actions:</th>
             </tr>
           </thead>
           <tbody>
@@ -186,7 +186,7 @@ function sub_UI_edit_posts_TableContent($safeCookie)
     $returnedPostIsDraft = cleanHtmlString($dBConnection, $row['PostIsDraft']);
     if ($returnedPostIsDraft == 1)
       $returnedPost = substr("[DRAFT]: " . $returnedPost,0,80);
-    echo'<tr><td>' . $returnedPostID . '</td><td>' . $returnedTitle . '</td><td>' . $returnedPost . '</td><td>' . $returnedTimestamp . '</td><td><form method="post" style="display:inline;"><input id="Edit" name="Edit" type="hidden" value="' . $returnedPostID . '" /><input type="submit" class="btn btn-primary btn-sm" name="EditSubmit" value="Edit" /></form>&nbsp;<form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $returnedPostID . '" /><input type="submit" class="btn btn-primary btn-sm" name="DeleteSubmit" value="Delete" /></form></td></tr>';
+    echo'<tr><td>' . $returnedPostID . '</td><td>' . $returnedTitle . '</td><td>' . $returnedPost . '</td><td>' . $returnedTimestamp . '</td><td><form method="post" style="display:inline;"><input id="Edit" name="Edit" type="hidden" value="' . $returnedPostID . '" /><input type="submit" class="btn btn-light btn-sm" name="EditSubmit" value="Edit" /></form>&nbsp;<form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $returnedPostID . '" /><input type="submit" class="btn btn-light btn-sm" name="DeleteSubmit" value="Delete" /></form></td></tr>';
   }
   disconnect($dBConnection);
 }

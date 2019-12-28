@@ -59,7 +59,7 @@ function UI_login_page()
       </div>
       <br />
       <div class="row">
-        <input type="submit" class="btn btn-primary col-3" name="LoginSubmit" value="Login" />
+        <input type="submit" class="btn btn-light col-3" name="LoginSubmit" value="Login" />
       </div>
     </fieldset>
   </form>

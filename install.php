@@ -1,7 +1,7 @@
 <?php
 /**
  * install.php - this installs and initialises BlogDraw for the first time.
-**/
+ **/
   function engine_page() //This handles all of the data for the install process.
   {
     if (isset($_POST['Submit']))
@@ -183,10 +183,10 @@
             <br />
             <div class="row">
               <label class="control-label col-12 col-sm-3" for="WSSSL">HTTP, or HTTPS?*:</label>
-              <div class="col-12 col-sm-9">
+              <div class="form-check col-12 col-sm-9">
                 <div>
-                  <input type="radio" name="WSSSL" value="WSSSL" checked />HTTPS
-                  <input type="radio" name="WSSSL" value="WSnoSSL" />HTTP
+                  <input class="form-check-input" type="radio" name="WSSSL" value="WSSSL" checked />HTTPS&nbsp;
+                  <input class="form-check-input" type="radio" name="WSSSL" value="WSnoSSL" />HTTP
                 </div>
               </div>
             </div>
