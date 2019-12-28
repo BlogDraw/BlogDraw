@@ -28,7 +28,7 @@ function engine_login_page($safeCookie)
         }
       }
     }
-    echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>Username and/or Password is Invalid.</strong></p></div>';
+    echo '<div class="row"><p class="col-10 offset-1"><strong>Username and/or Password is Invalid.</strong></p></div>';
     disconnect($dBConnection);
   }
   UI_login_page();
@@ -41,25 +41,25 @@ function UI_login_page()
 {
 ?><div class="container-fluid">
 <div class="row">
-  <form method="post" id="LoginForm" class="form-horizontal col-xs-10 col-xs-push-1">
+  <form method="post" id="LoginForm" class="col-10 offset-1">
     <fieldset class="form-group">
       <legend>Login:</legend>
       <div class="row">
-        <label class="control-label col-xs-12 col-sm-3" for="Username">Username:</label>
-        <div class="col-xs-12 col-sm-9">
+        <label class="control-label col-12 col-sm-3" for="Username">Username:</label>
+        <div class="col-12 col-sm-9">
           <input type="text" class="form-control" name="Username" id="Username" />
         </div>
       </div>
       <br />
       <div class="row">
-        <label class="control-label col-xs-12 col-sm-3" for="Password">Password:</label>
-        <div class="col-xs-12 col-sm-9">
+        <label class="control-label col-12 col-sm-3" for="Password">Password:</label>
+        <div class="col-12 col-sm-9">
           <input type="password" class="form-control" name="Password" id="Password" />
         </div>
       </div>
       <br />
       <div class="row">
-        <input type="submit" class="btn btn-default col-xs-3" name="LoginSubmit" value="Login" />
+        <input type="submit" class="btn btn-primary col-3" name="LoginSubmit" value="Login" />
       </div>
     </fieldset>
   </form>

@@ -43,7 +43,7 @@ function engine_account_page($safeCookie)
       }
     }
     else
-      echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>You need at least username and email address for an account.</strong></p></div>';
+      echo '<div class="row"><p class="col-10 offset-1"><strong>You need at least username and email address for an account.</strong></p></div>';
 
     if(isset($_POST['Password1']) && isset($_POST['Password2']) && !empty($_POST['Password1']))
     {
@@ -53,10 +53,10 @@ function engine_account_page($safeCookie)
         $safePassword = cleanHtmlString($dBConnection,$newPassword);
         $dBQuery = "UPDATE `" . DBPREFIX . "_LoginTable` SET Password = '" . $safePassword . "' WHERE Cookie = '" . $safeCookie . "';";
         mysqli_query($dBConnection,$dBQuery);
-        echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>Your account password has been reset, please look after it.</strong></p></div>';
+        echo '<div class="row"><p class="col-10 offset-1"><strong>Your account password has been reset, please look after it.</strong></p></div>';
       }
       else
-        echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>Passords don&#39;t match!</strong></p></div>';
+        echo '<div class="row"><p class="col-10 offset-1"><strong>Passords don&#39;t match!</strong></p></div>';
     }
     if(isset($_POST['Company']))
     {
@@ -147,84 +147,84 @@ function UI_account_page($returnedUsername,$returnedDisplayName,$returnedCompany
 {
 ?><div class="container-fluid">
   <div class="row">
-    <form method="post" id="AccountChangeForm" class="form-horizontal col-xs-10 col-xs-push-1">
+    <form method="post" id="AccountChangeForm" class="col-10 offset-1">
       <fieldset class="form-group">
         <legend>My Account:</legend>
         <div class="row">
-          <label class="control-label col-xs-12 col-sm-3" for="Username">Username:</label>
-          <div class="col-xs-12 col-sm-9">
+          <label class="col-form-label col-12 col-sm-3" for="Username">Username:</label>
+          <div class="col-12 col-sm-9">
             <input type="text" class="form-control" name="Username" id="Username" value="<?php echo $returnedUsername; ?>" />
           </div>
         </div>
         <div class="row">
-          <label class="control-label col-xs-12 col-sm-3" for="DisplayName">Display Name:</label>
-          <div class="col-xs-12 col-sm-9">
+          <label class="col-form-label col-12 col-sm-3" for="DisplayName">Display Name:</label>
+          <div class="col-12 col-sm-9">
             <input type="text" class="form-control" name="DisplayName" id="DisplayName" value="<?php echo $returnedDisplayName; ?>" />
           </div>
         </div>
         <br />
         <div class="row">
-          <label class="control-label col-xs-12 col-sm-3" for="Password1">Change Password:</label>
-          <div class="col-xs-12 col-sm-9">
+          <label class="col-form-label col-12 col-sm-3" for="Password1">Change Password:</label>
+          <div class="col-12 col-sm-9">
             <input type="password" class="form-control" name="Password1" id="Password1" />
           </div>
         </div>
         <div class="row">
-          <div class="col-xs-12 col-sm-9 col-sm-push-3">
+          <div class="col-12 col-sm-9 offset-sm-3">
             <input type="password" class="form-control" name="Password2" id="Password2" />
           </div>
         </div>
         <br />
         <div class="row">
-          <label class="control-label col-xs-12 col-sm-3" for="Company">Company:</label>
-          <div class="col-xs-12 col-sm-9">
+          <label class="col-form-label col-12 col-sm-3" for="Company">Company:</label>
+          <div class="col-12 col-sm-9">
             <input type="text" class="form-control" name="Company" id="Company" value="<?php echo $returnedCompany; ?>" />
           </div>
         </div>
         <br />
         <div class="row">
-          <label class="control-label col-xs-12 col-sm-3" for="UserURL">Website:</label>
-          <div class="col-xs-12 col-sm-9">
+          <label class="col-form-label col-12 col-sm-3" for="UserURL">Website:</label>
+          <div class="col-12 col-sm-9">
             <input type="text" class="form-control" name="UserURL" id="UserURL" value="<?php echo $returnedURL; ?>" />
           </div>
         </div>
         <br />
         <div class="row">
-          <label class="control-label col-xs-12 col-sm-3" for="Email">Email:</label>
-          <div class="col-xs-12 col-sm-9">
+          <label class="col-form-label col-12 col-sm-3" for="Email">Email:</label>
+          <div class="col-12 col-sm-9">
             <input type="text" class="form-control" name="Email" id="Email" value="<?php echo $returnedEmail; ?>" />
           </div>
         </div>
         <br />
         <div class="row">
-          <label class="control-label col-xs-12 col-sm-3" for="UserImage">User Photo URL:</label>
-          <div class="col-xs-12 col-sm-9">
+          <label class="col-form-label col-12 col-sm-3" for="UserImage">User Photo URL:</label>
+          <div class="col-12 col-sm-9">
             <input type="text" class="form-control" name="UserImage" id="UserImage" value="<?php echo $returnedUserImage; ?>" />
           </div>
         </div>
         <br />
         <div class="row">
-          <label class="control-label col-xs-12 col-sm-3" for="UserBlurb">Your User Blurb (accepts HTML):</label>
-          <div class="col-xs-12 col-sm-9">
+          <label class="col-form-label col-12 col-sm-3" for="UserBlurb">Your User Blurb (accepts HTML):</label>
+          <div class="col-12 col-sm-9">
             <input type="text" class="form-control" name="UserBlurb" id="UserBlurb" value="<?php echo $returnedUserBlurb; ?>" />
           </div>
         </div>
         <br />
         <div class="row">
-          <label class="control-label col-xs-12 col-sm-3" for="EmailPublic">Make email address public:</label>
-          <div class="col-xs-12 col-sm-9">
-            <div class="checkbox">
+          <label class="col-form-label col-12 col-sm-3" for="EmailPublic">Make email address public:</label>
+          <div class="col-12 col-sm-9">
+            <div class="form-check">
                 <?php if ($returnedEmailIsPublic == 1){ ?>
-              <input type="checkbox" name="EmailPublic" id="EmailPublic" checked />
+              <input class="form-check-input" type="checkbox" name="EmailPublic" id="EmailPublic" checked />
                 <?php }else{ ?>
-              <input type="checkbox" name="EmailPublic" id="EmailPublic" />
+              <input class="form-check-input" type="checkbox" name="EmailPublic" id="EmailPublic" />
                 <?php } ?>
             </div>
           </div>
         </div>
         <br />
         <div class="row">
-          <input type="submit" class="btn btn-default col-xs-3" name="AccountSubmit" value="Change" />
+          <input type="submit" class="btn btn-primary col-3" name="AccountSubmit" value="Change" />
         </div>
       </fieldset>
     </form>

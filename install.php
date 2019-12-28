@@ -43,23 +43,23 @@
         //1. Load the Website data into the functions file
         $file = "functions.php";
         $fileContent = '<?php' . "\n";
-        $fileContent .= '  if (substr($_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"], 0, ' . ($length + 1 - $protoLength) . ') != "' . $wSURL . '/" || substr($_SERVER["SERVER_NAME"] . $_SERVER["PHP_SELF"], 0, ' . ($length + 1 - $protoLength) . ') != "' . $wSURL . '/")' . "\n";
-        $fileContent .= '  {' . "\n" . '    die();' . "\n" . '  }' . "\n";
-        $fileContent .= '  define(\'URL\', \'' . $wSURL . '\');        //Website Location.' . "\n";
-        $fileContent .= '  define(\'PROTOCOL\', \'' . $wSSSL . '\');      //http:// or https://.' . "\n";
-        $fileContent .= '  define(\'LENGTH\', ' . $length . ');          //Length of URL plus PROTOCOL.' . "\n";
-        $fileContent .= '  define(\'DBUSER\', \'' . $dBUsername . '\');    //MySQL User.' . "\n";
-        $fileContent .= '  define(\'DBPASS\', \'' . $dBPassword . '\');      //MySQL Password.' . "\n";
-        $fileContent .= '  define(\'DBSERVER\', \'' . $dBServer . '\');    //Database Server.' . "\n";
-        $fileContent .= '  define(\'DBNAME\', \'' . $dBName . '\');    //Database Name.' . "\n";
-        $fileContent .= '  define(\'DBPREFIX\', \'' . $dBPrefix . '\');        //Database Table Prefix.' . "\n" . "\n";
-        $fileContent .= '  define(\'TITLE\', \'' . $wSTitle . '\');            //Your Blog Title.' . "\n";
-        $fileContent .= '  define(\'DESCRIPTION\', \'' . $wSDescription . '\');//A short description of your Blog.'. "\n";
-        $fileContent .= '  define(\'CONTACTEMAIL\', \'' . $wSContactEmail . '\');    //Your Contact Email.' . "\n";
-        $fileContent .= '  define(\'CONTACTPHONE\', \'' . $wSContactPhone . '\');      //Your Contact Phone.' . "\n";
-        $fileContent .= '  define(\'TEMPLATE\', \'BlogDraw2020\');          //Your Template Name.' . "\n";
-        $fileContent .= '  define(\'TEMPLATEBY\', \'TuxSoft Limited\');      //Template Manufacturer.' . "\n";
-        $fileContent .= '  define(\'COOKIENOTICE\', \'By using this site, you agree to our use of cookies on your computer, which enable some features of the site.\');  //Your Cookie Notice.' . "\n";
+        $fileContent .= 'if (substr($_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"], 0, ' . ($length + 1 - $protoLength) . ') != "' . $wSURL . '/" || substr($_SERVER["SERVER_NAME"] . $_SERVER["PHP_SELF"], 0, ' . ($length + 1 - $protoLength) . ') != "' . $wSURL . '/")' . "\n";
+        $fileContent .= '  die();' . "\n";
+        $fileContent .= 'define(\'URL\', \'' . $wSURL . '\');        //Website Location.' . "\n";
+        $fileContent .= 'define(\'PROTOCOL\', \'' . $wSSSL . '\');      //http:// or https://.' . "\n";
+        $fileContent .= 'define(\'LENGTH\', ' . $length . ');          //Length of URL plus PROTOCOL.' . "\n";
+        $fileContent .= 'define(\'DBUSER\', \'' . $dBUsername . '\');    //MySQL User.' . "\n";
+        $fileContent .= 'define(\'DBPASS\', \'' . $dBPassword . '\');      //MySQL Password.' . "\n";
+        $fileContent .= 'define(\'DBSERVER\', \'' . $dBServer . '\');    //Database Server.' . "\n";
+        $fileContent .= 'define(\'DBNAME\', \'' . $dBName . '\');    //Database Name.' . "\n";
+        $fileContent .= 'define(\'DBPREFIX\', \'' . $dBPrefix . '\');        //Database Table Prefix.' . "\n" . "\n";
+        $fileContent .= 'define(\'TITLE\', \'' . $wSTitle . '\');            //Your Blog Title.' . "\n";
+        $fileContent .= 'define(\'DESCRIPTION\', \'' . $wSDescription . '\');//A short description of your Blog.'. "\n";
+        $fileContent .= 'define(\'CONTACTEMAIL\', \'' . $wSContactEmail . '\');    //Your Contact Email.' . "\n";
+        $fileContent .= 'define(\'CONTACTPHONE\', \'' . $wSContactPhone . '\');      //Your Contact Phone.' . "\n";
+        $fileContent .= 'define(\'TEMPLATE\', \'BlogDraw2020\');          //Your Template Name.' . "\n";
+        $fileContent .= 'define(\'TEMPLATEBY\', \'TuxSoft Limited\');      //Template Manufacturer.' . "\n";
+        $fileContent .= 'define(\'COOKIENOTICE\', \'By using this site, you agree to our use of cookies on your computer, which enable some features of the site.\');  //Your Cookie Notice.' . "\n";
         $fileContent .= '?>';
         $fileContent .= file_get_contents($file);
         file_put_contents($file, $fileContent);
@@ -133,40 +133,40 @@
   <body>
     <div class="container-fluid">
       <div class="row">
-        <form method="post" id="InstallForm" class="form-horizontal col-xs-10 col-xs-push-1">
+        <form method="post" id="InstallForm" class="col-10 offset-1">
           <fieldset class="form-group">
             <legend>Database Details:</legend>
             <div class="row">
-              <label class="control-label col-xs-12 col-sm-3" for="DBUsername">Username*:</label>
-              <div class="col-xs-12 col-sm-9">
+              <label class="control-label col-12 col-sm-3" for="DBUsername">Username*:</label>
+              <div class="col-12 col-sm-9">
                 <input type="text" class="form-control" name="DBUsername" id="DBUsername" />
               </div>
             </div>
             <br />
             <div class="row">
-              <label class="control-label col-xs-12 col-sm-3" for="DBPassword">Password*:</label>
-              <div class="col-xs-12 col-sm-9">
+              <label class="control-label col-12 col-sm-3" for="DBPassword">Password*:</label>
+              <div class="col-12 col-sm-9">
                 <input type="password" class="form-control" name="DBPassword" id="DBPassword" />
               </div>
             </div>
             <br />
             <div class="row">
-              <label class="control-label col-xs-12 col-sm-3" for="DBServer">Server IP*:</label>
-              <div class="col-xs-12 col-sm-9">
+              <label class="control-label col-12 col-sm-3" for="DBServer">Server IP*:</label>
+              <div class="col-12 col-sm-9">
                 <input type="text" class="form-control" name="DBServer" id="DBServer" />
               </div>
             </div>
             <br />
             <div class="row">
-              <label class="control-label col-xs-12 col-sm-3" for="DBName">Database Name*:</label>
-              <div class="col-xs-12 col-sm-9">
+              <label class="control-label col-12 col-sm-3" for="DBName">Database Name*:</label>
+              <div class="col-12 col-sm-9">
                 <input type="text" class="form-control" name="DBName" id="DBName" />
               </div>
             </div>
             <br />
             <div class="row">
-              <label class="control-label col-xs-12 col-sm-3" for="DBPrefix">Table Prefix (Two random letters, IE: "BD")*:</label>
-              <div class="col-xs-12 col-sm-9">
+              <label class="control-label col-12 col-sm-3" for="DBPrefix">Table Prefix (Two random letters, IE: "BD")*:</label>
+              <div class="col-12 col-sm-9">
                 <input type="text" class="form-control" name="DBPrefix" id="DBPrefix" />
               </div>
             </div>
@@ -175,15 +175,15 @@
           <fieldset class="form-group">
             <legend>Website Details:</legend>
             <div class="row">
-              <label class="control-label col-xs-12 col-sm-3" for="WSURL">Website URL*:</label>
-              <div class="col-xs-12 col-sm-9">
+              <label class="control-label col-12 col-sm-3" for="WSURL">Website URL*:</label>
+              <div class="col-12 col-sm-9">
                 <input type="text" class="form-control" name="WSURL" id="WSURL" />
               </div>
             </div>
             <br />
             <div class="row">
-              <label class="control-label col-xs-12 col-sm-3" for="WSSSL">HTTP, or HTTPS?*:</label>
-              <div class="col-xs-12 col-sm-9">
+              <label class="control-label col-12 col-sm-3" for="WSSSL">HTTP, or HTTPS?*:</label>
+              <div class="col-12 col-sm-9">
                 <div>
                   <input type="radio" name="WSSSL" value="WSSSL" checked />HTTPS
                   <input type="radio" name="WSSSL" value="WSnoSSL" />HTTP
@@ -192,36 +192,36 @@
             </div>
             <br />
             <div class="row">
-              <label class="control-label col-xs-12 col-sm-3" for="WSTitle">Website Title*:</label>
-              <div class="col-xs-12 col-sm-9">
+              <label class="control-label col-12 col-sm-3" for="WSTitle">Website Title*:</label>
+              <div class="col-12 col-sm-9">
                 <input type="text" class="form-control" name="WSTitle" id="WSTitle" />
               </div>
             </div>
             <br />
             <div class="row">
-              <label class="control-label col-xs-12 col-sm-3" for="WSDescription">Website Description*:</label>
-              <div class="col-xs-12 col-sm-9">
+              <label class="control-label col-12 col-sm-3" for="WSDescription">Website Description*:</label>
+              <div class="col-12 col-sm-9">
                 <input type="text" class="form-control" name="WSDescription" id="WSDescription" />
               </div>
             </div>
             <br />
             <div class="row">
-              <label class="control-label col-xs-12 col-sm-3" for="WSContactEmail">Website Contact Email:</label>
-              <div class="col-xs-12 col-sm-9">
+              <label class="control-label col-12 col-sm-3" for="WSContactEmail">Website Contact Email:</label>
+              <div class="col-12 col-sm-9">
                 <input type="text" class="form-control" name="WSContactEmail" id="WSContactEmail" />
               </div>
             </div>
             <br />
             <div class="row">
-              <label class="control-label col-xs-12 col-sm-3" for="WSContactPhone">Website Contact Phone:</label>
-              <div class="col-xs-12 col-sm-9">
+              <label class="control-label col-12 col-sm-3" for="WSContactPhone">Website Contact Phone:</label>
+              <div class="col-12 col-sm-9">
                 <input type="text" class="form-control" name="WSContactPhone" id="WSContactPhone" />
               </div>
             </div>
             <br />
           </fieldset>
           <div class="row">
-            <input type="submit" class="btn btn-default col-xs-3" name="Submit" id="Submit" value="Submit" />
+            <input type="submit" class="btn btn-primary col-3" name="Submit" id="Submit" value="Submit" />
           </div>
         </form>
       </div>

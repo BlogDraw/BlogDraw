@@ -360,7 +360,7 @@ function engine_load_blog_archive_button($lastPostLoaded)
   ?>
   <form method="post">
     <input id="LastPostLoaded" name="LastPostLoaded" type="hidden" value="<?php echo $lastPostLoaded; ?>" />
-    <input type="submit" class="btn btn-default" name="LoadMore" value="Load More..." />
+    <input type="submit" class="btn btn-primary" name="LoadMore" value="Load More..." />
   </form>
   <?php
 }

@@ -8,14 +8,14 @@ function engine_add_posts_page($safeCookie)
   if (isset($_POST['PostSubmit']))
   {
     if (!(isset($_POST['Title']) && isset($_POST['Content']) && isset($_POST['Tags']) && !empty($_POST['Title']) && !empty($_POST['Content']) && !empty($_POST['Tags'])))
-      echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>Please fill in all fields.</strong></p></div>';
+      echo '<div class="row"><p class="col-10 offset-1"><strong>Please fill in all fields.</strong></p></div>';
     else
       sub_engine_add_posts_SubmitOrDraft('Submit',$safeCookie);
   }
   else if (isset($_POST['PostDraft']))
   {
     if (!(isset($_POST['Title']) && isset($_POST['Content']) && isset($_POST['Tags']) && !empty($_POST['Title']) && !empty($_POST['Content']) && !empty($_POST['Tags'])))
-      echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>Please fill in all fields.</strong></p></div>';
+      echo '<div class="row"><p class="col-10 offset-1"><strong>Please fill in all fields.</strong></p></div>';
     else
       sub_engine_add_posts_SubmitOrDraft('Draft',$safeCookie);
   }
@@ -47,14 +47,14 @@ function sub_engine_add_posts_SubmitOrDraft($submitOrDraft,$safeCookie)
   {
     $dBQuery = "INSERT INTO `" . DBPREFIX . "_PostsTable` (AuthorID,Title,NiceTitle,TagOne,TagTwo,TagThree,Post,PostIsDraft) VALUES ('" . $returnedAuthorID . "','" . $safeTitle . "','" . $safeNiceTitle . "','" . $safeTagOne . "','" . $safeTagTwo . "','" . $safeTagThree . "','" . $safePost . "',0);";
     mysqli_query($dBConnection,$dBQuery);
-    echo '<div class="row"><div class="col-xs-10 col-xs-push-1"><p class="alert alert-success" role="alert">Posted!</p></div></div>
-    <script>$(document).ready(function(){window.open("' . PROTOCOL . URL . '/' . $safeNiceTitle . '", "_blank");});</script>';
+    echo '<div class="row"><div class="col-10 offset-1"><p class="alert alert-success" role="alert">Posted!</p></div></div>
+    <script>window.onload = function(){window.open("' . PROTOCOL . URL . '/' . $safeNiceTitle . '", "_blank");};</script>';
   }
   else if ($submitOrDraft == 'Draft')
   {
     $dBQuery = "INSERT INTO `" . DBPREFIX . "_PostsTable` (AuthorID,Title,NiceTitle,TagOne,TagTwo,TagThree,Post,PostIsDraft) VALUES ('" . $returnedAuthorID . "','" . $safeTitle . "','" . $safeNiceTitle . "','" . $safeTagOne . "','" . $safeTagTwo . "','" . $safeTagThree . "','" . $safePost . "',1);";
     mysqli_query($dBConnection,$dBQuery);
-    echo '<div class="row"><div class="col-xs-10 col-xs-push-1"><p class="alert alert-success" role="alert">Saved!</p></div></div>';
+    echo '<div class="row"><div class="col-10 offset-1"><p class="alert alert-success" role="alert">Saved!</p></div></div>';
   }
   disconnect($dBConnection);
 }

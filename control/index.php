@@ -31,15 +31,14 @@
     <!-- Enable IE/Edge Standards mode -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- Use An Apple Touch Icon and Favicon -->
-    <link rel="apple-touch-icon" href="  <?php output_home_link(); ?>/uploads/apple-touch-icon.png" />
-    <link rel="shortcut icon" href="  <?php output_home_link(); ?>/uploads/favicon.ico" />
+    <link rel="apple-touch-icon" href="<?php output_home_link(); ?>/uploads/apple-touch-icon.png" />
+    <link rel="shortcut icon" href="<?php output_home_link(); ?>/uploads/favicon.ico" />
     <!-- Here`s where the SEO comes in. -->
     <meta name="robots" content="noindex, nofollow">
-    <meta name="description" content="  <?php output_head_description(); ?>" />
-    <title>The Control Panel -   <?php output_head_title(); ?></title>
+    <meta name="description" content="<?php output_head_description(); ?>" />
+    <title>The Control Panel - <?php output_head_title(); ?></title>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="./bootstrap/css/bootstrap-theme.min.css" />
   </head>
   <body>
 <?php
@@ -51,18 +50,18 @@
     if(isset($_GET['page']))
       $subPage = htmlspecialchars(filter_input( INPUT_GET, 'page', FILTER_SANITIZE_URL));
 ?>
-      <nav id="navbar" class="navbar navbar-inverse navbar-static-top">
+      <nav id="navbar" class="navbar navbar-expand static-top navbar-dark bg-dark">
       <div class="container-fluid">
-        <ul class="nav navbar-nav">
-          <li  <?php if(!isset($_GET['page'])){echo ' class="active"';} ?>><a href="  <?php PROTOCOL . URL ?>/control/" title="The Control Panel"><span class="glyphicon glyphicon-home" aria-hidden="true" aria-label="The Control Panel"></span>&nbsp;The Control Panel</a></li>
-          <li  <?php if(isset($_GET['page']) && $subPage == "AddPost"){echo ' class="active"';} ?>><a href="<?php echo PROTOCOL . URL; ?>/control/?page=AddPost" title="Write a Post">Write a Post</a></li>
-          <li  <?php if(isset($_GET['page']) && $subPage == "EditPost"){echo ' class="active"';} ?>><a href="<?php echo PROTOCOL . URL; ?>/control/?page=EditPost" title="View and Edit Posts">View and Edit Posts</a></li>
-          <li  <?php if(isset($_GET['page']) && $subPage == "Media"){echo ' class="active"';} ?>><a href="<?php echo PROTOCOL . URL;?>/control/?page=Media" title="Add and Edit Media">Add and Edit Media</a></li>
-          <li  <?php if(isset($_GET['page']) && $subPage == "Account"){echo ' class="active"';} ?>><a href="<?php echo PROTOCOL . URL; ?>/control/?page=Account" title="My Account">My Account</a></li>
-          <li  <?php if(isset($_GET['page']) && $subPage == "Register"){echo ' class="active"';} ?>><a href="<?php echo PROTOCOL . URL; ?>/control/?page=Register" title="Register a new User">Register a new User</a></li>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item<?php if(!isset($_GET['page'])){echo ' active';} ?>"><a class="nav-link" href="<?php PROTOCOL . URL ?>/control/" title="The Control Panel"><span class="glyphicon glyphicon-home" aria-hidden="true" aria-label="The Control Panel"></span>&nbsp;The Control Panel</a></li>
+          <li class="nav-item<?php if(isset($_GET['page']) && $subPage == "AddPost"){echo ' active';} ?>"><a class="nav-link" href="<?php echo PROTOCOL . URL; ?>/control/?page=AddPost" title="Write a Post">Write a Post</a></li>
+          <li class="nav-item<?php if(isset($_GET['page']) && $subPage == "EditPost"){echo ' active';} ?>"><a class="nav-link" href="<?php echo PROTOCOL . URL; ?>/control/?page=EditPost" title="View and Edit Posts">View and Edit Posts</a></li>
+          <li class="nav-item<?php if(isset($_GET['page']) && $subPage == "Media"){echo ' active';} ?>"><a class="nav-link" href="<?php echo PROTOCOL . URL;?>/control/?page=Media" title="Add and Edit Media">Add and Edit Media</a></li>
+          <li class="nav-item<?php if(isset($_GET['page']) && $subPage == "Account"){echo ' active';} ?>"><a class="nav-link" href="<?php echo PROTOCOL . URL; ?>/control/?page=Account" title="My Account">My Account</a></li>
+          <li class="nav-item<?php if(isset($_GET['page']) && $subPage == "Register"){echo ' active';} ?>"><a class="nav-link" href="<?php echo PROTOCOL . URL; ?>/control/?page=Register" title="Register a new User">Register a new User</a></li>
         </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="  <?php echo PROTOCOL . URL; ?>/control/?page=Logout" title="Logout">Logout</a></li>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a class="nav-link" href="<?php echo PROTOCOL . URL; ?>/control/?page=Logout" title="Logout">Logout</a></li>
         </ul>
       </div>
     </nav>
@@ -90,10 +89,10 @@
     {?>
 <section class="container-fluid">
   <div class="row">
-    <header class="col-xs-12">
+    <header class="col-10 offset-1">
       <h1>The Control Panel</h1>
     </header>
-    <div class="col-xs-12">
+    <div class="col-10 offset-1">
       <p><strong>Welcome to BlogDraw Version 0.0.1 Release Candidate!</strong> How can we help you today?  Use the menu above to navigate through the options available to you.</p>
     </div>
   </div>

@@ -29,20 +29,20 @@ function engine_register_page() //This handles the data for the Register page.
         {
           $dBQuery = "INSERT INTO `" . DBPREFIX . "_LoginTable` (Username,DisplayName,Password,Email,Company,URL,EmailIsPublic) VALUES ('" . $safeUsername . "','" . $safeDisplayName . "','" . $safePassword1 . "','" . $safeEmail . "','" . $safeCompany . "','" . $safeWebsite . "',1);";
           mysqli_query($dBConnection,$dBQuery);
-          echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>Account Added!</strong></p></div>';
+          echo '<div class="row"><p class="col-10 offset-1"><strong>Account Added!</strong></p></div>';
         }
         else
         {
           $dBQuery = "INSERT INTO `" . DBPREFIX . "_LoginTable` (Username,DisplayName,Password,Email,Company,URL,EmailIsPublic) VALUES ('" . $safeUsername . "','" . $safeDisplayName . "','" . $safePassword1 . "','" . $safeEmail . "','" . $safeCompany . "','" . $safeWebsite . "',0);";
           mysqli_query($dBConnection,$dBQuery);
-          echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>Account Added!</strong></p></div>';
+          echo '<div class="row"><p class="col-10 offset-1"><strong>Account Added!</strong></p></div>';
         }
       }
       else
-        echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>Passwords Do Not Match.</strong></p></div>';
+        echo '<div class="row"><p class="col-10 offset-1"><strong>Passwords Do Not Match.</strong></p></div>';
     }
     else
-      echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>You need at least username, display name, password, and email address for an account.</strong></p></div>';
+      echo '<div class="row"><p class="col-10 offset-1"><strong>You need at least username, display name, password, and email address for an account.</strong></p></div>';
     disconnect($dBConnection);
   }
   //Call in the UI.
@@ -56,67 +56,67 @@ function UI_register_page()
 {
 ?><div class="container-fluid">
   <div class="row">
-    <form method="post" id="RegisterForm" class="form-horizontal col-xs-10 col-xs-push-1">
+    <form method="post" id="RegisterForm" class="col-10 offset-1">
       <fieldset class="form-group">
         <legend>New Account:</legend>
         <div class="row">
-          <label class="control-label col-xs-12 col-sm-3" for="Username">Username*:</label>
-          <div class="col-xs-12 col-sm-9">
+          <label class="control-label col-12 col-sm-3" for="Username">Username*:</label>
+          <div class="col-12 col-sm-9">
             <input type="text" class="form-control" name="Username" id="Username" />
           </div>
         </div>
         <br />
         <div class="row">
-          <label class="control-label col-xs-12 col-sm-3" for="DisplayName">Display Name*:</label>
-          <div class="col-xs-12 col-sm-9">
+          <label class="control-label col-12 col-sm-3" for="DisplayName">Display Name*:</label>
+          <div class="col-12 col-sm-9">
             <input type="text" class="form-control" name="DisplayName" id="DisplayName" />
           </div>
         </div>
         <br />
         <div class="row">
-          <label class="control-label col-xs-12 col-sm-3" for="Password1">Password*:</label>
-          <div class="col-xs-12 col-sm-9">
+          <label class="control-label col-12 col-sm-3" for="Password1">Password*:</label>
+          <div class="col-12 col-sm-9">
             <input type="password" class="form-control" name="Password1" id="Password1" />
           </div>
         </div>
         <div class="row">
-          <div class="col-xs-12 col-sm-9 col-sm-push-3">
+          <div class="col-12 col-sm-9 offset-sm-3">
             <input type="password" class="form-control" name="Password2" id="Password2" />
           </div>
         </div>
         <br />
         <div class="row">
-          <label class="control-label col-xs-12 col-sm-3" for="Company">Company:</label>
-          <div class="col-xs-12 col-sm-9">
+          <label class="control-label col-12 col-sm-3" for="Company">Company:</label>
+          <div class="col-12 col-sm-9">
             <input type="text" class="form-control" name="Company" id="Company" />
           </div>
         </div>
         <br />
         <div class="row">
-          <label class="control-label col-xs-12 col-sm-3" for="UserURL">Website:</label>
-          <div class="col-xs-12 col-sm-9">
+          <label class="control-label col-12 col-sm-3" for="UserURL">Website:</label>
+          <div class="col-12 col-sm-9">
             <input type="text" class="form-control" name="UserURL" id="UserURL" />
           </div>
         </div>
         <br />
         <div class="row">
-          <label class="control-label col-xs-12 col-sm-3" for="Email">Email*:</label>
-          <div class="col-xs-12 col-sm-9">
+          <label class="control-label col-12 col-sm-3" for="Email">Email*:</label>
+          <div class="col-12 col-sm-9">
             <input type="text" class="form-control" name="Email" id="Email" />
           </div>
         </div>
         <br />
         <div class="row">
-          <label class="control-label col-xs-12 col-sm-3" for="EmailPublic">Make email address public:</label>
-          <div class="col-xs-12 col-sm-9">
-            <div class="checkbox">
-              <input type="checkbox" name="EmailPublic" id="EmailPublic" />
+          <label class="control-label col-12 col-sm-3" for="EmailPublic">Make email address public:</label>
+          <div class="col-12 col-sm-9">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="EmailPublic" id="EmailPublic" />
             </div>
           </div>
         </div>
         <br />
         <div class="row">
-          <input type="submit" class="btn btn-default col-xs-3" name="RegisterSubmit" id="RegisterSubmit" value="Add New Account" />
+          <input type="submit" class="btn btn-primary col-3" name="RegisterSubmit" id="RegisterSubmit" value="Add New Account" />
         </div>
       </fieldset>
     </form>

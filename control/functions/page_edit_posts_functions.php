@@ -50,7 +50,7 @@ function engine_edit_posts_page($safeCookie)
     {
       $dBQuery = "DELETE FROM `" . DBPREFIX . "_PostsTable` WHERE ID = '" . $safeDeletePostNo . "';";
       mysqli_query($dBConnection,$dBQuery);
-      echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>Your post has been deleted.</strong></p></div>';
+      echo '<div class="row"><p class="col-10 offset-1"><strong>Your post has been deleted.</strong></p></div>';
     }
     disconnect($dBConnection);
   }
@@ -61,14 +61,14 @@ function engine_edit_posts_page($safeCookie)
   if (isset($_POST['PostSubmit']))
   {
     if (!(isset($_POST['Title']) && isset($_POST['Content']) && isset($_POST['Tags']) && !empty($_POST['Title']) && !empty($_POST['Content']) && !empty($_POST['Tags'])))
-      echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>Please fill in all fields.</strong></p></div>';
+      echo '<div class="row"><p class="col-10 offset-1"><strong>Please fill in all fields.</strong></p></div>';
     else
       sub_engine_edit_posts_SubmitOrDraft('Submit',$safeCookie);
   }
   else if (isset($_POST['PostDraft']))
   {
     if (!(isset($_POST['Title']) && isset($_POST['Content']) && isset($_POST['Tags']) && !empty($_POST['Title']) && !empty($_POST['Content']) && !empty($_POST['Tags'])))
-      echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>Please fill in all fields.</strong></p></div>';
+      echo '<div class="row"><p class="col-10 offset-1"><strong>Please fill in all fields.</strong></p></div>';
     else
       sub_engine_edit_posts_SubmitOrDraft('Draft',$safeCookie);
   }
@@ -107,8 +107,8 @@ function sub_engine_edit_posts_SubmitOrDraft($submitOrDraft,$safeCookie) //This 
     {
       $dBQuery = "UPDATE `" . DBPREFIX . "_PostsTable` SET Title = '" . $safeTitle . "',NiceTitle = '" . $safeNiceTitle . "',TagOne = '" . $safeTagOne . "',TagTwo = '" . $safeTagTwo . "',TagThree = '" . $safeTagThree . "',Post = '" . $safePost . "',PostIsDraft = 0 WHERE ID = '" . $safeEditID . "';";
       mysqli_query($dBConnection,$dBQuery);
-      echo '<div class="row"><div class="col-xs-10 col-xs-push-1"><p class="alert alert-success" role="alert">Posted!</p></div></div>
-      <script>$(document).ready(function(){window.open(' . PROTOCOL . URL . '/' . $safeNiceTitle . ', "_blank");});</script>';
+      echo '<div class="row"><div class="col-10 offset-1"><p class="alert alert-success" role="alert">Posted!</p></div></div>
+      <script>window.onload = function(){window.open("' . PROTOCOL . URL . '/' . $safeNiceTitle . '", "_blank");};</script>';
     }
   }
   else if ($submitOrDraft == 'Draft')
@@ -122,7 +122,7 @@ function sub_engine_edit_posts_SubmitOrDraft($submitOrDraft,$safeCookie) //This 
     {
       $dBQuery = "UPDATE `" . DBPREFIX . "_PostsTable` SET Title = '" . $safeTitle . "',NiceTitle = '" . $safeNiceTitle . "',TagOne = '" . $safeTagOne . "',TagTwo = '" . $safeTagTwo . "',TagThree = '" . $safeTagThree . "',Post = '" . $safePost . "',PostIsDraft = 1 WHERE ID = '" . $safeEditID . "';";
       mysqli_query($dBConnection,$dBQuery);
-      echo '<div class="row"><div class="col-xs-10 col-xs-push-1"><p class="alert alert-success" role="alert">Saved!</p></div></div>';
+      echo '<div class="row"><div class="col-10 offset-1"><p class="alert alert-success" role="alert">Saved!</p></div></div>';
     }
   }
   disconnect($dBConnection);
@@ -135,14 +135,14 @@ function sub_engine_edit_posts_SubmitOrDraft($submitOrDraft,$safeCookie) //This 
 function UI_edit_posts_page($safeCookie)
 {?><div class="container-fluid">
   <div class="row">
-    <form class="form-horizontal col-xs-10 col-xs-push-1">
+    <form class="col-10 offset-1">
       <fieldset class="form-group">
         <legend>View and Edit Posts</legend>
       </fieldset>
     </form>
   </div>
   <div class="row">
-    <div class="col-xs-10 col-xs-push-1">
+    <div class="col-10 offset-1">
       <div class="table-responsive">
         <table class="table table-condensed">
           <thead>
@@ -186,7 +186,7 @@ function sub_UI_edit_posts_TableContent($safeCookie)
     $returnedPostIsDraft = cleanHtmlString($dBConnection, $row['PostIsDraft']);
     if ($returnedPostIsDraft == 1)
       $returnedPost = substr("[DRAFT]: " . $returnedPost,0,80);
-    echo'<tr><td>' . $returnedPostID . '</td><td>' . $returnedTitle . '</td><td>' . $returnedPost . '</td><td>' . $returnedTimestamp . '</td><td><form method="post" style="display:inline;"><input id="Edit" name="Edit" type="hidden" value="' . $returnedPostID . '" /><input type="submit" class="btn btn-default btn-xs" name="EditSubmit" value="Edit" /></form>&nbsp;<form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $returnedPostID . '" /><input type="submit" class="btn btn-default btn-xs" name="DeleteSubmit" value="Delete" /></form></td></tr>';
+    echo'<tr><td>' . $returnedPostID . '</td><td>' . $returnedTitle . '</td><td>' . $returnedPost . '</td><td>' . $returnedTimestamp . '</td><td><form method="post" style="display:inline;"><input id="Edit" name="Edit" type="hidden" value="' . $returnedPostID . '" /><input type="submit" class="btn btn-primary btn-sm" name="EditSubmit" value="Edit" /></form>&nbsp;<form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $returnedPostID . '" /><input type="submit" class="btn btn-primary btn-sm" name="DeleteSubmit" value="Delete" /></form></td></tr>';
   }
   disconnect($dBConnection);
 }
