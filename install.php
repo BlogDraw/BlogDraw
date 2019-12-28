@@ -128,7 +128,6 @@
     <title>Install BlogDraw</title>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="./control/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="./control/bootstrap/css/bootstrap-theme.min.css" />
   </head>
   <body>
     <div class="container-fluid">
@@ -185,7 +184,7 @@
               <label class="control-label col-12 col-sm-3" for="WSSSL">HTTP, or HTTPS?*:</label>
               <div class="form-check col-12 col-sm-9">
                 <div>
-                  <input class="form-check-input" type="radio" name="WSSSL" value="WSSSL" checked />HTTPS&nbsp;
+                  <input class="form-check-input" type="radio" name="WSSSL" value="WSSSL" checked />HTTPS<br />
                   <input class="form-check-input" type="radio" name="WSSSL" value="WSnoSSL" />HTTP
                 </div>
               </div>

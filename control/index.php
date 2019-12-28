@@ -39,6 +39,11 @@
     <title>The Control Panel - <?php output_head_title(); ?></title>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css" />
+    <style>
+.btn-light{border-color:#BDBDBD;}
+.navbar{margin-bottom:2rem;}
+.form-control-file{padding-top:9px;}
+    </style>
   </head>
   <body>
 <?php
@@ -50,10 +55,10 @@
     if(isset($_GET['page']))
       $subPage = htmlspecialchars(filter_input( INPUT_GET, 'page', FILTER_SANITIZE_URL));
 ?>
-      <nav id="navbar" class="navbar navbar-expand static-top navbar-dark bg-dark" style="margin-bottom:2rem;">
+      <nav id="navbar" class="navbar navbar-expand static-top navbar-dark bg-dark">
       <div class="container-fluid">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item<?php if(!isset($_GET['page'])){echo ' active';} ?>"><a class="nav-link" href="<?php PROTOCOL . URL ?>/control/" title="The Control Panel"><span class="glyphicon glyphicon-home" aria-hidden="true" aria-label="The Control Panel"></span>&nbsp;The Control Panel</a></li>
+          <li class="nav-item<?php if(!isset($_GET['page'])){echo ' active';} ?>"><a class="nav-link" href="<?php PROTOCOL . URL ?>/control/" title="The Control Panel">The Control Panel</a></li>
           <li class="nav-item<?php if(isset($_GET['page']) && $subPage == "AddPost"){echo ' active';} ?>"><a class="nav-link" href="<?php echo PROTOCOL . URL; ?>/control/?page=AddPost" title="Write a Post">Write a Post</a></li>
           <li class="nav-item<?php if(isset($_GET['page']) && $subPage == "EditPost"){echo ' active';} ?>"><a class="nav-link" href="<?php echo PROTOCOL . URL; ?>/control/?page=EditPost" title="View and Edit Posts">View and Edit Posts</a></li>
           <li class="nav-item<?php if(isset($_GET['page']) && $subPage == "Media"){echo ' active';} ?>"><a class="nav-link" href="<?php echo PROTOCOL . URL;?>/control/?page=Media" title="Add and Edit Media">Add and Edit Media</a></li>

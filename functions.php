@@ -476,7 +476,7 @@ function engine_call_author_details($postAuthor)
   }
   disconnect($dBConnection);
   if($returnedEmailIsPublic == 1 && !empty($returnedURL))
-    $authorCaption = '<a href="' . $returnedURL . '" title="Go To ' . $returnedURL . '">' . $returnedDisplayName . '</a>(<a href="mailto:' . $returnedEmail . '" title="Email ' . $returnedEmail . '">Email The Author</a>)';
+    $authorCaption = '<a href="' . $returnedURL . '" title="Go To ' . $returnedURL . '">' . $returnedDisplayName . '</a> (<a href="mailto:' . $returnedEmail . '" title="Email ' . $returnedEmail . '">Email The Author</a>)';
   else if($returnedEmailIsPublic == 1 && empty($returnedURL))
     $authorCaption = '<a href="mailto:' . $returnedEmail . '" title="Email ' . $returnedEmail . '">' . $returnedDisplayName . '</a>';
   else if($returnedEmailIsPublic == 0 && !empty($returnedURL))

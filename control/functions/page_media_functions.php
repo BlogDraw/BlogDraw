@@ -100,12 +100,12 @@ function UI_media_page($pageOrPlugin)
         </tbody>
       </table>
     </div>
-      <?php if ($pageOrPlugin != 'Plugin'){ ?><div class="row">
-      <form method="post" enctype="multipart/form-data">
-        <input type="file" name="UploadFile" class="col-6" id="UploadFile">
+      <?php if ($pageOrPlugin != 'Plugin'){ ?><form method="post" enctype="multipart/form-data">
+      <div class="row">
+        <input type="file" name="UploadFile" class="form-control-file col-6" id="UploadFile">
         <input type="submit" class="btn btn-light col-6" name="AddSubmit" id="AddSubmit" value="Add Media" />
-      </form>
-    </div>  <?php } ?>
+      </div>
+    </form><?php } ?>
   </div>
   <?php if ($pageOrPlugin != 'Plugin'){ ?></div>  <?php } ?>
 <?php if ($pageOrPlugin != 'Plugin'){ ?></div><?php }
