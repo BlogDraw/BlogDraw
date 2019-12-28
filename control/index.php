@@ -87,8 +87,18 @@
         echo '<p>Page: ' . $subPage . ' Not Found.  Please Try Again.</p>';
     }
     else
-    {
-      echo '<p><strong>Welcome to BlogDraw!</strong> How can we help you today?  Use the menu above to navigate through the options available to you.</p>';
+    {?>
+<section class="container-fluid">
+  <div class="row">
+    <header class="col-xs-12">
+      <h1>The Control Panel</h1>
+    </header>
+    <div class="col-xs-12">
+      <p><strong>Welcome to BlogDraw Version 0.0.1 Release Candidate!</strong> How can we help you today?  Use the menu above to navigate through the options available to you.</p>
+    </div>
+  </div>
+</section>
+<?php
     }
   }
 ?>
