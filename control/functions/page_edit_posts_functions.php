@@ -8,23 +8,23 @@ function engine_edit_posts_page($safeCookie)
   if (isset($_POST['EditSubmit']) && isset($_POST['Edit']) && !empty($_POST['Edit']))
   {
     $dBConnection = connect();
-    $safeEditPostNo = mysqli_real_escape_string($dBConnection,mb_convert_encoding($_POST['Edit'],"UTF-8"));
+    $safeEditPostNo = cleanString($dBConnection, $_POST['Edit']);
     $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $safeCookie . "';";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
     while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
-      $returnedID = mb_convert_encoding($row['ID'], "UTF-8");
+      $returnedID = cleanHtmlString($dBConnection, $row['ID']);
     $dBQuery = "SELECT ID,AuthorID,Title,Post,TagOne,TagTwo,TagThree FROM `" . DBPREFIX . "_PostsTable` WHERE ID = '" . $safeEditPostNo . "';";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
     while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
     {
-      $returnedPostID = mb_convert_encoding($row['ID'], "UTF-8");
-      $returnedAuthorID = mb_convert_encoding($row['AuthorID'], "UTF-8");
-      $returnedTitle = mb_convert_encoding($row['Title'], "UTF-8");
-      $returnedPost = mb_convert_encoding($row['Post'], "UTF-8");
+      $returnedPostID = cleanHtmlString($dBConnection, $row['ID']);
+      $returnedAuthorID = cleanHtmlString($dBConnection, $row['AuthorID']);
+      $returnedTitle = cleanHtmlString($dBConnection, $row['Title']);
+      $returnedPost = cleanHtmlString($dBConnection, $row['Post']);
       $returnedPost = str_replace("<br />", "", $returnedPost); //Writing a post adds in HTML linebreaks.  We want to remove these so we don't add them twice.
-      $returnedTagOne = mb_convert_encoding($row['TagOne'], "UTF-8");
-      $returnedTagTwo = mb_convert_encoding($row['TagTwo'], "UTF-8");
-      $returnedTagThree = mb_convert_encoding($row['TagThree'], "UTF-8");
+      $returnedTagOne = cleanHtmlString($dBConnection, $row['TagOne']);
+      $returnedTagTwo = cleanHtmlString($dBConnection, $row['TagTwo']);
+      $returnedTagThree = cleanHtmlString($dBConnection, $row['TagThree']);
       $returnedTags = $returnedTagOne . ',' . $returnedTagTwo . ',' . $returnedTagThree;
     }
     if ($returnedID == $returnedAuthorID)
@@ -37,15 +37,15 @@ function engine_edit_posts_page($safeCookie)
   else if (isset($_POST['DeleteSubmit']) && isset($_POST['Delete']) && !empty($_POST['Delete']))
   {
     $dBConnection = connect();
-    $safeDeletePostNo = mysqli_real_escape_string($dBConnection,mb_convert_encoding($_POST['Delete'],"UTF-8"));
+    $safeDeletePostNo = cleanString($dBConnection, $_POST['Delete']);
     $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $safeCookie . "';";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
     while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
-      $returnedID = mb_convert_encoding($row['ID'], "UTF-8");
+      $returnedID = cleanHtmlString($dBConnection, $row['ID']);
     $dBQuery = "SELECT AuthorID FROM `" . DBPREFIX . "_PostsTable` WHERE ID = '" . $safeDeletePostNo . "';";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
     while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
-      $returnedAuthorID = mb_convert_encoding($row['AuthorID'], "UTF-8");
+      $returnedAuthorID = cleanHtmlString($dBConnection, $row['AuthorID']);
     if ($returnedID == $returnedAuthorID)
     {
       $dBQuery = "DELETE FROM `" . DBPREFIX . "_PostsTable` WHERE ID = '" . $safeDeletePostNo . "';";
@@ -82,11 +82,11 @@ function engine_edit_posts_page($safeCookie)
 function sub_engine_edit_posts_SubmitOrDraft($submitOrDraft,$safeCookie) //This handles the Submit or Draft buttons present on the "Edit Posts" page.
 {
   $dBConnection = connect();
-  $safeTitle = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['Title']),"UTF-8"));
+  $safeTitle = cleanString($dBConnection, $_POST['Title']);
   $safeNiceTitle = preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', $safeTitle)));
-  $safePost = mysqli_real_escape_string($dBConnection,mb_convert_encoding('<div>' . nl2br($_POST['Content'],true) . '</div>',"UTF-8"));
-  $safeTagList = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['Tags']),"UTF-8"));
-  $safeEditID = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['Editor']),"UTF-8"));
+  $safePost = cleanHtmlString($dBConnection, '<div>' . nl2br($_POST['Content'],true) . '</div>');
+  $safeTagList = cleanString($dBConnection, $_POST['Tags']);
+  $safeEditID = cleanString($dBConnection, $_POST['Editor']);
   $safeTagArray = explode(',', $safeTagList);
   $safeTagOne = $safeTagArray[0];
   $safeTagTwo = $safeTagArray[1];
@@ -95,14 +95,14 @@ function sub_engine_edit_posts_SubmitOrDraft($submitOrDraft,$safeCookie) //This 
   $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $safeCookie . "';";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
   while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
-    $returnedID = mb_convert_encoding($row['ID'], "UTF-8");
+    $returnedID = cleanHtmlString($dBConnection, $row['ID']);
   if ($submitOrDraft == 'Submit')
   {
     $dBQuery = "SELECT AuthorID FROM `" . DBPREFIX . "_PostsTable` WHERE ID = '" . $safeEditID . "';";
     mysqli_query($dBConnection,$dBQuery);
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
     while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
-      $returnedAuthorID = mb_convert_encoding($row['AuthorID'], "UTF-8");
+      $returnedAuthorID = cleanHtmlString($dBConnection, $row['AuthorID']);
     if ($returnedID == $returnedAuthorID)
     {
       $dBQuery = "UPDATE `" . DBPREFIX . "_PostsTable` SET Title = '" . $safeTitle . "',NiceTitle = '" . $safeNiceTitle . "',TagOne = '" . $safeTagOne . "',TagTwo = '" . $safeTagTwo . "',TagThree = '" . $safeTagThree . "',Post = '" . $safePost . "',PostIsDraft = 0 WHERE ID = '" . $safeEditID . "';";
@@ -117,7 +117,7 @@ function sub_engine_edit_posts_SubmitOrDraft($submitOrDraft,$safeCookie) //This 
     mysqli_query($dBConnection,$dBQuery);
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
     while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
-      $returnedAuthorID = mb_convert_encoding($row['AuthorID'], "UTF-8");
+      $returnedAuthorID = cleanHtmlString($dBConnection, $row['AuthorID']);
     if ($returnedID == $returnedAuthorID)
     {
       $dBQuery = "UPDATE `" . DBPREFIX . "_PostsTable` SET Title = '" . $safeTitle . "',NiceTitle = '" . $safeNiceTitle . "',TagOne = '" . $safeTagOne . "',TagTwo = '" . $safeTagTwo . "',TagThree = '" . $safeTagThree . "',Post = '" . $safePost . "',PostIsDraft = 1 WHERE ID = '" . $safeEditID . "';";
@@ -174,16 +174,16 @@ function sub_UI_edit_posts_TableContent($safeCookie)
   $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $safeCookie . "';";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
   while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
-    $returnedID = mb_convert_encoding($row['ID'], "UTF-8");
+    $returnedID = cleanHtmlString($dBConnection, $row['ID']);
   $dBQuery = "SELECT ID,Title,Post,Timestamp,PostIsDraft FROM `" . DBPREFIX . "_PostsTable` WHERE AuthorID = '" . $returnedID . "';";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
   while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
   {
-    $returnedPostID = mb_convert_encoding($row['ID'], "UTF-8");
-    $returnedTitle = mb_convert_encoding($row['Title'], "UTF-8");
-    $returnedPost = substr(strip_tags(mb_convert_encoding($row['Post'], "UTF-8")),0,80);
-    $returnedTimestamp = mb_convert_encoding($row['Timestamp'], "UTF-8");
-    $returnedPostIsDraft = mb_convert_encoding($row['PostIsDraft'], "UTF-8");
+    $returnedPostID = cleanHtmlString($dBConnection, $row['ID']);
+    $returnedTitle = cleanHtmlString($dBConnection, $row['Title']);
+    $returnedPost = substr(strip_tags(cleanHtmlString($dBConnection, $row['Post'])),0,80);
+    $returnedTimestamp = cleanHtmlString($dBConnection, $row['Timestamp']);
+    $returnedPostIsDraft = cleanHtmlString($dBConnection, $row['PostIsDraft']);
     if ($returnedPostIsDraft == 1)
       $returnedPost = substr("[DRAFT]: " . $returnedPost,0,80);
     echo'<tr><td>' . $returnedPostID . '</td><td>' . $returnedTitle . '</td><td>' . $returnedPost . '</td><td>' . $returnedTimestamp . '</td><td><form method="post" style="display:inline;"><input id="Edit" name="Edit" type="hidden" value="' . $returnedPostID . '" /><input type="submit" class="btn btn-default btn-xs" name="EditSubmit" value="Edit" /></form>&nbsp;<form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $returnedPostID . '" /><input type="submit" class="btn btn-default btn-xs" name="DeleteSubmit" value="Delete" /></form></td></tr>';

@@ -1,7 +1,7 @@
 <?php
 /**
  * index.php - this contains most of the framework for the back end of BlogDraw (Known as "The Control Panel").
-**/
+ **/
 //Here we set our basic requirements, and do some security testing.
   $notLoggedIn = true;
   require_once ('../functions.php');
@@ -11,8 +11,8 @@
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
   while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
   {
-    $returnedCookie = mb_convert_encoding($row['Cookie'], "UTF-8");
-    $safeCookie = mysqli_real_escape_string($dBConnection,$safeCookie);
+    $returnedCookie = cleanHtmlString($dBConnection, $row['Cookie']);
+    $safeCookie = cleanHtmlString($dBConnection,$safeCookie);
     if ($returnedCookie == $safeCookie)
       $notLoggedIn = false;
   }

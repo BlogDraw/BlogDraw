@@ -17,12 +17,12 @@ if (!isset($_POST['LoginSubmit']))
 if (isset($_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']))
 {
   $dBConnection = connect();
-  $safeCookie = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']), "UTF-8"));
+  $safeCookie = cleanString($dBConnection,$_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']);
   $dBQuery = "SELECT Cookie FROM `" . DBPREFIX . "_LoginTable` WHERE CHAR_LENGTH(Cookie) > 1;";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
   while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
   {
-    $returnedCookie = mb_convert_encoding($row['Cookie'], "UTF-8");
+    $returnedCookie = cleanHtmlString($dBConnection, $row['Cookie']);
     if ($returnedCookie == $safeCookie)
       $notLoggedIn = false;
   }
@@ -59,7 +59,7 @@ function output_head_title()
       $returnQuery = mysqli_query($dBConnection,$dBQuery);
       while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
       {
-        $returnedTitle = mb_convert_encoding(htmlspecialchars($row['Title']), "UTF-8");
+        $returnedTitle = cleanHtmlString($dBConnection, $row['Title']);
         echo TITLE . ' | ' . $returnedTitle;
         $isPost = true;
       }
@@ -250,11 +250,11 @@ function engine_author_profile()
   {//else find canonical page post link get author id from post where that = nice-title
     $preamble = "Author profile:";
     $dBConnection = connect();
-    $requestedURI = mysqli_real_escape_string($dBConnection,$requestedURI);
+    $requestedURI = cleanHtmlString($dBConnection,$requestedURI);
     $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_PostsTable` WHERE PostIsDraft=0 AND NiceTitle='" . $requestedURI . "' ORDER BY ID DESC LIMIT 1;";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
     while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
-      $returnedID = mb_convert_encoding(htmlspecialchars($row['ID']), "UTF-8");
+      $returnedID = cleanString($dBConnection, $row['ID']);
     $postID = $returnedID;
     disconnect($dBConnection);
   }
@@ -265,8 +265,8 @@ function engine_author_profile()
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
   while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
   {
-    $returnedAuthorImage = mb_convert_encoding(htmlspecialchars($row['UserImage']), "UTF-8");
-    $returnedAuthorBlurb = mb_convert_encoding($row['UserBlurb'], "UTF-8");
+    $returnedAuthorImage = cleanString($dBConnection, $row['UserImage']);
+    $returnedAuthorBlurb = cleanHtmlString($dBConnection, $row['UserBlurb']);
   }
   if (!empty($returnedAuthorImage)){$authorImage = $returnedAuthorImage;} else {$authorImage = "X";}
   if (!empty($returnedAuthorBlurb)){$authorBlurb = $returnedAuthorBlurb;} else {$authorBlurb = "X";}
@@ -314,14 +314,14 @@ function engine_find_called_post()
   $dBConnection = connect();
   $postCount = 1;
   if (strpos($_SERVER['REQUEST_URI'], "?fbclid") != FALSE)
-    $requestedURI = mysqli_real_escape_string($dBConnection, mb_convert_encoding(htmlspecialchars(strstr(substr($_SERVER['REQUEST_URI'], 1), "?fbclid", TRUE)), "UTF-8"));
+    $requestedURI = cleanString($dBConnection, strstr(substr($_SERVER['REQUEST_URI'], 1), "?fbclid", TRUE));
   else
-    $requestedURI = mysqli_real_escape_string($dBConnection, mb_convert_encoding(htmlspecialchars(substr($_SERVER['REQUEST_URI'], 1)), "UTF-8"));
+    $requestedURI = cleanString($dBConnection, substr($_SERVER['REQUEST_URI'], 1));
   $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_PostsTable` WHERE PostIsDraft=0 AND NiceTitle='" . $requestedURI . "' ORDER BY ID DESC LIMIT 1;";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
   while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
   {
-    $returnedID = mb_convert_encoding(htmlspecialchars($row['ID']), "UTF-8");
+    $returnedID = cleanString($dBConnection, $row['ID']);
     engine_collate_post_details($returnedID);
     $postCount = 0;
   }
@@ -337,12 +337,12 @@ function engine_find_called_tag()
 {
   $dBConnection = connect();
   $postCount = 1;
-  $requestedTag= mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars(urldecode(substr($_SERVER['REQUEST_URI'],5))), "UTF-8"));
+  $requestedTag = cleanString($dBConnection,urldecode(substr($_SERVER['REQUEST_URI'],5)));
   $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_PostsTable` WHERE PostIsDraft=0 AND (TagOne='" . $requestedTag . "' OR TagTwo='" . $requestedTag . "' OR TagThree='" . $requestedTag . "') ORDER BY ID DESC;";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
   while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
   {
-    $returnedID = mb_convert_encoding(htmlspecialchars($row['ID']), "UTF-8");
+    $returnedID = cleanString($dBConnection, $row['ID']);
     engine_collate_post_details($returnedID);
     $postCount = 0;
   }
@@ -375,14 +375,14 @@ function engine_load_blog_archive($numberToLoad)
   if(isset($_POST['LoadMore']) && isset($_POST['LastPostLoaded']))
   {
     $dBConnection = connect();
-    $lastOneLoaded = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['LastPostLoaded']), "UTF-8"));
+    $lastOneLoaded = cleanString($dBConnection,$_POST['LastPostLoaded']);
     if (!is_numeric($lastOneLoaded))
       $lastOneLoaded = $numberToLoad + 1;
     $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_PostsTable` WHERE PostIsDraft=0 AND ID<" . $lastOneLoaded . " ORDER BY ID DESC LIMIT " . $numberToLoad . ";";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
     while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
     {
-      $returnedID = mb_convert_encoding(htmlspecialchars($row['ID']), "UTF-8");
+      $returnedID = cleanString($dBConnection, $row['ID']);
       engine_collate_post_details($returnedID);
     }
     disconnect($dBConnection);
@@ -394,7 +394,7 @@ function engine_load_blog_archive($numberToLoad)
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
     while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
     {
-      $returnedID = mb_convert_encoding(htmlspecialchars($row['ID']), "UTF-8");
+      $returnedID = cleanString($dBConnection, $row['ID']);
       engine_collate_post_details($returnedID);
     }
     disconnect($dBConnection);
@@ -431,7 +431,7 @@ function engine_find_latest_public_post_id()
   $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_PostsTable` WHERE PostIsDraft=0 ORDER BY ID DESC LIMIT 1;";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
   while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
-    $returnedID = mb_convert_encoding(htmlspecialchars($row['ID']), "UTF-8");
+    $returnedID = cleanString($dBConnection, $row['ID']);
   disconnect($dBConnection);
   return $returnedID;
 }
@@ -469,10 +469,10 @@ function engine_call_author_details($postAuthor)
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
   while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
   {
-    $returnedDisplayName = mb_convert_encoding(htmlspecialchars($row['DisplayName']), "UTF-8");
-    $returnedEmail = mb_convert_encoding(htmlspecialchars($row['Email']), "UTF-8");
-    $returnedEmailIsPublic = mb_convert_encoding(htmlspecialchars($row['EmailIsPublic']), "UTF-8");
-    $returnedURL = mb_convert_encoding(htmlspecialchars($row['URL']), "UTF-8");
+    $returnedDisplayName = cleanString($dBConnection, $row['DisplayName']);
+    $returnedEmail = cleanString($dBConnection, $row['Email']);
+    $returnedEmailIsPublic = cleanString($dBConnection, $row['EmailIsPublic']);
+    $returnedURL = cleanString($dBConnection, $row['URL']);
   }
   disconnect($dBConnection);
   if($returnedEmailIsPublic == 1 && !empty($returnedURL))
@@ -500,13 +500,13 @@ function engine_call_post_field($postToCallID,$field)
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
   while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
   {
-    $returnedPostIsDraft = mb_convert_encoding(htmlspecialchars($row['PostIsDraft']), "UTF-8");
+    $returnedPostIsDraft = cleanString($dBConnection, $row['PostIsDraft']);
     if ($returnedPostIsDraft == 0)
     {
       if ($field != 'Post')
-        $returnedField = mb_convert_encoding(htmlspecialchars($row[$field]), "UTF-8");
+        $returnedField = cleanString($dBConnection, $row[$field]);
       else
-        $returnedField = mb_convert_encoding($row[$field], "UTF-8");
+        $returnedField = cleanHtmlString($dBConnection, $row[$field]);
     }
   }
   disconnect($dBConnection);

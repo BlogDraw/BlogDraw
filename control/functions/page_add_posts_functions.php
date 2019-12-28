@@ -30,10 +30,10 @@ function engine_add_posts_page($safeCookie)
 function sub_engine_add_posts_SubmitOrDraft($submitOrDraft,$safeCookie)
 {
   $dBConnection = connect();
-  $safeTitle = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['Title']),"UTF-8"));
+  $safeTitle = cleanString($dBConnection, $_POST['Title']);
   $safeNiceTitle = preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', $safeTitle)));
-  $safePost = mysqli_real_escape_string($dBConnection,mb_convert_encoding('<div>' . nl2br($_POST['Content'],true) . '</div>',"UTF-8"));
-  $safeTagList = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['Tags']),"UTF-8"));
+  $safePost = cleanHtmlString($dBConnection, '<div>' . nl2br($_POST['Content'],true) . '</div>');
+  $safeTagList = cleanString($dBConnection, $_POST['Tags']);
   $safeTagArray = explode(',', $safeTagList);
   $safeTagOne = $safeTagArray[0];
   $safeTagTwo = $safeTagArray[1];
@@ -42,7 +42,7 @@ function sub_engine_add_posts_SubmitOrDraft($submitOrDraft,$safeCookie)
   $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $safeCookie . "';";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
   while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
-    $returnedAuthorID = mb_convert_encoding($row['ID'], "UTF-8");
+    $returnedAuthorID = cleanHtmlString($dBConnection, $row['ID']);
   if ($submitOrDraft == 'Submit')
   {
     $dBQuery = "INSERT INTO `" . DBPREFIX . "_PostsTable` (AuthorID,Title,NiceTitle,TagOne,TagTwo,TagThree,Post,PostIsDraft) VALUES ('" . $returnedAuthorID . "','" . $safeTitle . "','" . $safeNiceTitle . "','" . $safeTagOne . "','" . $safeTagTwo . "','" . $safeTagThree . "','" . $safePost . "',0);";

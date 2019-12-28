@@ -10,14 +10,14 @@ function engine_account_page($safeCookie)
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
   while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
   {
-    $returnedUsername = mb_convert_encoding($row['Username'], "UTF-8");
-    $returnedDisplayName = mb_convert_encoding($row['DisplayName'], "UTF-8");
-    $returnedEmail = mb_convert_encoding($row['Email'], "UTF-8");
-    $returnedUserImage = mb_convert_encoding($row['UserImage'], "UTF-8");
-    $returnedUserBlurb = mb_convert_encoding($row['UserBlurb'], "UTF-8");
-    $returnedCompany = mb_convert_encoding($row['Company'], "UTF-8");
-    $returnedURL = mb_convert_encoding($row['URL'], "UTF-8");
-    $returnedEmailIsPublic = mb_convert_encoding($row['EmailIsPublic'], "UTF-8");
+    $returnedUsername = cleanHtmlString($dBConnection, $row['Username']);
+    $returnedDisplayName = cleanHtmlString($dBConnection, $row['DisplayName']);
+    $returnedEmail = cleanHtmlString($dBConnection, $row['Email']);
+    $returnedUserImage = cleanHtmlString($dBConnection, $row['UserImage']);
+    $returnedUserBlurb = cleanHtmlString($dBConnection, $row['UserBlurb']);
+    $returnedCompany = cleanHtmlString($dBConnection, $row['Company']);
+    $returnedURL = cleanHtmlString($dBConnection, $row['URL']);
+    $returnedEmailIsPublic = cleanHtmlString($dBConnection, $row['EmailIsPublic']);
   }
   disconnect($dBConnection);
 
@@ -26,8 +26,8 @@ function engine_account_page($safeCookie)
     $dBConnection = connect();
     if(isset($_POST['Username']) && isset($_POST['Email']) && !empty($_POST['Username']) && !empty($_POST['Email']))
     {
-      $safeUsername = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['Username']),"UTF-8"));
-      $safeEmail = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['Email']),"UTF-8"));
+      $safeUsername = cleanString($dBConnection, $_POST['Username']);
+      $safeEmail = cleanString($dBConnection, $_POST['Email']);
       if ($safeUsername != $returnedUsername)
       {
         $dBQuery = "UPDATE `" . DBPREFIX . "_LoginTable` SET Username = '" . $safeUsername . "' WHERE Cookie = '" . $safeCookie . "';";
@@ -49,7 +49,7 @@ function engine_account_page($safeCookie)
       if ($_POST['Password1'] == $_POST['Password2'])
       {
         $newPassword = password_hash($_POST['Password1'], PASSWORD_DEFAULT);
-        $safePassword = mysqli_real_escape_string($dBConnection,$newPassword);
+        $safePassword = cleanHtmlString($dBConnection,$newPassword);
         $dBQuery = "UPDATE `" . DBPREFIX . "_LoginTable` SET Password = '" . $safePassword . "' WHERE Cookie = '" . $safeCookie . "';";
         mysqli_query($dBConnection,$dBQuery);
         echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>Your account password has been reset, please look after it.</strong></p></div>';
@@ -59,7 +59,7 @@ function engine_account_page($safeCookie)
     }
     if(isset($_POST['Company']))
     {
-      $safeCompany = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['Company']),"UTF-8"));
+      $safeCompany = cleanString($dBConnection, $_POST['Company']);
       if ($safeCompany != $returnedCompany)
       {
         $dBQuery = "UPDATE `" . DBPREFIX . "_LoginTable` SET Company = '" . $safeCompany . "' WHERE Cookie = '" . $safeCookie . "';";
@@ -69,7 +69,7 @@ function engine_account_page($safeCookie)
     }
     if(isset($_POST['DisplayName']))
     {
-      $safeDisplayName = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['DisplayName']),"UTF-8"));
+      $safeDisplayName = cleanString($dBConnection, $_POST['DisplayName']);
       if ($safeDisplayName != $returnedDisplayName)
       {
         $dBQuery = "UPDATE `" . DBPREFIX . "_LoginTable` SET DisplayName = '" . $safeDisplayName . "' WHERE Cookie = '" . $safeCookie . "';";
@@ -79,7 +79,7 @@ function engine_account_page($safeCookie)
     }
     if(isset($_POST['UserURL']))
     {
-      $safeURL = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['UserURL']),"UTF-8"));
+      $safeURL = cleanHtmlString($dBConnection, $_POST['UserURL']);
       if ($safeURL != $returnedURL)
       {
         $dBQuery = "UPDATE `" . DBPREFIX . "_LoginTable` SET URL = '" . $safeURL . "' WHERE Cookie = '" . $safeCookie . "';";
@@ -89,7 +89,7 @@ function engine_account_page($safeCookie)
     }
     if(isset($_POST['UserImage']))
     {
-      $safeUserImage = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['UserImage']),"UTF-8"));
+      $safeUserImage = cleanHtmlString($dBConnection, $_POST['UserImage']);
       if ($safeUserImage != $returnedUserImage)
       {
         $dBQuery = "UPDATE `" . DBPREFIX . "_LoginTable` SET UserImage = '" . $safeUserImage . "' WHERE Cookie = '" . $safeCookie . "';";
@@ -99,7 +99,7 @@ function engine_account_page($safeCookie)
     }
     if(isset($_POST['UserBlurb']))
     {
-      $safeUserBlurb = mysqli_real_escape_string($dBConnection,mb_convert_encoding($_POST['UserBlurb'],"UTF-8"));
+      $safeUserBlurb = cleanHtmlString($dBConnection, $_POST['UserBlurb']);
       if ($safeUserBlurb != $returnedUserBlurb)
       {
         $dBQuery = "UPDATE `" . DBPREFIX . "_LoginTable` SET UserBlurb = '" . $safeUserBlurb . "' WHERE Cookie = '" . $safeCookie . "';";

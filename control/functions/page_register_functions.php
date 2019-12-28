@@ -7,16 +7,17 @@ function engine_register_page() //This handles the data for the Register page.
   if (isset($_POST['RegisterSubmit']))
   {
     $dBConnection = connect();
-    if(isset($_POST['Username']) && isset($_POST['Email']) && !empty($_POST['Username']) && !empty($_POST['Email']) && isset($_POST['Password1']) && !empty($_POST['Password1']) && isset($_POST['Password2']) && !empty($_POST['Password2']))
+    if(isset($_POST['Username']) && isset($_POST['DisplayName']) && isset($_POST['Email']) && !empty($_POST['Username']) && !empty($_POST['Email']) && isset($_POST['Password1']) && !empty($_POST['Password1']) && isset($_POST['Password2']) && !empty($_POST['Password2']))
     {
-      $safeUsername = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['Username']),"UTF-8"));
-      $safeEmail = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['Email']),"UTF-8"));
-      $safePassword1 = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['Password1']),"UTF-8"));
-      $safePassword2 = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['Password2']),"UTF-8"));
+      $safeUsername = cleanString($dBConnection, $_POST['Username']);
+      $safeUsername = cleanString($dBConnection, $_POST['DisplayName']);
+      $safeEmail = cleanString($dBConnection, $_POST['Email']);
+      $safePassword1 = cleanString($dBConnection, $_POST['Password1']);
+      $safePassword2 = cleanString($dBConnection, $_POST['Password2']);
       if (isset($_POST['Company']) && !empty($_POST['Company']))
-        $safeCompany = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['Company']),"UTF-8"));
+        $safeCompany = cleanString($dBConnection, $_POST['Company']);
       if (isset($_POST['Website']) && !empty($_POST['Website']))
-        $safeWebsite = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['Website']),"UTF-8"));
+        $safeWebsite = cleanString($dBConnection, $_POST['Website']);
       if (isset($_POST['EmailIsPublic']) && !empty($_POST['EmailIsPublic']))
         $safeEmailIsPublic = 1;
       else
@@ -26,13 +27,13 @@ function engine_register_page() //This handles the data for the Register page.
         $safePassword1 = password_hash($safePassword1, PASSWORD_DEFAULT);
         if ($safeEmailIsPublic == 1)
         {
-          $dBQuery = "INSERT INTO `" . DBPREFIX . "_LoginTable` (Username,Password,Email,Company,URL,EmailIsPublic) VALUES ('" . $safeUsername . "','" . $safePassword1 . "','" . $safeEmail . "','" . $safeCompany . "','" . $safeWebsite . "',1);";
+          $dBQuery = "INSERT INTO `" . DBPREFIX . "_LoginTable` (Username,DisplayName,Password,Email,Company,URL,EmailIsPublic) VALUES ('" . $safeUsername . "','" . $safeDisplayName . "','" . $safePassword1 . "','" . $safeEmail . "','" . $safeCompany . "','" . $safeWebsite . "',1);";
           mysqli_query($dBConnection,$dBQuery);
           echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>Account Added!</strong></p></div>';
         }
         else
         {
-          $dBQuery = "INSERT INTO `" . DBPREFIX . "_LoginTable` (Username,Password,Email,Company,URL,EmailIsPublic) VALUES ('" . $safeUsername . "','" . $safePassword1 . "','" . $safeEmail . "','" . $safeCompany . "','" . $safeWebsite . "',0);";
+          $dBQuery = "INSERT INTO `" . DBPREFIX . "_LoginTable` (Username,DisplayName,Password,Email,Company,URL,EmailIsPublic) VALUES ('" . $safeUsername . "','" . $safeDisplayName . "','" . $safePassword1 . "','" . $safeEmail . "','" . $safeCompany . "','" . $safeWebsite . "',0);";
           mysqli_query($dBConnection,$dBQuery);
           echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>Account Added!</strong></p></div>';
         }
@@ -41,7 +42,7 @@ function engine_register_page() //This handles the data for the Register page.
         echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>Passwords Do Not Match.</strong></p></div>';
     }
     else
-      echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>You need at least username, password, and email address for an account.</strong></p></div>';
+      echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>You need at least username, display name, password, and email address for an account.</strong></p></div>';
     disconnect($dBConnection);
   }
   //Call in the UI.
@@ -62,6 +63,13 @@ function UI_register_page()
           <label class="control-label col-xs-12 col-sm-3" for="Username">Username*:</label>
           <div class="col-xs-12 col-sm-9">
             <input type="text" class="form-control" name="Username" id="Username" />
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <label class="control-label col-xs-12 col-sm-3" for="DisplayName">Display Name*:</label>
+          <div class="col-xs-12 col-sm-9">
+            <input type="text" class="form-control" name="DisplayName" id="DisplayName" />
           </div>
         </div>
         <br />
