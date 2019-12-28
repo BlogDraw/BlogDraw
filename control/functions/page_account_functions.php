@@ -6,11 +6,12 @@
 function engine_account_page($safeCookie)
 {
   $dBConnection = connect();
-  $dBQuery = "SELECT Username,Email,UserImage,UserBlurb,Company,URL,EmailIsPublic FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $safeCookie . "';";
+  $dBQuery = "SELECT Username,DisplayName,Email,UserImage,UserBlurb,Company,URL,EmailIsPublic FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $safeCookie . "';";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
   while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
   {
     $returnedUsername = mb_convert_encoding($row['Username'], "UTF-8");
+    $returnedDisplayName = mb_convert_encoding($row['DisplayName'], "UTF-8");
     $returnedEmail = mb_convert_encoding($row['Email'], "UTF-8");
     $returnedUserImage = mb_convert_encoding($row['UserImage'], "UTF-8");
     $returnedUserBlurb = mb_convert_encoding($row['UserBlurb'], "UTF-8");
@@ -64,6 +65,16 @@ function engine_account_page($safeCookie)
         $dBQuery = "UPDATE `" . DBPREFIX . "_LoginTable` SET Company = '" . $safeCompany . "' WHERE Cookie = '" . $safeCookie . "';";
         mysqli_query($dBConnection,$dBQuery);
         $returnedCompany = $safeCompany;
+      }
+    }
+    if(isset($_POST['DisplayName']))
+    {
+      $safeDisplayName = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['DisplayName']),"UTF-8"));
+      if ($safeDisplayName != $returnedDisplayName)
+      {
+        $dBQuery = "UPDATE `" . DBPREFIX . "_LoginTable` SET DisplayName = '" . $safeDisplayName . "' WHERE Cookie = '" . $safeCookie . "';";
+        mysqli_query($dBConnection,$dBQuery);
+        $returnedDisplayName = $safeDisplayName;
       }
     }
     if(isset($_POST['UserURL']))
@@ -123,6 +134,7 @@ function engine_account_page($safeCookie)
 /**
  * This handles the UI for the Account page.
  * @param returnedUsername - The username returned from the database.
+ * @param returnedDisplayName - The display name returned from the database.
  * @param returnedCompany - The company returned from the database.
  * @param returnedURL - The URL returned from the database.
  * @param returnedEmail - The email address returned from the database.
@@ -130,7 +142,7 @@ function engine_account_page($safeCookie)
  * @param returnedUserImage - The user's image returned from the database.
  * @param returnedEmailIsPublic - The boolean value representing whether the user's email is public returned from the database.
  **/
-function UI_account_page($returnedUsername,$returnedCompany,$returnedURL,$returnedEmail,$returnedUserBlurb,$returnedUserImage,$returnedEmailIsPublic)
+function UI_account_page($returnedUsername,$returnedDisplayName,$returnedCompany,$returnedURL,$returnedEmail,$returnedUserBlurb,$returnedUserImage,$returnedEmailIsPublic)
 {
 ?><div class="container-fluid">
   <div class="row">
@@ -141,6 +153,12 @@ function UI_account_page($returnedUsername,$returnedCompany,$returnedURL,$return
           <label class="control-label col-xs-12 col-sm-3" for="Username">Username:</label>
           <div class="col-xs-12 col-sm-9">
             <input type="text" class="form-control" name="Username" id="Username" value="<?php echo $returnedUsername; ?>" />
+          </div>
+        </div>
+        <div class="row">
+          <label class="control-label col-xs-12 col-sm-3" for="DisplayName">Display Name:</label>
+          <div class="col-xs-12 col-sm-9">
+            <input type="text" class="form-control" name="DisplayName" id="DisplayName" value="<?php echo $returnedDisplayName; ?>" />
           </div>
         </div>
         <br />

@@ -100,9 +100,9 @@
         $dBConnection = mysqli_connect($dBServer, $dBUsername, $dBPassword, $dBName);
         if (!$dBConnection)
           die('Could not connect to database.  Please try again later.');
-        $dBQuery = "CREATE TABLE " . $dBPrefix . "_LoginTable(ID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, Username VARCHAR(25) NOT NULL, Password VARCHAR(256) NOT NULL, Email VARCHAR(255) NOT NULL, Company VARCHAR(50), URL VARCHAR(255), EmailIsPublic BOOLEAN, Cookie VARCHAR(512), UserImage VARCHAR(255), UserBlurb LONGTEXT);";
+        $dBQuery = "CREATE TABLE " . $dBPrefix . "_LoginTable(ID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, Username VARCHAR(25) NOT NULL, DisplayName VARCHAR(25) NOT NULL, Password VARCHAR(256) NOT NULL, Email VARCHAR(255) NOT NULL, Company VARCHAR(50), URL VARCHAR(255), EmailIsPublic BOOLEAN, Cookie VARCHAR(512), UserImage VARCHAR(255), UserBlurb LONGTEXT);";
         mysqli_query($dBConnection, $dBQuery);
-        $dBQuery = "INSERT INTO " . $dBPrefix . "_LoginTable (Username, Password, Email, EmailIsPublic, Cookie) VALUES ('Admin', '" . password_hash($randPass . $dBPrefix, PASSWORD_DEFAULT) . "', '" . $wSContactEmail . "', 0, 'XXXX');";
+        $dBQuery = "INSERT INTO " . $dBPrefix . "_LoginTable (Username, DisplayName, Password, Email, EmailIsPublic, Cookie) VALUES ('Admin', 'Administrator', '" . password_hash($randPass . $dBPrefix, PASSWORD_DEFAULT) . "', '" . $wSContactEmail . "', 0, 'XXXX');";
         mysqli_query($dBConnection, $dBQuery);
         $dBQuery = "CREATE TABLE " . $dBPrefix . "_PostsTable(ID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, AuthorID BIGINT NOT NULL, Title VARCHAR(128) NOT NULL, NiceTitle VARCHAR(128) NOT NULL, TagOne VARCHAR(512) NOT NULL, TagTwo VARCHAR(512) NOT NULL, TagThree VARCHAR(512), Timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, Post LONGTEXT NOT NULL, PostIsDraft BOOLEAN);";
         mysqli_query($dBConnection, $dBQuery);
@@ -119,6 +119,7 @@
     else
       UI_page();
   }
+  
   function UI_page() //This handles the UI for the installer.
   {
   ?><!DOCTYPE html>

@@ -465,24 +465,24 @@ function engine_collate_post_details($postID)
 function engine_call_author_details($postAuthor)
 {
   $dBConnection = connect();
-  $dBQuery = "SELECT Username,Email,EmailIsPublic,URL FROM `" . DBPREFIX . "_LoginTable` WHERE ID='" . $postAuthor . "';";
+  $dBQuery = "SELECT DisplayName,Email,EmailIsPublic,URL FROM `" . DBPREFIX . "_LoginTable` WHERE ID='" . $postAuthor . "';";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
   while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
   {
-    $returnedUsername = mb_convert_encoding(htmlspecialchars($row['Username']), "UTF-8");
+    $returnedDisplayName = mb_convert_encoding(htmlspecialchars($row['DisplayName']), "UTF-8");
     $returnedEmail = mb_convert_encoding(htmlspecialchars($row['Email']), "UTF-8");
     $returnedEmailIsPublic = mb_convert_encoding(htmlspecialchars($row['EmailIsPublic']), "UTF-8");
     $returnedURL = mb_convert_encoding(htmlspecialchars($row['URL']), "UTF-8");
   }
   disconnect($dBConnection);
   if($returnedEmailIsPublic == 1 && !empty($returnedURL))
-    $authorCaption = '<a href="' . $returnedURL . '" title="Go To ' . $returnedURL . '">' . $returnedUsername . '</a>(<a href="mailto:' . $returnedEmail . '" title="Email ' . $returnedEmail . '">Email The Author</a>)';
+    $authorCaption = '<a href="' . $returnedURL . '" title="Go To ' . $returnedURL . '">' . $returnedDisplayName . '</a>(<a href="mailto:' . $returnedEmail . '" title="Email ' . $returnedEmail . '">Email The Author</a>)';
   else if($returnedEmailIsPublic == 1 && empty($returnedURL))
-    $authorCaption = '<a href="mailto:' . $returnedEmail . '" title="Email ' . $returnedEmail . '">' . $returnedUsername . '</a>';
+    $authorCaption = '<a href="mailto:' . $returnedEmail . '" title="Email ' . $returnedEmail . '">' . $returnedDisplayName . '</a>';
   else if($returnedEmailIsPublic == 0 && !empty($returnedURL))
-    $authorCaption = '<a href="' . $returnedURL . '" title="Go To ' . $returnedURL . '">' . $returnedUsername . '</a>';
+    $authorCaption = '<a href="' . $returnedURL . '" title="Go To ' . $returnedURL . '">' . $returnedDisplayName . '</a>';
   else //if($returnedEmailIsPublic == 0 && empty($returnedURL))
-    $authorCaption = $returnedUsername;
+    $authorCaption = $returnedDisplayName;
   return $authorCaption;
 }
 
