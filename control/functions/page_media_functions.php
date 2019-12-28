@@ -132,7 +132,7 @@ function sub_UI_media_page_FindAndPrintFileData($pageOrPlugin)
     {
       echo '<tr>';
       if ($pageOrPlugin != 'Plugin')
-        echo '<td><img src="' . PROTOCOL . URL . substr($file,2) . '" alt="' . substr($file,11) . '" style="height:8vh;width:auto;" /></td><td>&ltimg src=&quot;' . PROTOCOL . URL . substr($file,2) . '&quot; alt=&quot;' . substr($file,11) . '&quot; /&gt;</td><td>' . substr($file,2) . '</td><td> ' . date ("Y-m-d H:i:s.", filemtime($file)) . '</td><td><form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $returnedPostID . '" /><input type="submit" class="btn btn-default btn-xs" name="DeleteSubmit" value="Delete" /></form></td>';
+        echo '<td><img src="' . PROTOCOL . URL . substr($file,2) . '" alt="' . substr($file,11) . '" style="height:8vh;width:auto;" /></td><td>&ltimg src=&quot;' . PROTOCOL . URL . substr($file,2) . '&quot; alt=&quot;' . substr($file,11) . '&quot; /&gt;</td><td>' . substr($file,2) . '</td><td> ' . date ("Y-m-d H:i:s.", filemtime($file)) . '</td><td><form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $file . '" /><input type="submit" class="btn btn-default btn-xs" name="DeleteSubmit" value="Delete" /></form></td>';
       else
       {
         echo '<td><img src="' . PROTOCOL . URL . substr($file,2) . '" alt="' . substr($file,11) . '" style="height:8vh;width:auto;" /></td><td>';
@@ -146,7 +146,7 @@ function sub_UI_media_page_FindAndPrintFileData($pageOrPlugin)
       echo '<tr><td>No Image Available.</td><td>&lt;video controls&gt;&ltsource src=&quot;' . PROTOCOL . URL . substr($file,2) . '&quot; /&gt;Your Web Browser Doesn&#39;t Support Videos!&lt;/video&gt;</td>' . '<td>' . substr($file,2) . '</td><td> ' . date ("Y-m-d H:i:s.", filemtime($file)) . '</td>';
       if ($pageOrPlugin != 'Plugin')
       {
-        echo '<td><form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $returnedPostID . '" /><input type="submit" class="btn btn-default btn-xs" name="DeleteSubmit" value="Delete" /></form></td>';
+        echo '<td><form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $file . '" /><input type="submit" class="btn btn-default btn-xs" name="DeleteSubmit" value="Delete" /></form></td>';
       }
       echo '</tr>';
     }
@@ -155,7 +155,7 @@ function sub_UI_media_page_FindAndPrintFileData($pageOrPlugin)
       echo '<tr><td>No Image Available.</td><td>&lt;audio controls&gt;&ltsource src=&quot;' . PROTOCOL . URL . substr($file,2) . '&quot; /&gt;Your Web Browser Doesn&#39;t Support Audio!&lt;/audio&gt;</td>' . '<td>' . substr($file,2) . '</td><td> ' . date ("Y-m-d H:i:s.", filemtime($file)) . '</td>';
       if ($pageOrPlugin != 'Plugin')
       {
-        echo '<td><form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $returnedPostID . '" /><input type="submit" class="btn btn-default btn-xs" name="DeleteSubmit" value="Delete" /></form></td>';
+        echo '<td><form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $file . '" /><input type="submit" class="btn btn-default btn-xs" name="DeleteSubmit" value="Delete" /></form></td>';
       }
       echo '</tr>';
     }
@@ -164,7 +164,7 @@ function sub_UI_media_page_FindAndPrintFileData($pageOrPlugin)
       echo '<tr><td>No Image Available.</td>' . '<td>' . substr($file,2) . '</td><td>&lta href=&quot;' . PROTOCOL . URL . substr($file,2) . '&quot; title=&quot;' . substr($file,11) . '&quot; &gt;' . PROTOCOL . URL . substr($file,2) . '&lt;/a&gt;</td><td> ' . date ("Y-m-d H:i:s.", filemtime($file)) . '</td>';
       if ($pageOrPlugin != 'Plugin')
       {
-        echo '<td><form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $returnedPostID . '" /><input type="submit" class="btn btn-default btn-xs" name="DeleteSubmit" value="Delete" /></form></td>';
+        echo '<td><form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $file . '" /><input type="submit" class="btn btn-default btn-xs" name="DeleteSubmit" value="Delete" /></form></td>';
       }
       echo '</tr>';
     }

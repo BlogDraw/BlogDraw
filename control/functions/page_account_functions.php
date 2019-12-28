@@ -24,9 +24,10 @@ function engine_account_page($safeCookie)
   if (isset($_POST['AccountSubmit']))
   {
     $dBConnection = connect();
-    if(isset($_POST['Username']) && isset($_POST['Email']) && !empty($_POST['Username']) && !empty($_POST['Email']))
+    if(isset($_POST['Username']) && isset($_POST['DisplayName']) && isset($_POST['Email']) && !empty($_POST['Username']) && !empty($_POST['Email']))
     {
       $safeUsername = cleanString($dBConnection, $_POST['Username']);
+      $safeDisplayName = cleanString($dBConnection, $_POST['DisplayName']);
       $safeEmail = cleanString($dBConnection, $_POST['Email']);
       if ($safeUsername != $returnedUsername)
       {
@@ -43,7 +44,7 @@ function engine_account_page($safeCookie)
     }
     else
       echo '<div class="row"><p class="col-xs-10 col-xs-push-1"><strong>You need at least username and email address for an account.</strong></p></div>';
- 
+
     if(isset($_POST['Password1']) && isset($_POST['Password2']) && !empty($_POST['Password1']))
     {
       if ($_POST['Password1'] == $_POST['Password2'])
@@ -128,7 +129,7 @@ function engine_account_page($safeCookie)
     disconnect($dBConnection);
   }
   //Call in the UI, and pass variables to autofill the form
-  UI_account_page($returnedUsername,$returnedCompany,$returnedURL,$returnedEmail,$returnedUserBlurb,$returnedUserImage,$returnedEmailIsPublic);
+  UI_account_page($returnedUsername,$returnedDisplayName,$returnedCompany,$returnedURL,$returnedEmail,$returnedUserBlurb,$returnedUserImage,$returnedEmailIsPublic);
 }
 
 /**

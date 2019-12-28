@@ -506,7 +506,7 @@ function engine_call_post_field($postToCallID,$field)
       if ($field != 'Post')
         $returnedField = cleanString($dBConnection, $row[$field]);
       else
-        $returnedField = cleanHtmlString($dBConnection, $row[$field]);
+        $returnedField = mb_convert_encoding($row[$field], "UTF-8");
     }
   }
   disconnect($dBConnection);
