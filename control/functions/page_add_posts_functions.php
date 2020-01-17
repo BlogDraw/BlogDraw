@@ -35,9 +35,9 @@ function sub_engine_add_posts_SubmitOrDraft($submitOrDraft,$safeCookie)
   $safePost = cleanHtmlString($dBConnection, '<div>' . nl2br($_POST['Content'],true) . '</div>');
   $safeTagList = cleanString($dBConnection, $_POST['Tags']);
   $safeTagArray = explode(',', $safeTagList);
-  $safeTagOne = $safeTagArray[0];
-  $safeTagTwo = $safeTagArray[1];
-  $safeTagThree = $safeTagArray[2];
+  $safeTagOne = trim($safeTagArray[0]);// Use trim to remove spacing between commas from the final tags.
+  $safeTagTwo = trim($safeTagArray[1]);
+  $safeTagThree = trim($safeTagArray[2]);
 
   $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $safeCookie . "';";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
