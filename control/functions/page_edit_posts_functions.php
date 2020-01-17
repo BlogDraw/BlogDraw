@@ -21,7 +21,9 @@ function engine_edit_posts_page($safeCookie)
       $returnedAuthorID = cleanHtmlString($dBConnection, $row['AuthorID']);
       $returnedTitle = cleanHtmlString($dBConnection, $row['Title']);
       $returnedPost = cleanHtmlString($dBConnection, $row['Post']);
-      $returnedPost = str_replace("<br />", "", $returnedPost); //Writing a post adds in HTML linebreaks.  We want to remove these so we don't add them twice.
+      $returnedPost = str_replace("<br />", "", $returnedPost);// Writing a post adds in HTML linebreaks.  We want to remove these so we don't add them twice.
+      $returnedPost = str_replace("<", "[HTMLLEFTBRACKET]", $returnedPost);// Add safe entry/exit points for HTML tags so they don't mix up the DOM on edit.
+      $returnedPost = str_replace(">", "[HTMLRIGHTBRACKET]", $returnedPost);
       $returnedTagOne = cleanHtmlString($dBConnection, $row['TagOne']);
       $returnedTagTwo = cleanHtmlString($dBConnection, $row['TagTwo']);
       $returnedTagThree = cleanHtmlString($dBConnection, $row['TagThree']);

@@ -144,8 +144,12 @@ function sub_UI_add_edit_posts_JSFillForEdit($returnedPostID,$returnedTitle,$ret
 {
 ?><script>
   document.getElementById("Title").value = "<?php echo $returnedTitle; ?>";
-  document.getElementById("Content").value = `<?php echo substr($returnedPost,5,-6); ?>`;
+  var content = `<?php echo substr($returnedPost,38,-39); ?>`;
+  document.getElementById("Content").value = content;
+  document.getElementById("Content").value = document.getElementById("Content").value.replace(/\[HTMLLEFTBRACKET\]/g, "<");// Replace safe tag entry for internal HTML.
+  document.getElementById("Content").value = document.getElementById("Content").value.replace(/\[HTMLRIGHTBRACKET\]/g, ">"); // Replace safe tag closure for internal HTML.
   document.getElementById("Tags").value = "<?php echo $returnedTags; ?>";
 </script><?php
 }
+?>
 ?>
