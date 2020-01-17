@@ -450,9 +450,9 @@ function engine_collate_post_details($postID)
   $postTagTwo = engine_call_post_field($postID,"TagTwo");
   $postTagThree = engine_call_post_field($postID,"TagThree");
   echo '<p><small>Written by: ' . $postAuthor . ' on: ' . engine_call_post_field($postID,"TimeStamp") . '. 
-    Tags: <a href="' . PROTOCOL . URL . '/tag-' . urlencode($postTagOne) . '" title="Visit Tag Archive for: ' . $postTagOne . '">' . $postTagOne . '</a>,
-    <a href="' . PROTOCOL . URL . '/tag-' . urlencode($postTagTwo) . '" title="Visit Tag Archive for: ' . $postTagTwo . '">' . $postTagTwo . '</a>,
-    <a href="' . PROTOCOL . URL . '/tag-' . urlencode($postTagThree) . '" title="Visit Tag Archive for: ' . $postTagThree . '">' . $postTagThree . '</a>.</small></p>';
+    Tags: <a href="' . PROTOCOL . URL . '/tag-' . urlencode(strtolower($postTagOne)) . '" title="Visit Tag Archive for: ' . $postTagOne . '">' . $postTagOne . '</a>,
+    <a href="' . PROTOCOL . URL . '/tag-' . urlencode(strtolower($postTagTwo)) . '" title="Visit Tag Archive for: ' . $postTagTwo . '">' . $postTagTwo . '</a>,
+    <a href="' . PROTOCOL . URL . '/tag-' . urlencode(strtolower($postTagThree)) . '" title="Visit Tag Archive for: ' . $postTagThree . '">' . $postTagThree . '</a>.</small></p>';// Make URLs out of the tags, ensure they're lower-case for consistency.
   echo engine_call_post_field($postID,"Post");
   echo '</article>'; 
 }
