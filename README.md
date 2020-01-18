@@ -18,7 +18,7 @@ BlogDraw is an ultra-lightweight, super-simple, easy-to-use, fully-featured blog
         <li>Super Speedy!  BlogDraw is installed and ready to use in a matter of minutes.</li>
         <li>Set me up! BlogDraw is set up as soon as it's installed.  </li>
         <li>Security is Key.  There's no complex security settings to change.  It's as secure as we can make it out of the box.</li>
-        <li>All the themes! You can install any BlogDraw Theme on any BlogDraw Site, and it just works. </li>
+        <li>All the templates! You can install any BlogDraw Template on any BlogDraw Site, and it just works. </li>
       </ul>
     </td>
     <td width="60%">
@@ -60,7 +60,7 @@ BlogDraw is an ultra-lightweight, super-simple, easy-to-use, fully-featured blog
 2. We'll announce when there's an update, and provide you with an updater.
 3. Follow the instructions.
 
-- If you're a developer, you can star and watch [BlogDraw-Updater on GitHub](https://github.com/TuxSoftLimited/BlogDraw-Updater "BlogDraw-Updater"), to get updates whenever we release a new update.
+- If you're already on GitHub, you can star and watch [BlogDraw-Updater on GitHub](https://github.com/TuxSoftLimited/BlogDraw-Updater "BlogDraw-Updater") and [BlogDraw on GitHub](https://github.com/TuxSoftLimited/BlogDraw "BlogDraw"); to get updates whenever we release a new update.
 
 ## System Requirements
 
@@ -68,4 +68,4 @@ BlogDraw is an ultra-lightweight, super-simple, easy-to-use, fully-featured blog
   - with mod_rewrite installed.
 - PHP 7 or above.
   - with mbstring extension.
-- MYSQL.
+- MySQL.
