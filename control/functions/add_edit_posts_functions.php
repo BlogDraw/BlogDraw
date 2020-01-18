@@ -4,7 +4,7 @@
  * @param safeCookie - The authentication cookie in use.
  * @return String - the post author's details.
  **/
-function sub_UI_add_edit_posts_FindAuthorDetails ($safeCookie)
+function sub_UI_add_edit_posts_FindAuthorDetails($safeCookie)
 {
   $dBConnection = connect();
   $dBQuery = "SELECT Username FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $safeCookie . "';";

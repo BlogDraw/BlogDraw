@@ -2,7 +2,7 @@
 
 ## Who we Are
 
-If you're just starting out with BlogDraw development, let's first introduce you to our team.  BlogDraw is made by [@TuxSoftLimited](https://github.com/TuxSoftLimited "TuxSoft Limited"). - a small Software and Web Development company based in Lancashire, in the UK.  Our Lead Developer is [@JamesPhillipsUK](https://github.com/JamesPhillipsUK "James Phillips") - his original codebase powers BlogDraw, and all decisions about development go through him (but don't worry - he's a nice guy to work with).  A major benefit of Open-Source software (like BlogDraw) is that anyone is welcome to help out and contribute to the project; so we also welcome contributors from outside [@TuxSoftLimited](https://github.com/TuxSoftLimited "TuxSoft Limited").
+If you're just starting out with BlogDraw development, let's first introduce you to our team.  BlogDraw is made by [@TuxSoftLimited](https://github.com/TuxSoftLimited "TuxSoft Limited"). - a small Software and Web Development company based in Lancashire, in the UK.  Our Lead Developer is [@JamesPhillipsUK](https://github.com/JamesPhillipsUK "James Phillips") - his original codebase powers BlogDraw, and decisions about development all go through him (but don't worry - he's a nice guy to work with).  A major benefit of Open-Source software (like BlogDraw) is that everyone's welcome to help out and contribute to the project; so we also welcome contributors from outside [@TuxSoftLimited](https://github.com/TuxSoftLimited "TuxSoft Limited").
 
 ## How we Talk
 
@@ -63,6 +63,22 @@ if (2 == 2)
 
 - Don’t leave trailing white space at the end of your lines.
 - Write one statement per line.
+- if statements, loop structures, etc. use a space between their name and parameter list, function calls don't.
+
+```php
+function do_this()
+{
+  if (1==1)
+    do_that();
+}// Correct.
+
+function do_this ()
+{
+  if(1==1)
+    do_that ();
+}// Incorrect.
+```
+
 - Give your variables meaningful names.
 - Use ‘camelCase’ for variable names.
 
@@ -114,7 +130,7 @@ do_that(9);
 do_that(9); ?>// Incorrect.
 ```
 
-- an exception the the above rule can be made when you're only calling one statement.  Then your PHP code can go on one line.
+- An exception the the above rule can be made when you're only calling one statement.  Then your PHP code can go on one line.
 
 ```php
 <p><?php text(); ?></p>
