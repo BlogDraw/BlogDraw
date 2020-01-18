@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This handles the data processing for the Media page.
  **/
@@ -31,7 +30,7 @@ function engine_media_page()
       $fineToUpload = 0;
     }
 
-    if(!($fileType == "jpg" || $fileType == "jpeg" || $fileType == "png" || $fileType == "bmp" || $fileType == "gif" || $fileType == "tiff" || $fileType == "ogg" || $fileType == "ogv" || $fileType == "webm" || $fileType == "mp4" || $fileType == "txt" || $fileType == "rtf" || $fileType == "pdf" || $fileType == "docx" || $fileType == "pptx" || $fileType == "xlsx" || $fileType == "csv" || $fileType == "odt" || $fileType == "odp" || $fileType == "ods" || $fileType == "odg" || $fileType == "mp3" || $fileType == "ico")) //Allow certain file formats
+    if (!($fileType == "jpg" || $fileType == "jpeg" || $fileType == "png" || $fileType == "bmp" || $fileType == "gif" || $fileType == "tiff" || $fileType == "ogg" || $fileType == "ogv" || $fileType == "webm" || $fileType == "mp4" || $fileType == "txt" || $fileType == "rtf" || $fileType == "pdf" || $fileType == "docx" || $fileType == "pptx" || $fileType == "xlsx" || $fileType == "csv" || $fileType == "odt" || $fileType == "odp" || $fileType == "ods" || $fileType == "odg" || $fileType == "mp3" || $fileType == "ico")) //Allow certain file formats
     {
       echo "Allowed formats are: jpg, jpeg, png, bmp, gif, tiff, ogg, ogv, webm, mp4, mp3, txt, rtf, pdf, docx, pptx, xlsx, csv, odt, odp, ods, odg, ico.";
       $fineToUpload = 0;
@@ -145,27 +144,21 @@ function sub_UI_media_page_FindAndPrintFileData($pageOrPlugin)
     {
       echo '<tr><td>No Image Available.</td><td>&lt;video controls&gt;&ltsource src=&quot;' . PROTOCOL . URL . substr($file,2) . '&quot; /&gt;Your Web Browser Doesn&#39;t Support Videos!&lt;/video&gt;</td>' . '<td>' . substr($file,2) . '</td><td> ' . date ("Y-m-d H:i:s.", filemtime($file)) . '</td>';
       if ($pageOrPlugin != 'Plugin')
-      {
         echo '<td><form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $file . '" /><input type="submit" class="btn btn-light btn-sm" name="DeleteSubmit" value="Delete" /></form></td>';
-      }
       echo '</tr>';
     }
     else if (strcasecmp(substr($file,-4),'.mp3') == 0 || strcasecmp(substr($file,-4),'.ogg') == 0)
     {
       echo '<tr><td>No Image Available.</td><td>&lt;audio controls&gt;&ltsource src=&quot;' . PROTOCOL . URL . substr($file,2) . '&quot; /&gt;Your Web Browser Doesn&#39;t Support Audio!&lt;/audio&gt;</td>' . '<td>' . substr($file,2) . '</td><td> ' . date ("Y-m-d H:i:s.", filemtime($file)) . '</td>';
       if ($pageOrPlugin != 'Plugin')
-      {
         echo '<td><form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $file . '" /><input type="submit" class="btn btn-light btn-sm" name="DeleteSubmit" value="Delete" /></form></td>';
-      }
       echo '</tr>';
     }
     else
     {
       echo '<tr><td>No Image Available.</td>' . '<td>' . substr($file,2) . '</td><td>&lta href=&quot;' . PROTOCOL . URL . substr($file,2) . '&quot; title=&quot;' . substr($file,11) . '&quot; &gt;' . PROTOCOL . URL . substr($file,2) . '&lt;/a&gt;</td><td> ' . date ("Y-m-d H:i:s.", filemtime($file)) . '</td>';
       if ($pageOrPlugin != 'Plugin')
-      {
         echo '<td><form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $file . '" /><input type="submit" class="btn btn-light btn-sm" name="DeleteSubmit" value="Delete" /></form></td>';
-      }
       echo '</tr>';
     }
     $count++;

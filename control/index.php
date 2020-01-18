@@ -9,7 +9,7 @@
   $dBConnection = connect();
   $dBQuery = "SELECT Cookie,ID FROM `" . DBPREFIX . "_LoginTable` WHERE CHAR_LENGTH(Cookie) > 1;";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
-  while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+  while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
   {
     $returnedCookie = cleanHtmlString($dBConnection, $row['Cookie']);
     $safeCookie = cleanHtmlString($dBConnection,$safeCookie);
@@ -52,18 +52,18 @@
     include ('./page_login.php');
   else
   {
-    if(isset($_GET['page']))
+    if (isset($_GET['page']))
       $subPage = htmlspecialchars(filter_input( INPUT_GET, 'page', FILTER_SANITIZE_URL));
 ?>
       <nav id="navbar" class="navbar navbar-expand static-top navbar-dark bg-dark">
       <div class="container-fluid">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item<?php if(!isset($_GET['page'])){echo ' active';} ?>"><a class="nav-link" href="<?php PROTOCOL . URL ?>/control/" title="The Control Panel">The Control Panel</a></li>
-          <li class="nav-item<?php if(isset($_GET['page']) && $subPage == "AddPost"){echo ' active';} ?>"><a class="nav-link" href="<?php echo PROTOCOL . URL; ?>/control/?page=AddPost" title="Write a Post">Write a Post</a></li>
-          <li class="nav-item<?php if(isset($_GET['page']) && $subPage == "EditPost"){echo ' active';} ?>"><a class="nav-link" href="<?php echo PROTOCOL . URL; ?>/control/?page=EditPost" title="View and Edit Posts">View and Edit Posts</a></li>
-          <li class="nav-item<?php if(isset($_GET['page']) && $subPage == "Media"){echo ' active';} ?>"><a class="nav-link" href="<?php echo PROTOCOL . URL;?>/control/?page=Media" title="Add and Edit Media">Add and Edit Media</a></li>
-          <li class="nav-item<?php if(isset($_GET['page']) && $subPage == "Account"){echo ' active';} ?>"><a class="nav-link" href="<?php echo PROTOCOL . URL; ?>/control/?page=Account" title="My Account">My Account</a></li>
-          <li class="nav-item<?php if(isset($_GET['page']) && $subPage == "Register"){echo ' active';} ?>"><a class="nav-link" href="<?php echo PROTOCOL . URL; ?>/control/?page=Register" title="Register a new User">Register a new User</a></li>
+          <li class="nav-item<?php if (!isset($_GET['page'])){echo ' active';} ?>"><a class="nav-link" href="<?php PROTOCOL . URL ?>/control/" title="The Control Panel">The Control Panel</a></li>
+          <li class="nav-item<?php if (isset($_GET['page']) && $subPage == "AddPost"){echo ' active';} ?>"><a class="nav-link" href="<?php echo PROTOCOL . URL; ?>/control/?page=AddPost" title="Write a Post">Write a Post</a></li>
+          <li class="nav-item<?php if (isset($_GET['page']) && $subPage == "EditPost"){echo ' active';} ?>"><a class="nav-link" href="<?php echo PROTOCOL . URL; ?>/control/?page=EditPost" title="View and Edit Posts">View and Edit Posts</a></li>
+          <li class="nav-item<?php if (isset($_GET['page']) && $subPage == "Media"){echo ' active';} ?>"><a class="nav-link" href="<?php echo PROTOCOL . URL;?>/control/?page=Media" title="Add and Edit Media">Add and Edit Media</a></li>
+          <li class="nav-item<?php if (isset($_GET['page']) && $subPage == "Account"){echo ' active';} ?>"><a class="nav-link" href="<?php echo PROTOCOL . URL; ?>/control/?page=Account" title="My Account">My Account</a></li>
+          <li class="nav-item<?php if (isset($_GET['page']) && $subPage == "Register"){echo ' active';} ?>"><a class="nav-link" href="<?php echo PROTOCOL . URL; ?>/control/?page=Register" title="Register a new User">Register a new User</a></li>
         </ul>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item"><a class="nav-link" href="<?php echo PROTOCOL . URL; ?>/control/?page=Logout" title="Logout">Logout</a></li>
@@ -72,7 +72,7 @@
     </nav>
 <?php
     //Find out what page the user wants to see, and display it in the context of the framework laid out here.
-    if(isset($_GET['page']))
+    if (isset($_GET['page']))
     {
       $subPage = htmlspecialchars(filter_input( INPUT_GET, 'page', FILTER_SANITIZE_URL));
       if ($subPage == "Account")

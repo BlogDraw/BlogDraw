@@ -11,11 +11,11 @@ function engine_edit_posts_page($safeCookie)
     $safeEditPostNo = cleanString($dBConnection, $_POST['Edit']);
     $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $safeCookie . "';";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
-    while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+    while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
       $returnedID = cleanHtmlString($dBConnection, $row['ID']);
     $dBQuery = "SELECT ID,AuthorID,Title,Post,TagOne,TagTwo,TagThree FROM `" . DBPREFIX . "_PostsTable` WHERE ID = '" . $safeEditPostNo . "';";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
-    while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+    while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
     {
       $returnedPostID = cleanHtmlString($dBConnection, $row['ID']);
       $returnedAuthorID = cleanHtmlString($dBConnection, $row['AuthorID']);
@@ -42,11 +42,11 @@ function engine_edit_posts_page($safeCookie)
     $safeDeletePostNo = cleanString($dBConnection, $_POST['Delete']);
     $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $safeCookie . "';";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
-    while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+    while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
       $returnedID = cleanHtmlString($dBConnection, $row['ID']);
     $dBQuery = "SELECT AuthorID FROM `" . DBPREFIX . "_PostsTable` WHERE ID = '" . $safeDeletePostNo . "';";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
-    while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+    while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
       $returnedAuthorID = cleanHtmlString($dBConnection, $row['AuthorID']);
     if ($returnedID == $returnedAuthorID)
     {
@@ -96,14 +96,14 @@ function sub_engine_edit_posts_SubmitOrDraft($submitOrDraft,$safeCookie) //This 
 
   $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $safeCookie . "';";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
-  while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+  while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
     $returnedID = cleanHtmlString($dBConnection, $row['ID']);
   if ($submitOrDraft == 'Submit')
   {
     $dBQuery = "SELECT AuthorID FROM `" . DBPREFIX . "_PostsTable` WHERE ID = '" . $safeEditID . "';";
     mysqli_query($dBConnection,$dBQuery);
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
-    while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+    while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
       $returnedAuthorID = cleanHtmlString($dBConnection, $row['AuthorID']);
     if ($returnedID == $returnedAuthorID)
     {
@@ -118,7 +118,7 @@ function sub_engine_edit_posts_SubmitOrDraft($submitOrDraft,$safeCookie) //This 
     $dBQuery = "SELECT AuthorID FROM `" . DBPREFIX . "_PostsTable` WHERE ID = '" . $safeEditID . "';";
     mysqli_query($dBConnection,$dBQuery);
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
-    while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+    while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
       $returnedAuthorID = cleanHtmlString($dBConnection, $row['AuthorID']);
     if ($returnedID == $returnedAuthorID)
     {
@@ -175,11 +175,11 @@ function sub_UI_edit_posts_TableContent($safeCookie)
   $dBConnection = connect();
   $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $safeCookie . "';";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
-  while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+  while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
     $returnedID = cleanHtmlString($dBConnection, $row['ID']);
   $dBQuery = "SELECT ID,Title,Post,Timestamp,PostIsDraft FROM `" . DBPREFIX . "_PostsTable` WHERE AuthorID = '" . $returnedID . "';";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
-  while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+  while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
   {
     $returnedPostID = cleanHtmlString($dBConnection, $row['ID']);
     $returnedTitle = cleanHtmlString($dBConnection, $row['Title']);

@@ -7,7 +7,7 @@ function engine_register_page() //This handles the data for the Register page.
   if (isset($_POST['RegisterSubmit']))
   {
     $dBConnection = connect();
-    if(isset($_POST['Username']) && isset($_POST['DisplayName']) && isset($_POST['Email']) && !empty($_POST['Username']) && !empty($_POST['Email']) && isset($_POST['Password1']) && !empty($_POST['Password1']) && isset($_POST['Password2']) && !empty($_POST['Password2']))
+    if (isset($_POST['Username']) && isset($_POST['DisplayName']) && isset($_POST['Email']) && !empty($_POST['Username']) && !empty($_POST['Email']) && isset($_POST['Password1']) && !empty($_POST['Password1']) && isset($_POST['Password2']) && !empty($_POST['Password2']))
     {
       $safeUsername = cleanString($dBConnection, $_POST['Username']);
       $safeUsername = cleanString($dBConnection, $_POST['DisplayName']);

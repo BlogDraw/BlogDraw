@@ -8,7 +8,7 @@ function engine_account_page($safeCookie)
   $dBConnection = connect();
   $dBQuery = "SELECT Username,DisplayName,Email,UserImage,UserBlurb,Company,URL,EmailIsPublic FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $safeCookie . "';";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
-  while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+  while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
   {
     $returnedUsername = cleanHtmlString($dBConnection, $row['Username']);
     $returnedDisplayName = cleanHtmlString($dBConnection, $row['DisplayName']);
@@ -24,7 +24,7 @@ function engine_account_page($safeCookie)
   if (isset($_POST['AccountSubmit']))
   {
     $dBConnection = connect();
-    if(isset($_POST['Username']) && isset($_POST['DisplayName']) && isset($_POST['Email']) && !empty($_POST['Username']) && !empty($_POST['Email']))
+    if (isset($_POST['Username']) && isset($_POST['DisplayName']) && isset($_POST['Email']) && !empty($_POST['Username']) && !empty($_POST['Email']))
     {
       $safeUsername = cleanString($dBConnection, $_POST['Username']);
       $safeDisplayName = cleanString($dBConnection, $_POST['DisplayName']);
@@ -45,7 +45,7 @@ function engine_account_page($safeCookie)
     else
       echo '<div class="row"><p class="col-10 offset-1"><strong>You need at least username and email address for an account.</strong></p></div>';
 
-    if(isset($_POST['Password1']) && isset($_POST['Password2']) && !empty($_POST['Password1']))
+    if (isset($_POST['Password1']) && isset($_POST['Password2']) && !empty($_POST['Password1']))
     {
       if ($_POST['Password1'] == $_POST['Password2'])
       {
@@ -58,7 +58,7 @@ function engine_account_page($safeCookie)
       else
         echo '<div class="row"><p class="col-10 offset-1"><strong>Passords don&#39;t match!</strong></p></div>';
     }
-    if(isset($_POST['Company']))
+    if (isset($_POST['Company']))
     {
       $safeCompany = cleanString($dBConnection, $_POST['Company']);
       if ($safeCompany != $returnedCompany)
@@ -68,7 +68,7 @@ function engine_account_page($safeCookie)
         $returnedCompany = $safeCompany;
       }
     }
-    if(isset($_POST['DisplayName']))
+    if (isset($_POST['DisplayName']))
     {
       $safeDisplayName = cleanString($dBConnection, $_POST['DisplayName']);
       if ($safeDisplayName != $returnedDisplayName)
@@ -78,7 +78,7 @@ function engine_account_page($safeCookie)
         $returnedDisplayName = $safeDisplayName;
       }
     }
-    if(isset($_POST['UserURL']))
+    if (isset($_POST['UserURL']))
     {
       $safeURL = cleanHtmlString($dBConnection, $_POST['UserURL']);
       if ($safeURL != $returnedURL)
@@ -88,7 +88,7 @@ function engine_account_page($safeCookie)
         $returnedURL = $safeURL;
       }
     }
-    if(isset($_POST['UserImage']))
+    if (isset($_POST['UserImage']))
     {
       $safeUserImage = cleanHtmlString($dBConnection, $_POST['UserImage']);
       if ($safeUserImage != $returnedUserImage)
@@ -98,7 +98,7 @@ function engine_account_page($safeCookie)
         $returnedUserImage = $safeUserImage;
       }
     }
-    if(isset($_POST['UserBlurb']))
+    if (isset($_POST['UserBlurb']))
     {
       $safeUserBlurb = cleanHtmlString($dBConnection, $_POST['UserBlurb']);
       if ($safeUserBlurb != $returnedUserBlurb)
@@ -108,7 +108,7 @@ function engine_account_page($safeCookie)
         $returnedUserBlurb = str_replace("\\'", "'", $safeUserBlurb);
       }
     }
-    if(isset($_POST['EmailPublic']))
+    if (isset($_POST['EmailPublic']))
     {
       if ($returnedEmailIsPublic == 0)
       {
@@ -117,7 +117,7 @@ function engine_account_page($safeCookie)
         $returnedEmailIsPublic = 1;
       }
     }
-    else if(!isset($_POST['EmailPublic']))
+    else if (!isset($_POST['EmailPublic']))
     {
       if ($returnedEmailIsPublic == 1)
       {

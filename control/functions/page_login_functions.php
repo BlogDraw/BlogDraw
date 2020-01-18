@@ -12,7 +12,7 @@ function engine_login_page($safeCookie)
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
     $safeUsername = cleanString($dBConnection, $_POST['Username']);
     $safePassword = cleanString($dBConnection, $_POST['Password']);
-    while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+    while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
     {
       $returnedUsername = cleanHtmlString($dBConnection, $row['Username']);
       $returnedPassword = cleanHtmlString($dBConnection, $row['Password']);

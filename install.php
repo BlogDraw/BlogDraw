@@ -69,11 +69,11 @@
           $htaccessContent = file($htaccessFile);
           foreach($htaccessContent as $lineNumber => &$lineContent)
           {
-            if($lineNumber == 12)
+            if ($lineNumber == 12)
               $lineContent .= '# Force SSL/TLS';
-            if($lineNumber == 13)
+            if ($lineNumber == 13)
               $lineContent .= 'RewriteCond %{HTTPS} off';
-            if($lineNumber == 14)
+            if ($lineNumber == 14)
               $lineContent .= 'RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]';
           }
           $allContent = implode("", $htaccessContent);
@@ -85,11 +85,11 @@
           $htaccessContent = file($htaccessFile);
           foreach($htaccessContent as $lineNumber => &$lineContent)
           {
-            if($lineNumber == 12)
+            if ($lineNumber == 12)
               $lineContent .= '# Force no SSL/TLS';
-            if($lineNumber == 13)
+            if ($lineNumber == 13)
               $lineContent .= 'RewriteCond %{HTTPS} on';
-            if($lineNumber == 14)
+            if ($lineNumber == 14)
               $lineContent .= 'RewriteRule ^(.*)$ http://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]';
           }
           $allContent = implode("", $htaccessContent);

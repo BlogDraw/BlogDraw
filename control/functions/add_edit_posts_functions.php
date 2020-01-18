@@ -9,7 +9,7 @@ function sub_UI_add_edit_posts_FindAuthorDetails ($safeCookie)
   $dBConnection = connect();
   $dBQuery = "SELECT Username FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $safeCookie . "';";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
-  while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+  while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
     $returnedAuthor = cleanHtmlString($dBConnection, $row['Username']);
   disconnect($dBConnection);
   return '<p>Written by: ' . $returnedAuthor . ' on: ' . date("Y-m-d") . '.</p>';

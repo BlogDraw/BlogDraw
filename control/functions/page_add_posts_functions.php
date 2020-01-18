@@ -41,7 +41,7 @@ function sub_engine_add_posts_SubmitOrDraft($submitOrDraft,$safeCookie)
 
   $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_LoginTable` WHERE Cookie = '" . $safeCookie . "';";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
-  while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+  while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
     $returnedAuthorID = cleanHtmlString($dBConnection, $row['ID']);
   if ($submitOrDraft == 'Submit')
   {
