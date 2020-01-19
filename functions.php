@@ -9,7 +9,7 @@
  * - Engine Functions - this section contains functions that parse, operate on, and pass data to and from output functions.
 **/
 //CORE CONTENT
-global $notLoggedIn; 
+global $notLoggedIn;
 
 require_once ('control/functions/db_connection_handler.php');
 if (!isset($_POST['LoginSubmit']))
