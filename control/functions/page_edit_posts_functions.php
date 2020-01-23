@@ -177,7 +177,7 @@ function sub_UI_edit_posts_TableContent($safeCookie)
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
   while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
     $returnedID = cleanHtmlString($dBConnection, $row['ID']);
-  $dBQuery = "SELECT ID,Title,Post,Timestamp,PostIsDraft FROM `" . DBPREFIX . "_PostsTable` WHERE AuthorID = '" . $returnedID . "';";
+  $dBQuery = "SELECT ID,Title,Post,Timestamp,PostIsDraft FROM `" . DBPREFIX . "_PostsTable` WHERE AuthorID = '" . $returnedID . "' ORDER BY ID DESC;";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
   while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
   {
