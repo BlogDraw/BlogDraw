@@ -31,7 +31,7 @@ function engine_edit_posts_page($safeCookie)
     }
     if ($returnedID == $returnedAuthorID)
     {
-      UI_add_edit_posts_page('Edit',$safeCookies,$returnedPostID);
+      UI_add_edit_posts_page('Edit',$safeCookie,$returnedPostID);
       sub_UI_add_edit_posts_JSFillForEdit($returnedPostID,$returnedTitle,$returnedPost,$returnedTags);
     }
     disconnect($dBConnection);
