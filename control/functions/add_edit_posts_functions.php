@@ -33,7 +33,7 @@ function controlBoldFunc()
   var PostText  = ContentValue.substring( EndPosition, ContentValue.length );
   $('#Content').val( PreText+ "<strong> BOLD TEXT HERE </strong>" +PostText );
 }
-   
+
 function controlItalicFunc()
 {
   var StartPosition = $('#Content').prop('selectionStart');
@@ -43,7 +43,7 @@ function controlItalicFunc()
   var PostText  = ContentValue.substring( EndPosition, ContentValue.length );
   $('#Content').val( PreText+ "<em> ITALIC TEXT HERE </em>" +PostText );
 }
-   
+
 function controlUnderlineFunc()
 {
   var StartPosition = $('#Content').prop('selectionStart');
@@ -53,7 +53,7 @@ function controlUnderlineFunc()
   var PostText  = ContentValue.substring( EndPosition, ContentValue.length );
   $('#Content').val( PreText+ '<span style="text-decoration:underline;"> UNDERLINED TEXT HERE </span>' +PostText );
 }
-   
+
 function controlQuoteFunc()
 {
   var StartPosition = $('#Content').prop('selectionStart');
@@ -63,7 +63,7 @@ function controlQuoteFunc()
   var PostText  = ContentValue.substring( EndPosition, ContentValue.length );
   $('#Content').val( PreText+ '<blockquote> QUOTE HERE </blockquote>' +PostText );
 }
-   
+
 function controlCodeFunc()
 {
   var StartPosition = $('#Content').prop('selectionStart');
@@ -151,5 +151,4 @@ function sub_UI_add_edit_posts_JSFillForEdit($returnedPostID,$returnedTitle,$ret
   document.getElementById("Tags").value = "<?php echo $returnedTags; ?>";
 </script><?php
 }
-?>
 ?>

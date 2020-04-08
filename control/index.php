@@ -4,8 +4,8 @@
  **/
 //Here we set our basic requirements, and do some security testing.
   $notLoggedIn = true;
-  require_once ('../functions.php');
-  require_once ('functions/functions_back.php');
+  require_once('../functions.php');
+  require_once('functions/functions_back.php');
   $dBConnection = connect();
   $dBQuery = "SELECT Cookie,ID FROM `" . DBPREFIX . "_LoginTable` WHERE CHAR_LENGTH(Cookie) > 1;";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
