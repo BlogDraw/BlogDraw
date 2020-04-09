@@ -259,6 +259,15 @@ function output_template_version()
   echo $templateData["version"];
 }
 
+/**
+ * This outputs a link to the template author's contact website, from the template code.
+ **/
+function output_template_contact_url()
+{
+  $templateData = engine_find_template_data(TEMPLATE);
+  echo $templateData["contactURL"];
+}
+
 //ENGINE FUNCTIONS
 
 /**
