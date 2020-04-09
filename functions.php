@@ -229,7 +229,47 @@ function output_author_profile($option)
   }
 }
 
+/**
+ * This outputs the template name, from the template code.
+ **/
+function output_template_name()
+{
+  $templateData = engine_find_template_data(TEMPLATE);
+  echo $templateData["name"];
+}
+
+/**
+ * This outputs the template author, from the template code.
+ **/
+function output_template_author()
+{
+  $templateData = engine_find_template_data(TEMPLATE);
+  echo $templateData["author"];
+}
+
+/**
+ * This outputs the template version, from the template code.
+ **/
+function output_template_version()
+{
+  $templateData = engine_find_template_data(TEMPLATE);
+  echo $templateData["version"];
+}
+
 //ENGINE FUNCTIONS
+
+/**
+ * This finds the data provided by the template developer in data.json.
+ * @param templateName - The name of the template directory.
+ * @return array - The data provided.
+ **/
+function engine_find_template_data($templateName)
+{
+  $dataFile = realpath("./template/" . $templateName . "/data.json");
+  $data = json_decode(file_get_contents($dataFile), true);
+  return $data;
+}
+
 /**
  * This handles the data processing for the author profile.
  * @return array - An array of author information needed for the profile.

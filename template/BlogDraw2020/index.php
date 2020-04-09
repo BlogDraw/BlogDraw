@@ -55,7 +55,7 @@
       <div class="row">
         <div class="col-12">
           <p>Content on <?php echo URL; ?>, Copyright &copy; <?php echo TITLE; ?> <?php echo date('Y'); ?></p>
-          <p><?php echo TITLE; ?>: Proudly powered by <a href="https://blogdraw.com">BlogDraw</a>.  Template: <?php echo TEMPLATE; ?> by <?php echo TEMPLATEBY; ?></p>
+          <p><?php echo TITLE; ?>: Proudly powered by <a href="https://blogdraw.com">BlogDraw</a>.  Template: <?php echo output_template_name(); ?> by <?php echo output_template_author(); ?></p>
         </div>
       </div>
     </footer>
