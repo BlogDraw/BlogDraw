@@ -50,7 +50,7 @@
         </div>
       </div>
     </div>
-    <footer class="container-fluid">
+    <footer class="container-fluid text-center">
       <hr />
       <div class="row">
         <div class="col-12">
