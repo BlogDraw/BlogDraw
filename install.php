@@ -59,7 +59,7 @@
         $fileContent .= 'define(\'CONTACTPHONE\', \'' . $wSContactPhone . '\');      //Your Contact Phone.' . "\n";
         $fileContent .= 'define(\'TEMPLATE\', \'BlogDraw2020\');          //Your Template Name.' . "\n";
         $fileContent .= 'define(\'TEMPLATEBY\', \'TuxSoft Limited\');      //Template Manufacturer.' . "\n";
-        $fileContent .= 'define(\'COOKIENOTICE\', \'By using this site, you agree to our use of cookies on your computer, which enable some features of the site.\');  //Your Cookie Notice.' . "\n";
+        $fileContent .= 'define(\'COOKIENOTICE\', \'By using this site, you agree to our use of cookies to enable some features of the site.  The following cookies are in use on this website: "' . $wSURL . 'Cookies" - tells us when you make this agreement., "' . $wSTitle . 'BlogDrawLogin" - used for security to track users who attempt to log into the site.\');  //Your Cookie Notice.' . "\n";
         $fileContent .= '?>';
         $fileContent .= file_get_contents($file);
         file_put_contents($file, $fileContent);
