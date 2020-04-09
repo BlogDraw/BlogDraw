@@ -10,26 +10,29 @@
 **/
 //CORE CONTENT
 global $notLoggedIn;
-
 require_once ('control/functions/db_connection_handler.php');
-if (!isset($_POST['LoginSubmit']))
-  $cookieKey = mb_convert_encoding(htmlspecialchars(bin2hex(random_bytes(256))),"UTF-8");
-if (isset($_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']))
+
+if (strpos($_SERVER['REQUEST_URI'], "/control/") !== false) // Only handle auth cookies when an auth attempt is made.
 {
-  $dBConnection = connect();
-  $safeCookie = cleanString($dBConnection,$_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']);
-  $dBQuery = "SELECT Cookie FROM `" . DBPREFIX . "_LoginTable` WHERE CHAR_LENGTH(Cookie) > 1;";
-  $returnQuery = mysqli_query($dBConnection,$dBQuery);
-  while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+  if (!isset($_POST['LoginSubmit']))
+    $cookieKey = mb_convert_encoding(htmlspecialchars(bin2hex(random_bytes(256))),"UTF-8");
+  if (isset($_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']))
   {
-    $returnedCookie = cleanHtmlString($dBConnection, $row['Cookie']);
-    if ($returnedCookie == $safeCookie)
-      $notLoggedIn = false;
+    $dBConnection = connect();
+    $safeCookie = cleanString($dBConnection,$_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']);
+    $dBQuery = "SELECT Cookie FROM `" . DBPREFIX . "_LoginTable` WHERE CHAR_LENGTH(Cookie) > 1;";
+    $returnQuery = mysqli_query($dBConnection,$dBQuery);
+    while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+    {
+      $returnedCookie = cleanHtmlString($dBConnection, $row['Cookie']);
+      if ($returnedCookie == $safeCookie)
+        $notLoggedIn = false;
+    }
+    disconnect($dBConnection);
   }
-  disconnect($dBConnection);
+  if (!isset($_POST['LoginSubmit']) && (!isset($_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']) || $notLoggedIn == true))
+    setcookie(preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin',$cookieKey,0,'/',URL,FALSE,TRUE); 
 }
-if (!isset($_POST['LoginSubmit']) && (!isset($_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']) || $notLoggedIn == true))
-  setcookie(preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin',$cookieKey,0,'/',URL,FALSE,TRUE); 
 
 //HEAD OUTPUT FUNCTIONS
 /**
