@@ -2,7 +2,7 @@
 
 ## Who we Are
 
-If you're just starting out with BlogDraw development, let's first introduce you to our team.  BlogDraw is made by [@TuxSoftLimited](https://github.com/TuxSoftLimited "TuxSoft Limited"). - a small Software and Web Development company based in Lancashire, in the UK.  Our Lead Developer is [@JamesPhillipsUK](https://github.com/JamesPhillipsUK "James Phillips") - his original codebase powers BlogDraw, and decisions about development all go through him (but don't worry - he's a nice guy to work with).  A major benefit of Open-Source software (like BlogDraw) is that everyone's welcome to help out and contribute to the project; so we also welcome contributors from outside [@TuxSoftLimited](https://github.com/TuxSoftLimited "TuxSoft Limited").
+If you're just starting out with BlogDraw development, let's first introduce you to our team.  BlogDraw is made by [the team at TuxSoft Limited](https://github.com/TuxSoftLimited "TuxSoft Limited - @TuxSoftLimited"). - a small Software and Web Development company based in Lancashire, in the UK.  Our Lead Developer is [Jesse](https://github.com/JamesPhillipsUK "Jesse - @JamesPhillipsUK") - their original codebase powers BlogDraw, and decisions about development all go through them (don't worry - they're lovely to work with and always happy to help).  A major benefit of Open-Source software (like BlogDraw) is that everyone's welcome to help out and contribute to the project; so we welcome contributors from outside [TuxSoft Limited](https://github.com/TuxSoftLimited "@TuxSoftLimited").
 
 ## How we Talk
 
@@ -28,7 +28,7 @@ We use these guidelines to ensure our code is as uniform and easy-to-read as pos
 
 - Use ‘camelCase’ for directory names, or (ideally) keep them to one lower-case word.
 - Use 'underscored_lower_case' for file names.
-- PHP file names must end with ".php", CSS - ".css", HTML - ".html", Markdown - ".md", and JavaScript - ".js".
+- PHP file names must end with ".php", CSS - ".css", HTML - ".html", Markdown - ".md", JSON - ".json", and JavaScript - ".js".
 
 ### Code Style
 
@@ -161,4 +161,4 @@ function square_then_add_five($input)
 
 If you have any questions about these guidelines, or about contributing to BlogDraw in general, feel free to [get in touch](https://tuxsoft.uk/Contact/ "Get in touch with us.").
 
-- This was last updated for Beta 2.1, BlogDraw 0.0.1.
+- This was last updated for Release Candidate 1, BlogDraw 0.0.1.
