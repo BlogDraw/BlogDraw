@@ -9,28 +9,29 @@
  * - Engine Functions - this section contains functions that parse, operate on, and pass data to and from output functions.
 **/
 //CORE CONTENT
-global $notLoggedIn; 
+global $notLoggedIn;
+require_once ('control/functions/db_connection_handler.php');
 
-require_once ('Back/functions/db_connection_handler.php');
-if (!isset($_POST['LoginSubmit']))
-  $cookieKey = mb_convert_encoding(htmlspecialchars(bin2hex(random_bytes(256))),"UTF-8");
-if (isset($_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']))
+if (strpos($_SERVER['REQUEST_URI'], "/control/") !== false) // Only handle auth cookies when an auth attempt is made.
 {
-  $dBConnection = connect();
-  $safeCookie = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']), "UTF-8"));
-  $dBQuery = "SELECT Cookie FROM `" . DBPREFIX . "_LoginTable` WHERE CHAR_LENGTH(Cookie) > 1;";
-  $returnQuery = mysqli_query($dBConnection,$dBQuery);
-  while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+  if (!isset($_POST['LoginSubmit']))
+    $cookieKey = mb_convert_encoding(htmlspecialchars(bin2hex(random_bytes(256))),"UTF-8");
+  if (isset($_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']))
   {
-    $returnedCookie = mb_convert_encoding($row['Cookie'], "UTF-8");
-    if ($returnedCookie == $safeCookie)
-      $notLoggedIn = false;
+    $dBConnection = connect();
+    $safeCookie = cleanString($dBConnection,$_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']);
+    $dBQuery = "SELECT Cookie FROM `" . DBPREFIX . "_LoginTable` WHERE CHAR_LENGTH(Cookie) > 1;";
+    $returnQuery = mysqli_query($dBConnection,$dBQuery);
+    while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+    {
+      $returnedCookie = cleanHtmlString($dBConnection, $row['Cookie']);
+      if ($returnedCookie == $safeCookie)
+        $notLoggedIn = false;
+    }
+    disconnect($dBConnection);
   }
-  disconnect($dBConnection);
-}
-if (!isset($_POST['LoginSubmit']) && (!isset($_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']) || $notLoggedIn == true))
-{
-  setcookie(preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin',$cookieKey,0,'/',URL,FALSE,TRUE); 
+  if (!isset($_POST['LoginSubmit']) && (!isset($_COOKIE[preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin']) || $notLoggedIn == true))
+    setcookie(preg_replace('/^-+|-+$/', '', strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', TITLE))) . 'BlogDrawLogin',$cookieKey,0,'/',URL,FALSE,TRUE); 
 }
 
 //HEAD OUTPUT FUNCTIONS
@@ -57,14 +58,14 @@ function output_head_title()
       $isPost = false;
       $dBQuery = "SELECT Title FROM `" . DBPREFIX . "_PostsTable` WHERE PostIsDraft=0 AND NiceTitle='" . $uRI . "' ORDER BY ID DESC LIMIT 1;";
       $returnQuery = mysqli_query($dBConnection,$dBQuery);
-      while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+      while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
       {
-        $returnedTitle = mb_convert_encoding(htmlspecialchars($row['Title']), "UTF-8");
+        $returnedTitle = cleanHtmlString($dBConnection, $row['Title']);
         echo TITLE . ' | ' . $returnedTitle;
         $isPost = true;
       }
       disconnect($dBConnection);
-      if($isPost == false)
+      if ($isPost == false)
         echo TITLE . ' | ' . $uRI;
   }
 }
@@ -164,7 +165,7 @@ function output_latest_blog_post()
 function output_blog_archive($numberToLoad,$lazyLoadIsOK)
 {
   $lastPostLoaded = engine_load_blog_archive($numberToLoad);
-  if($lazyLoadIsOK)
+  if ($lazyLoadIsOK)
   {
     if (!($lastPostLoaded <= $numberToLoad))
       engine_load_blog_archive_button($lastPostLoaded);
@@ -182,9 +183,9 @@ function output_canonical_page()
   if (strpos($uRLPath,"?fbclid") != FALSE)
     $uRLPath = strstr($uRLPath, "?fbclid", TRUE);
   $elements = explode('/', $uRLPath);
-  if(empty($elements[0]) || strcmp("?fbclid", substr($elements[0], 0, 7)) == 0)// No path elements means home
+  if (empty($elements[0]) || strcmp("?fbclid", substr($elements[0], 0, 7)) == 0)// No path elements means home
     engine_call_canonical_page('home');
-  else if(substr($elements[0],0,4) == "tag-")
+  else if (substr($elements[0],0,4) == "tag-")
     engine_call_canonical_page('tag');
   else switch(array_shift($elements))
   {
@@ -231,7 +232,56 @@ function output_author_profile($option)
   }
 }
 
+/**
+ * This outputs the template name, from the template code.
+ **/
+function output_template_name()
+{
+  $templateData = engine_find_template_data(TEMPLATE);
+  echo $templateData["name"];
+}
+
+/**
+ * This outputs the template author, from the template code.
+ **/
+function output_template_author()
+{
+  $templateData = engine_find_template_data(TEMPLATE);
+  echo $templateData["author"];
+}
+
+/**
+ * This outputs the template version, from the template code.
+ **/
+function output_template_version()
+{
+  $templateData = engine_find_template_data(TEMPLATE);
+  echo $templateData["version"];
+}
+
+/**
+ * This outputs a link to the template author's contact website, from the template code.
+ **/
+function output_template_contact_url()
+{
+  $templateData = engine_find_template_data(TEMPLATE);
+  echo $templateData["contactURL"];
+}
+
 //ENGINE FUNCTIONS
+
+/**
+ * This finds the data provided by the template developer in data.json.
+ * @param templateName - The name of the template directory.
+ * @return array - The data provided.
+ **/
+function engine_find_template_data($templateName)
+{
+  $dataFile = realpath("./template/" . $templateName . "/data.json");
+  $data = json_decode(file_get_contents($dataFile), true);
+  return $data;
+}
+
 /**
  * This handles the data processing for the author profile.
  * @return array - An array of author information needed for the profile.
@@ -242,19 +292,19 @@ function engine_author_profile()
   //Check if front page
   $requestedURI= mb_convert_encoding(htmlspecialchars(substr($_SERVER['REQUEST_URI'],1)), "UTF-8");
   if (PROTOCOL . URL . $requestedURI == PROTOCOL.URL || PROTOCOL . URL . "/" . $requestedURI == PROTOCOL.URL."/archive"  || PROTOCOL . URL . "/" . $requestedURI == PROTOCOL.URL."/contact" || substr(PROTOCOL . URL . "/" . $requestedURI,0,(LENGTH+5)) == PROTOCOL.URL."/tag-")
-  {//If front page, get author id from latest blog article where not draft
+  {// If front page, get author id from latest blog article where not draft
     $postID = engine_find_latest_public_post_id();
     $preamble = "The latest blog author on this site:";
   }
   else
-  {//else find canonical page post link get author id from post where that = nice-title
+  {// Else find canonical page post link get author id from post where that = nice-title
     $preamble = "Author profile:";
     $dBConnection = connect();
-    $requestedURI = mysqli_real_escape_string($dBConnection,$requestedURI);
+    $requestedURI = cleanHtmlString($dBConnection,$requestedURI);
     $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_PostsTable` WHERE PostIsDraft=0 AND NiceTitle='" . $requestedURI . "' ORDER BY ID DESC LIMIT 1;";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
-    while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
-      $returnedID = mb_convert_encoding(htmlspecialchars($row['ID']), "UTF-8");
+    while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+      $returnedID = cleanString($dBConnection, $row['ID']);
     $postID = $returnedID;
     disconnect($dBConnection);
   }
@@ -263,13 +313,19 @@ function engine_author_profile()
   $dBConnection = connect();
   $dBQuery = "SELECT UserImage,UserBlurb FROM `" . DBPREFIX . "_LoginTable` WHERE ID='" . $authorID . "';";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
-  while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+  while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
   {
-    $returnedAuthorImage = mb_convert_encoding(htmlspecialchars($row['UserImage']), "UTF-8");
-    $returnedAuthorBlurb = mb_convert_encoding($row['UserBlurb'], "UTF-8");
+    $returnedAuthorImage = cleanString($dBConnection, $row['UserImage']);
+    $returnedAuthorBlurb = cleanHtmlString($dBConnection, $row['UserBlurb']);
   }
-  if (!empty($returnedAuthorImage)){$authorImage = $returnedAuthorImage;} else {$authorImage = "X";}
-  if (!empty($returnedAuthorBlurb)){$authorBlurb = $returnedAuthorBlurb;} else {$authorBlurb = "X";}
+  if (!empty($returnedAuthorImage))
+    $authorImage = $returnedAuthorImage;
+  else
+    $authorImage = "X";
+  if (!empty($returnedAuthorBlurb))
+    $authorBlurb = $returnedAuthorBlurb;
+  else
+    $authorBlurb = "X";
   disconnect($dBConnection);
   return array ($authorID,$authorBlurb,$authorImage,$preamble);
 }
@@ -314,14 +370,14 @@ function engine_find_called_post()
   $dBConnection = connect();
   $postCount = 1;
   if (strpos($_SERVER['REQUEST_URI'], "?fbclid") != FALSE)
-    $requestedURI = mysqli_real_escape_string($dBConnection, mb_convert_encoding(htmlspecialchars(strstr(substr($_SERVER['REQUEST_URI'], 1), "?fbclid", TRUE)), "UTF-8"));
+    $requestedURI = cleanString($dBConnection, strstr(substr($_SERVER['REQUEST_URI'], 1), "?fbclid", TRUE));
   else
-    $requestedURI = mysqli_real_escape_string($dBConnection, mb_convert_encoding(htmlspecialchars(substr($_SERVER['REQUEST_URI'], 1)), "UTF-8"));
+    $requestedURI = cleanString($dBConnection, substr($_SERVER['REQUEST_URI'], 1));
   $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_PostsTable` WHERE PostIsDraft=0 AND NiceTitle='" . $requestedURI . "' ORDER BY ID DESC LIMIT 1;";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
-  while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+  while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
   {
-    $returnedID = mb_convert_encoding(htmlspecialchars($row['ID']), "UTF-8");
+    $returnedID = cleanString($dBConnection, $row['ID']);
     engine_collate_post_details($returnedID);
     $postCount = 0;
   }
@@ -337,12 +393,12 @@ function engine_find_called_tag()
 {
   $dBConnection = connect();
   $postCount = 1;
-  $requestedTag= mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars(urldecode(substr($_SERVER['REQUEST_URI'],5))), "UTF-8"));
+  $requestedTag = cleanString($dBConnection,urldecode(substr($_SERVER['REQUEST_URI'],5)));
   $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_PostsTable` WHERE PostIsDraft=0 AND (TagOne='" . $requestedTag . "' OR TagTwo='" . $requestedTag . "' OR TagThree='" . $requestedTag . "') ORDER BY ID DESC;";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
-  while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+  while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
   {
-    $returnedID = mb_convert_encoding(htmlspecialchars($row['ID']), "UTF-8");
+    $returnedID = cleanString($dBConnection, $row['ID']);
     engine_collate_post_details($returnedID);
     $postCount = 0;
   }
@@ -360,7 +416,7 @@ function engine_load_blog_archive_button($lastPostLoaded)
   ?>
   <form method="post">
     <input id="LastPostLoaded" name="LastPostLoaded" type="hidden" value="<?php echo $lastPostLoaded; ?>" />
-    <input type="submit" class="btn btn-default" name="LoadMore" value="Load More..." />
+    <input type="submit" class="btn btn-primary" name="LoadMore" value="Load More..." />
   </form>
   <?php
 }
@@ -372,17 +428,17 @@ function engine_load_blog_archive_button($lastPostLoaded)
  **/
 function engine_load_blog_archive($numberToLoad)
 {
-  if(isset($_POST['LoadMore']) && isset($_POST['LastPostLoaded']))
+  if (isset($_POST['LoadMore']) && isset($_POST['LastPostLoaded']))
   {
     $dBConnection = connect();
-    $lastOneLoaded = mysqli_real_escape_string($dBConnection,mb_convert_encoding(htmlspecialchars($_POST['LastPostLoaded']), "UTF-8"));
+    $lastOneLoaded = cleanString($dBConnection,$_POST['LastPostLoaded']);
     if (!is_numeric($lastOneLoaded))
       $lastOneLoaded = $numberToLoad + 1;
     $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_PostsTable` WHERE PostIsDraft=0 AND ID<" . $lastOneLoaded . " ORDER BY ID DESC LIMIT " . $numberToLoad . ";";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
-    while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+    while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
     {
-      $returnedID = mb_convert_encoding(htmlspecialchars($row['ID']), "UTF-8");
+      $returnedID = cleanString($dBConnection, $row['ID']);
       engine_collate_post_details($returnedID);
     }
     disconnect($dBConnection);
@@ -392,9 +448,9 @@ function engine_load_blog_archive($numberToLoad)
     $dBConnection = connect();
     $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_PostsTable` WHERE PostIsDraft=0 ORDER BY ID DESC LIMIT " . $numberToLoad . ";";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
-    while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+    while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
     {
-      $returnedID = mb_convert_encoding(htmlspecialchars($row['ID']), "UTF-8");
+      $returnedID = cleanString($dBConnection, $row['ID']);
       engine_collate_post_details($returnedID);
     }
     disconnect($dBConnection);
@@ -408,12 +464,12 @@ function engine_load_blog_archive($numberToLoad)
  **/
 function engine_load_blog_archive_alt($numberLeft)
 {
-  if($numberLeft > 0)
+  if ($numberLeft > 0)
   {
     $dBConnection = connect();
     $dBQuery = "SELECT ID,Title,NiceTitle FROM `" . DBPREFIX . "_PostsTable` WHERE PostIsDraft=0 AND ID<" . $numberLeft . " ORDER BY ID DESC;";
     $returnQuery = mysqli_query($dBConnection,$dBQuery);
-    while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+    while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
     {
       echo '<a href="' . URL . htmlspecialchars($row['NiceTitle']) . '" title="' . htmlspecialchars($row['Title']) . '">' . htmlspecialchars($row['Title']) . '</a><br />';
     }
@@ -430,8 +486,8 @@ function engine_find_latest_public_post_id()
   $dBConnection = connect();
   $dBQuery = "SELECT ID FROM `" . DBPREFIX . "_PostsTable` WHERE PostIsDraft=0 ORDER BY ID DESC LIMIT 1;";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
-  while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
-    $returnedID = mb_convert_encoding(htmlspecialchars($row['ID']), "UTF-8");
+  while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+    $returnedID = cleanString($dBConnection, $row['ID']);
   disconnect($dBConnection);
   return $returnedID;
 }
@@ -450,9 +506,9 @@ function engine_collate_post_details($postID)
   $postTagTwo = engine_call_post_field($postID,"TagTwo");
   $postTagThree = engine_call_post_field($postID,"TagThree");
   echo '<p><small>Written by: ' . $postAuthor . ' on: ' . engine_call_post_field($postID,"TimeStamp") . '. 
-    Tags: <a href="' . PROTOCOL . URL . '/tag-' . urlencode($postTagOne) . '" title="Visit Tag Archive for: ' . $postTagOne . '">' . $postTagOne . '</a>,
-    <a href="' . PROTOCOL . URL . '/tag-' . urlencode($postTagTwo) . '" title="Visit Tag Archive for: ' . $postTagTwo . '">' . $postTagTwo . '</a>,
-    <a href="' . PROTOCOL . URL . '/tag-' . urlencode($postTagThree) . '" title="Visit Tag Archive for: ' . $postTagThree . '">' . $postTagThree . '</a>.</small></p>';
+    Tags: <a href="' . PROTOCOL . URL . '/tag-' . urlencode(strtolower($postTagOne)) . '" title="Visit Tag Archive for: ' . $postTagOne . '">' . $postTagOne . '</a>,
+    <a href="' . PROTOCOL . URL . '/tag-' . urlencode(strtolower($postTagTwo)) . '" title="Visit Tag Archive for: ' . $postTagTwo . '">' . $postTagTwo . '</a>,
+    <a href="' . PROTOCOL . URL . '/tag-' . urlencode(strtolower($postTagThree)) . '" title="Visit Tag Archive for: ' . $postTagThree . '">' . $postTagThree . '</a>.</small></p>';// Make URLs out of the tags, ensure they're lower-case for consistency.
   echo engine_call_post_field($postID,"Post");
   echo '</article>'; 
 }
@@ -465,24 +521,24 @@ function engine_collate_post_details($postID)
 function engine_call_author_details($postAuthor)
 {
   $dBConnection = connect();
-  $dBQuery = "SELECT Username,Email,EmailIsPublic,URL FROM `" . DBPREFIX . "_LoginTable` WHERE ID='" . $postAuthor . "';";
+  $dBQuery = "SELECT DisplayName,Email,EmailIsPublic,URL FROM `" . DBPREFIX . "_LoginTable` WHERE ID='" . $postAuthor . "';";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
-  while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+  while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
   {
-    $returnedUsername = mb_convert_encoding(htmlspecialchars($row['Username']), "UTF-8");
-    $returnedEmail = mb_convert_encoding(htmlspecialchars($row['Email']), "UTF-8");
-    $returnedEmailIsPublic = mb_convert_encoding(htmlspecialchars($row['EmailIsPublic']), "UTF-8");
-    $returnedURL = mb_convert_encoding(htmlspecialchars($row['URL']), "UTF-8");
+    $returnedDisplayName = cleanString($dBConnection, $row['DisplayName']);
+    $returnedEmail = cleanString($dBConnection, $row['Email']);
+    $returnedEmailIsPublic = cleanString($dBConnection, $row['EmailIsPublic']);
+    $returnedURL = cleanString($dBConnection, $row['URL']);
   }
   disconnect($dBConnection);
-  if($returnedEmailIsPublic == 1 && !empty($returnedURL))
-    $authorCaption = '<a href="' . $returnedURL . '" title="Go To ' . $returnedURL . '">' . $returnedUsername . '</a>(<a href="mailto:' . $returnedEmail . '" title="Email ' . $returnedEmail . '">Email The Author</a>)';
-  else if($returnedEmailIsPublic == 1 && empty($returnedURL))
-    $authorCaption = '<a href="mailto:' . $returnedEmail . '" title="Email ' . $returnedEmail . '">' . $returnedUsername . '</a>';
-  else if($returnedEmailIsPublic == 0 && !empty($returnedURL))
-    $authorCaption = '<a href="' . $returnedURL . '" title="Go To ' . $returnedURL . '">' . $returnedUsername . '</a>';
-  else //if($returnedEmailIsPublic == 0 && empty($returnedURL))
-    $authorCaption = $returnedUsername;
+  if ($returnedEmailIsPublic == 1 && !empty($returnedURL))
+    $authorCaption = '<a href="' . $returnedURL . '" title="Go To ' . $returnedURL . '">' . $returnedDisplayName . '</a> (<a href="mailto:' . $returnedEmail . '" title="Email ' . $returnedEmail . '">Email The Author</a>)';
+  else if ($returnedEmailIsPublic == 1 && empty($returnedURL))
+    $authorCaption = '<a href="mailto:' . $returnedEmail . '" title="Email ' . $returnedEmail . '">' . $returnedDisplayName . '</a>';
+  else if ($returnedEmailIsPublic == 0 && !empty($returnedURL))
+    $authorCaption = '<a href="' . $returnedURL . '" title="Go To ' . $returnedURL . '">' . $returnedDisplayName . '</a>';
+  else //if ($returnedEmailIsPublic == 0 && empty($returnedURL))
+    $authorCaption = $returnedDisplayName;
   return $authorCaption;
 }
 
@@ -498,13 +554,13 @@ function engine_call_post_field($postToCallID,$field)
   $dBConnection = connect();
   $dBQuery = "SELECT " . $field . ",PostIsDraft FROM `" . DBPREFIX . "_PostsTable` WHERE ID='" . $postToCallID . "';";
   $returnQuery = mysqli_query($dBConnection,$dBQuery);
-  while($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
+  while ($row = mysqli_fetch_array($returnQuery, MYSQLI_ASSOC))
   {
-    $returnedPostIsDraft = mb_convert_encoding(htmlspecialchars($row['PostIsDraft']), "UTF-8");
+    $returnedPostIsDraft = cleanString($dBConnection, $row['PostIsDraft']);
     if ($returnedPostIsDraft == 0)
     {
       if ($field != 'Post')
-        $returnedField = mb_convert_encoding(htmlspecialchars($row[$field]), "UTF-8");
+        $returnedField = cleanString($dBConnection, $row[$field]);
       else
         $returnedField = mb_convert_encoding($row[$field], "UTF-8");
     }

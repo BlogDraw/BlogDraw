@@ -3,5 +3,5 @@
 User-agent: *
 Disallow: /cgi-bin/
 Disallow: /cgi-bin
-Disallow: /Back/
-Disallow: /Back
+Disallow: /control/
+Disallow: /control
