@@ -156,7 +156,7 @@ function sub_UI_media_page_FindAndPrintFileData($pageOrPlugin)
     }
     else
     {
-      echo '<tr><td>No Image Available.</td>' . '<td>' . substr($file,2) . '</td><td>&lta href=&quot;' . PROTOCOL . URL . substr($file,2) . '&quot; title=&quot;' . substr($file,11) . '&quot; &gt;' . PROTOCOL . URL . substr($file,2) . '&lt;/a&gt;</td><td> ' . date ("Y-m-d H:i:s.", filemtime($file)) . '</td>';
+      echo '<tr><td>No Image Available.</td>' . '<td>&lta href=&quot;' . PROTOCOL . URL . substr($file,2) . '&quot; title=&quot;' . substr($file,11) . '&quot; &gt;' . PROTOCOL . URL . substr($file,2) . '&lt;/a&gt;</td><td>' . substr($file,2) . '</td><td> ' . date ("Y-m-d H:i:s.", filemtime($file)) . '</td>';
       if ($pageOrPlugin != 'Plugin')
         echo '<td><form method="post" style="display:inline;"><input id="Delete" name="Delete" type="hidden" value="' . $file . '" /><input type="submit" class="btn btn-light btn-sm" name="DeleteSubmit" value="Delete" /></form></td>';
       echo '</tr>';
