@@ -323,7 +323,7 @@ function engine_author_profile()
   else
     $authorImage = "X";
   if (!empty($returnedAuthorBlurb))
-    $authorBlurb = $returnedAuthorBlurb;
+    $authorBlurb = str_replace("\\\"","\"", $returnedAuthorBlurb);
   else
     $authorBlurb = "X";
   disconnect($dBConnection);
