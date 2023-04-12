@@ -14,7 +14,7 @@ function engine_account_page($safeCookie)
     $returnedDisplayName = cleanHtmlString($dBConnection, $row['DisplayName']);
     $returnedEmail = cleanHtmlString($dBConnection, $row['Email']);
     $returnedUserImage = cleanHtmlString($dBConnection, $row['UserImage']);
-    $returnedUserBlurb = cleanHtmlString($dBConnection, $row['UserBlurb']);
+    $returnedUserBlurb = str_replace("\\\"", "&quot;", $returnedUserBlurb); // User Blurb may contain speech marks.  This is intended behaviour.
     $returnedCompany = cleanHtmlString($dBConnection, $row['Company']);
     $returnedURL = cleanHtmlString($dBConnection, $row['URL']);
     $returnedEmailIsPublic = cleanHtmlString($dBConnection, $row['EmailIsPublic']);
