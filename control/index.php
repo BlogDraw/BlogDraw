@@ -98,7 +98,7 @@
       <h1>The Control Panel</h1>
     </header>
     <div class="col-10 offset-1">
-      <p><strong>Welcome to BlogDraw Version 0.0.1 Release Candidate!</strong> How can we help you today?  Use the menu above to navigate through the options available to you.</p>
+      <p><strong>Welcome to BlogDraw Version 0.0.1 Release Candidate 2!</strong> How can we help you today?  Use the menu above to navigate through the options available to you.</p>
     </div>
   </div>
 </section>
@@ -107,7 +107,7 @@
   }
 ?>
     <!-- jQuery and Bootstrap -->
-    <script src="./bootstrap/js/jquery-3.4.1.min.js"></script>
+    <script src="./bootstrap/js/jquery-3.7.1.min.js"></script>
     <script src="./bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>

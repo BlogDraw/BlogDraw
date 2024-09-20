@@ -228,7 +228,7 @@
     <br />
   </body>
   <!-- jQuery and Bootstrap -->
-  <script src="./control/bootstrap/js/jquery-3.4.1.min.js"></script>
+  <script src="./control/bootstrap/js/jquery-3.7.1.min.js"></script>
   <script src="./control/bootstrap/js/bootstrap.min.js"></script>
 </html><?php
   }
