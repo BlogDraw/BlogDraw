@@ -268,6 +268,19 @@ function output_template_contact_url()
   echo $templateData["contactURL"];
 }
 
+/**
+ * This outputs true if the template has a dark mode and it is set.
+ * @return boolean - True if dark mode is enabled.
+ **/
+function output_template_is_dark_mode()
+{
+  $templateData = engine_find_template_data(TEMPLATE);
+  if(array_key_exists("doDarkMode",$templateData))
+    return $templateData["doDarkMode"];
+  return false;
+}
+
+
 //ENGINE FUNCTIONS
 
 /**
